@@ -89,7 +89,8 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array();
+// Cari baris ini (sekitar baris 92)
+$autoload['helper'] = array('url', 'file'); // Tambahkan 'url' di sini
 
 /*
 | -------------------------------------------------------------------
