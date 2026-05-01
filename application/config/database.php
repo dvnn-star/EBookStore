@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 2), '.env');
+$dotenv->load();
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
@@ -71,9 +72,9 @@ $active_group = 'default';
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'laravel',
-	'password' => 'delvinpro',
-	'database' => 'EBookStore',
+	'username' => $_ENV['DB_USER'],
+	'password' => $_ENV['DB_PASS'],
+	'database' => $_ENV['DB_NAME'],
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
