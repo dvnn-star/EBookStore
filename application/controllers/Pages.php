@@ -7,6 +7,6 @@ class Pages extends CI_Controller {
     public function kategori() {
         // Logika: ambil data dari model (jika ada)
         // Lalu lempar ke tampilan (View)
-        $this->load->view('pages/kategori'); 
+        $this->load->view('pages/kategori');
     }
 }
