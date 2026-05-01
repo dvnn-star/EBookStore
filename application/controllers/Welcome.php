@@ -26,7 +26,7 @@ class Welcome extends CI_Controller {
 		$this->load->view('components/Terpopuler');
 		$this->load->view('components/Kategori_beranda');
 		$this->load->view('components/Keunggulan');
-		$this->load->view('components/footer');
+		$this->load->view('components/Footer');
 		$this->load->view('welcome_message');
 	}
 

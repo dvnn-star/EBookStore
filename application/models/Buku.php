@@ -1,6 +1,6 @@
 <?php
-class User_model extends CI_Model {
-    public function getAll() {
-        return $this->db->get('users')->result();
+class Buku extends CI_Model {
+    public function getALL() {
+        return $this->db->get('buku')->result();
     }
 }
