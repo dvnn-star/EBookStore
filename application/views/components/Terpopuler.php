@@ -10,7 +10,7 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="bg-gray-50 py-16">
+<body class="bg-gray-100 py-16">
 
 <?php
 // Data buku untuk simulasi database

@@ -16,7 +16,7 @@
 // Data navigasi footer
 $footerData = [
     'Navigasi' => ['Tautan penting', 'Latihan', 'Blog', 'Kontak'],
-    'Kategori' => ['Kategori', 'Bisnis', 'Terpopuler', 'Pengembangan Diri', 'Edukasi'],
+    'Kategori' => ['Sejarah', 'Bisnis & Ekonomi', 'Terpopuler', 'Edukasi'],
     'Bantuan' => ['FAQ', 'Kontak']
 ];
 ?>
