@@ -1,5 +1,29 @@
 .DS_Store
 
+.env
+
+
+# Config sensitif (jangan dishare password DB)
+application/config/database.php
+
+# Kalau tiap orang beda base_url
+application/config/config.php
+
+# Vendor (kalau pakai composer)
+vendor/
+
+# Node (kalau ada frontend)
+node_modules/
+
+
+# Build cache (opsional)
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+
 application/cache/*
 !application/cache/index.html
 
