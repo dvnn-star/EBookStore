@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteBase /EBookStore/
+
+# Jika file atau folder ada secara fisik, akses langsung (untuk CSS/JS/Images)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Selain itu, lempar semuanya ke index.php
+RewriteRule ^(.*)$ index.php/$1 [L]
