@@ -5,12 +5,13 @@
     <title>E-Pustaka</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="m-0 p-0">
 
 <?php
 $title = "JELAJAHI RIBUAN E-BOOK TERBAIK HANYA DI E-PUSTAKA";
 $desc  = "Akses instan ke koleksi terlengkap fiksi, non-fiksi, dan edukasi.";
-$image = "ebook.png"; // ganti dengan ilustrasi kamu
+$image = "assets/images/image_hero2.png";
 ?>
 
 <div class="bg-teal-700 text-white px-10 py-12 flex items-center justify-between">
@@ -30,15 +31,14 @@ $image = "ebook.png"; // ganti dengan ilustrasi kamu
                 MULAI MEMBACA SEKARANG!
             </button>
 
-            <button classer border-white px-5="bord py-3 rounded hover:bg-white hover:text-teal-700 transition">
+            <button class="bg-orange-500 border-white px-5 py-3 rounded hover:bg-orange-600 transition">
                 Lihat Koleksi
             </button>
         </div>
     </div>
 
-    <!-- Image -->
-    <div class="hidden md:block">
-        <img src="<?= $image ?>" alt="ebook" class="w-80">
+    <div class="mr-[100px] hidden md:block" >
+        <img src="<?= $image ?>" alt="ebook" class="w-100">
     </div>
 
 </div>
