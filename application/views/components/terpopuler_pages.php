@@ -8,11 +8,11 @@ $semua_buku = [
 ];
 
 $judul_referensi = [
-    'terpopuler'     => 'Buku Terpopuler 🔥',
-    'fiksi'          => 'Koleksi Fiksi',
-    'bisnis_ekonomi' => 'Bisnis & Ekonomi',
-    'sejarah'        => 'Koleksi Sejarah',
-    'edukasi'        => 'Edukasi & Edukasi'
+    'terpopuler'     => 'Buku Terpopuler',
+    'fiksi'          => 'Populer Fiksi',
+    'bisnis_ekonomi' => 'Populer Bisnis & Ekonomi',
+    'sejarah'        => 'Populer Sejarah',
+    'edukasi'        => 'Populer Edukasi'
 ];
 
 $koleksi_buku = [];
@@ -86,7 +86,7 @@ foreach ($semua_buku as $buku) {
                     <div class="flex items-end justify-between mb-8">
                         <div>
                             <h2 class="text-3xl font-black text-slate-800 tracking-tight"><?= $section['judul'] ?></h2>
-                            <div class="h-1 w-12 bg-ep-green mt-2 rounded-full"></div>
+                            <div class="h-1 w-full bg-ep-green mt-2 rounded-full"></div>
                         </div>
                     </div>
 
