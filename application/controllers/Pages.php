@@ -18,10 +18,17 @@ class Pages extends CI_Controller
     // halaman login
     public function login()
     {
+        if ($this->session->userdata('logged_in')) {
+
+            redirect($_ENV['BASE_URL']);
+        }
         $this->load->view('login');
     }
     public function register()
     {
+        if ($this->session->userdata('logged_in')) {
+            redirect($_ENV['BASE_URL']);
+        }
         $this->load->view('register');
     }
 }
