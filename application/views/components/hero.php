@@ -27,11 +27,14 @@ $image = "assets/images/image_hero2.png";
         </p>
 
         <div class="flex gap-4">
-            <button class="bg-orange-500 hover:bg-orange-600 px-5 py-3 rounded font-semibold">
-                MULAI MEMBACA SEKARANG!
+            <button 
+            class="bg-orange-500 hover:bg-orange-600 px-5 py-3 rounded font-semibold">
+            MULAI MEMBACA SEKARANG!
             </button>
-
-            <button class="bg-orange-500 border-white px-5 py-3 rounded hover:bg-orange-600 transition">
+        
+            <button
+                onclick="window.location.href='<?= base_url('kategori'); ?>'"
+                class="bg-orange-500 border-white px-5 py-3 rounded hover:bg-orange-600 transition">
                 Lihat Koleksi
             </button>
         </div>

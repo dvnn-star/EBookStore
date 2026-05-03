@@ -8,3 +8,4 @@ $this->load->view('components/Kategori_beranda');
 $this->load->view('components/Keunggulan');
 $this->load->view('components/Footer');
 
+?>

@@ -36,17 +36,17 @@
         <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white flex-col p-6 shadow-xl md:static md:flex md:flex-row md:shadow-none md:w-auto md:p-0 md:space-x-8 md:items-center font-medium">
             
             <!-- Link Beranda (Kondisi Aktif) -->
-            <a href="" class="nav-link text-[#0E6D64] border-b-2 border-[#0E6D64] py-2 md:py-0 transition-all duration-300">
+            <a href="<?php $_ENV['BASE_URL'] ?>" class="nav-link text-[#0E6D64] border-b-2 border-[#0E6D64] py-2 md:py-0 transition-all duration-300">
                 Beranda
             </a>
             <!-- Link Lainnya (Gunakan text-gray-500 agar kontras saat hover ke warna primary) -->
             <a href="kategori" class="nav-link text-gray-500 hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
                 Kategori
             </a>
-            <a href="#populer" class="nav-link text-gray-500 hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
+            <a href="populer" class="nav-link text-gray-500 hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
                 Terpopuler
             </a>
-            <a href="#footer" class="nav-link text-gray-500 hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
+            <a href="footer" class="nav-link text-gray-500 hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
                 Tentang Kami
             </a>
             
@@ -58,7 +58,9 @@
                         <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                     </svg>
                 </div>
-                <button class="bg-[#FF8C00] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#e67e00] transition-all shadow-md w-full md:w-auto">
+                <button 
+                    onclick="window.location.href='<?= base_url('login'); ?>'"
+                    class="bg-[#FF8C00] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#e67e00] transition-all shadow-md w-full md:w-auto">
                     MASUK
                 </button>
             </div>
