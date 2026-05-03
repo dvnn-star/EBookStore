@@ -30,7 +30,6 @@ class Migration_Create_sessions extends CI_Migration
                 'type' => 'BLOB', // Tempat menyimpan userdata (id_user, role, dll) secara otomatis
                 'null' => FALSE
             ),
-  
         ));
 
         $this->dbforge->add_key('id', TRUE);
