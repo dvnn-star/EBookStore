@@ -16,11 +16,10 @@
 // Data navigasi footer
 $footerData = [
     'Navigasi' => [
-        'Beranda'      => 'home', // Sesuaikan dengan controller utama Anda
-        'Kategori'     => 'halaman_kategori', // Ganti dengan nama controller kategori Anda
-        'Terpopuler'   => '#sec-Terpopuler',
-        'Tentang Kami' => '#sec-Tentang-Kami'
-    ],
+        'Beranda'      => '', // Sesuaikan dengan controller utama Anda
+        'Kategori'     => 'kategori', // Ganti dengan nama controller kategori Anda
+        'Terpopuler'   => 'populer',
+        'Tentang Kami' => 'tentang'],
 
     'Kategori' => [
         // Format: 'NAMA_CONTROLLER/index#sec-ID_KATEGORI'
