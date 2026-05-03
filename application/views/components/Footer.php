@@ -18,14 +18,14 @@ $footerData = [
     'Navigasi' => [
         'Beranda'      => '', // Sesuaikan dengan controller utama Anda
         'Kategori'     => 'kategori', // Ganti dengan nama controller kategori Anda
-        'Terpopuler'   => 'populer',
+        'Terpopuler'   => 'terpopuler',
         'Tentang Kami' => 'tentang'],
 
     'Kategori' => [
         // Format: 'NAMA_CONTROLLER/index#sec-ID_KATEGORI'
         // Sesuaikan 'kategori' dengan nama controller tempat form kategori Anda berada
         'Sejarah'          => 'kategori#sec-sejarah',
-        'Bisnis & Ekonomi' => 'kategori#sec-bisnis_ekonomi',
+        'Bisnis & Ekonomi' => 'kategori#sec-bisnis&ekonomi',
         'Edukasi'          => 'kategori#sec-edukasi',
         'Fiksi'            => 'kategori#sec-fiksi'
     ],
