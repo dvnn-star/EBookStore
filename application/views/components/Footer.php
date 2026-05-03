@@ -15,7 +15,7 @@
 <?php
 // Data navigasi footer
 $footerData = [
-    'Navigasi' => ['Tautan penting', 'Latihan', 'Blog', 'Kontak'],
+    'Navigasi' => ['Beranda', 'Kategori', 'Terpopuler', 'Tentang Kami'],
     'Kategori' => ['Sejarah', 'Bisnis & Ekonomi', 'Terpopuler', 'Edukasi'],
     'Bantuan' => ['FAQ', 'Kontak']
 ];
@@ -23,7 +23,7 @@ $footerData = [
 
 <footer class="bg-[#004d4d] text-white pt-12 pb-6 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-items-center">
             
             <!-- Looping untuk Navigasi, Kategori, Bantuan -->
             <?php foreach ($footerData as $title => $links): ?>
@@ -52,19 +52,6 @@ $footerData = [
                 </div>
             </div>
 
-            <!-- Berlangganan Update -->
-            <div class="lg:col-span-1">
-                <h4 class="font-bold text-lg mb-4">Berlangganan Update</h4>
-                <p class="text-sm text-gray-300 mb-4">Berlangganan update bermanfaat dengan newsletter.</p>
-                <form class="relative max-w-sm">
-                    <input type="email" placeholder="Dapatkan update" 
-                        class="w-full py-3 px-4 pr-12 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-500">
-                    <button type="submit" 
-                        class="absolute right-1 top-1 bottom-1 w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:bg-orange-600 transition">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </button>
-                </form>
-            </div>
         </div>
 
         <!-- Garis Tipis & Copyright -->
