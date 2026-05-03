@@ -20,14 +20,14 @@ class Pages extends CI_Controller
     {
         if ($this->session->userdata('logged_in')) {
 
-            redirect($_ENV['BASE_URL']);
+            redirect('');
         }
         $this->load->view('login');
     }
     public function register()
-    {
+{
         if ($this->session->userdata('logged_in')) {
-            redirect($_ENV['BASE_URL']);
+            redirect('');
         }
         $this->load->view('register');
     }
