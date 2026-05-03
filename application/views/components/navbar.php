@@ -56,8 +56,8 @@
             </a>
 
             <!-- Link Terpopuler -->
-            <a href="<?= base_url('populer'); ?>" 
-            class="nav-link <?= ($current_page == 'populer') ? 'text-[#0E6D64] border-b-2 border-[#0E6D64]' : 'text-gray-500'; ?> hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
+            <a href="<?= base_url('terpopuler'); ?>" 
+            class="nav-link <?= ($current_page == 'terpopuler') ? 'text-[#0E6D64] border-b-2 border-[#0E6D64]' : 'text-gray-500'; ?> hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
                 Terpopuler
             </a>
 
