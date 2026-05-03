@@ -15,9 +15,26 @@
 <?php
 // Data navigasi footer
 $footerData = [
-    'Navigasi' => ['Beranda', 'Kategori', 'Terpopuler', 'Tentang Kami'],
-    'Kategori' => ['Sejarah', 'Bisnis & Ekonomi', 'Terpopuler', 'Edukasi'],
-    'Bantuan' => ['FAQ', 'Kontak']
+    'Navigasi' => [
+        'Beranda'      => 'home', // Sesuaikan dengan controller utama Anda
+        'Kategori'     => 'halaman_kategori', // Ganti dengan nama controller kategori Anda
+        'Terpopuler'   => '#sec-Terpopuler',
+        'Tentang Kami' => '#sec-Tentang-Kami'
+    ],
+
+    'Kategori' => [
+        // Format: 'NAMA_CONTROLLER/index#sec-ID_KATEGORI'
+        // Sesuaikan 'kategori' dengan nama controller tempat form kategori Anda berada
+        'Sejarah'          => 'kategori#sec-sejarah',
+        'Bisnis & Ekonomi' => 'kategori#sec-bisnis_ekonomi',
+        'Edukasi'          => 'kategori#sec-edukasi',
+        'Fiksi'            => 'kategori#sec-fiksi'
+    ],
+    
+    'Bantuan' => [
+        'FAQ'    => '#sec-FAQ', 
+        'Kontak' => '#sec-Kontak'
+    ]
 ];
 ?>
 
@@ -30,8 +47,13 @@ $footerData = [
             <div>
                 <h4 class="font-bold text-lg mb-4"><?php echo $title; ?></h4>
                 <ul class="space-y-2">
-                    <?php foreach ($links as $link): ?>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition text-sm"><?php echo $link; ?></a></li>
+                    <?php foreach ($links as $label => $url): ?>
+                    <li>
+                        <a href="<?= base_url($url); ?>" 
+                        class="text-gray-300 hover:text-white transition text-sm">
+                            <?= $label; ?>
+                        </a>
+                    </li>
                     <?php endforeach; ?>
                 </ul>
             </div>
