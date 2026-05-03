@@ -44,54 +44,66 @@
                 Create Account
             </h2>
 
+            <!-- Error Flash Message -->
             <?php if($this->session->flashdata('error')): ?>
-                <div class="mb-4 text-sm text-red-600 bg-red-100 p-3 rounded-lg">
-                    <?= $this->session->flashdata('error'); ?>
+                <div class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+                    <span class="font-semibold">✕</span> <?= $this->session->flashdata('error'); ?>
+                </div>
+            <?php endif; ?>
+
+            <!-- Success Flash Message -->
+            <?php if($this->session->flashdata('success')): ?>
+                <div class="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg text-sm">
+                    <span class="font-semibold">✓</span> <?= $this->session->flashdata('success'); ?>
                 </div>
             <?php endif; ?>
 
             <?php echo form_open('auth/register'); ?>
 
-            <!-- Name -->
+            <!-- Full Name (DIPERBAIKI: Sesuai dengan PHP validation 'full_name') -->
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                     Full Name
                 </label>
                 <input 
                     type="text" 
-                    name="name"
-                    value="<?= set_value('name'); ?>"
-                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:outline-none"
-                    placeholder="Your name"
+                    name="full_name"
+                    value="<?= set_value('full_name'); ?>"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black focus:outline-none"
+                    placeholder="Your full name"
                     required
                 >
-                <p class="text-red-500 text-xs mt-1">
-                    <?= form_error('name'); ?>
-                </p>
+                <?php if(form_error('full_name')): ?>
+                    <p class="text-red-500 text-xs mt-1">
+                        <span class="font-semibold">⚠</span> <?= form_error('full_name'); ?>
+                    </p>
+                <?php endif; ?>
             </div>
 
             <!-- Email -->
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Email
+                    Email Address
                 </label>
                 <input 
                     type="email" 
                     name="email"
                     value="<?= set_value('email'); ?>"
-                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:outline-none"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black focus:outline-none"
                     placeholder="name@example.com"
                     required
                 >
-                <p class="text-red-500 text-xs mt-1">
-                    <?= form_error('email'); ?>
-                </p>
+                <?php if(form_error('email')): ?>
+                    <p class="text-red-500 text-xs mt-1">
+                        <span class="font-semibold">⚠</span> <?= form_error('email'); ?>
+                    </p>
+                <?php endif; ?>
             </div>
 
             <!-- Password -->
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Password
+                    Password (Min. 6 characters)
                 </label>
 
                 <div class="relative">
@@ -99,25 +111,28 @@
                         id="password"
                         type="password" 
                         name="password"
-                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:outline-none pr-10"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black focus:outline-none pr-12"
                         placeholder="••••••••"
+                        minlength="6"
                         required
                     >
                     <button 
                         type="button"
                         onclick="togglePassword('password', this)"
-                        class="absolute right-3 top-2.5 text-gray-500 hover:text-black text-sm"
+                        class="absolute right-3 top-2.5 text-gray-500 hover:text-black text-xs font-semibold transition"
                     >
                         Show
                     </button>
                 </div>
 
-                <p class="text-red-500 text-xs mt-1">
-                    <?= form_error('password'); ?>
-                </p>
+                <?php if(form_error('password')): ?>
+                    <p class="text-red-500 text-xs mt-1">
+                        <span class="font-semibold">⚠</span> <?= form_error('password'); ?>
+                    </p>
+                <?php endif; ?>
             </div>
 
-            <!-- Confirm Password -->
+            <!-- Confirm Password (DIPERBAIKI: Sesuai dengan PHP validation 'confirm_password') -->
             <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                     Confirm Password
@@ -125,43 +140,46 @@
 
                 <div class="relative">
                     <input 
-                        id="password2"
+                        id="confirm_password"
                         type="password" 
-                        name="password2"
-                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:outline-none pr-10"
+                        name="confirm_password"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black focus:outline-none pr-12"
                         placeholder="••••••••"
+                        minlength="6"
                         required
                     >
                     <button 
                         type="button"
-                        onclick="togglePassword('password2', this)"
-                        class="absolute right-3 top-2.5 text-gray-500 hover:text-black text-sm"
+                        onclick="togglePassword('confirm_password', this)"
+                        class="absolute right-3 top-2.5 text-gray-500 hover:text-black text-xs font-semibold transition"
                     >
                         Show
                     </button>
                 </div>
 
-                <p class="text-red-500 text-xs mt-1">
-                    <?= form_error('password2'); ?>
-                </p>
+                <?php if(form_error('confirm_password')): ?>
+                    <p class="text-red-500 text-xs mt-1">
+                        <span class="font-semibold">⚠</span> <?= form_error('confirm_password'); ?>
+                    </p>
+                <?php endif; ?>
             </div>
 
-            <!-- Button -->
+            <!-- Submit Button -->
             <button 
                 type="submit"
-                class="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition duration-200"
+                class="w-full bg-black text-white font-semibold py-2.5 rounded-lg hover:bg-gray-800 active:bg-gray-900 transition duration-200"
             >
-                Register
+                Create Account
             </button>
 
             <?php echo form_close(); ?>
 
-            <!-- Back to login -->
-            <p class="text-center text-sm text-gray-600 mt-4">
+            <!-- Link to Login -->
+            <p class="text-center text-sm text-gray-600 mt-6">
                 Already have an account?
                 <a href="<?= base_url('login'); ?>" 
-                   class="text-blue-500 font-semibold hover:underline">
-                    Login
+                   class="text-blue-600 font-semibold hover:text-blue-800 transition">
+                    Login here
                 </a>
             </p>
 
