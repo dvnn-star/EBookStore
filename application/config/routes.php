@@ -49,8 +49,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+<<<<<<< HEAD
 $route['contact'] = 'pages/contact';
+=======
+// halaman kategori
+>>>>>>> 0774b30da3399ee5f0030d061a1565931e9b2357
 $route['kategori'] = 'pages/kategori';
 $route['default_controller'] = 'welcome';
+
+
+// halaman untuk login dan register
+$route['login'] = 'pages/login';
+$route['register'] = 'pages/register';
+
+
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
