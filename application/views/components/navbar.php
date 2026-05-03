@@ -40,7 +40,7 @@
                 Beranda
             </a>
             <!-- Link Lainnya (Gunakan text-gray-500 agar kontras saat hover ke warna primary) -->
-            <a href="#kategori" class="nav-link text-gray-500 hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
+            <a href="kategori" class="nav-link text-gray-500 hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
                 Kategori
             </a>
             <a href="#populer" class="nav-link text-gray-500 hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">

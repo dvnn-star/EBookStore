@@ -61,7 +61,7 @@ foreach ($semua_buku as $item) {
     <main class="container mx-auto px-4 md:px-12 py-8 flex flex-col md:flex-row gap-8 items-start">
         
         <!-- Sidebar Filter Sticky -->
-        <aside class="w-full md:w-1/4 bg-white p-6 rounded-lg shadow-sm sticky top-24">
+        <aside class="w-full md:w-1/4 bg-white p-6 rounded-lg shadow-sm md:sticky md:top-24 md:z-10">
             <h2 class="text-lg font-bold mb-4 border-b pb-2">Kategori Section</h2>
             
             <div class="mb-6">
@@ -132,14 +132,20 @@ foreach ($semua_buku as $item) {
                                 <?php endfor; ?>
                             </div>
 
-                            <p class="text-xs text-gray-600 line-clamp-2 mb-3"><?= htmlspecialchars($book['deskripsi'] ?? '') ?></p>
+                            <p class="text-xs text-gray-600 line-clamp-2 mb-4"><?= htmlspecialchars($book['deskripsi'] ?? '') ?></p>
                             
                             <div class="mt-auto">
                                 <p class="font-bold text-lg text-gray-900 mb-3">Rp <?= number_format($book['harga'] ?? 0, 0, ',', '.') ?></p>
                                 
-                                <button class="w-full bg-epustaka-green text-white text-xs font-bold py-2.5 rounded-md hover:bg-teal-800 transition shadow-sm">
-                                    TAMBAH KE KERANJANG
-                                </button>
+                                <!-- Modifikasi Tombol Beli & Keranjang -->
+                                <div class="flex gap-2">
+                                    <button class="flex-grow bg-epustaka-orange text-white text-[11px] md:text-xs font-bold py-2.5 rounded-md hover:bg-orange-600 transition shadow-sm">
+                                        BELI SEKARANG
+                                    </button>
+                                    <button class="flex-none border border-epustaka-green bg-green-50 text-epustaka-green px-3 rounded-md hover:bg-epustaka-green hover:text-white transition shadow-sm group-hover:shadow-md" title="Tambah ke Keranjang">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
