@@ -31,13 +31,7 @@ class Migration_Create_users extends CI_Migration
                 'default'    => 'user',                          // Sangat disarankan menentukan default
                 'null'       => FALSE
             ),
-            'rating' => array(
-                'type'       => 'TINYINT',
-                'constraint' => 1,        // Cukup 1 digit
-                'unsigned'   => TRUE,     // Tidak mungkin rating negatif
-                'default'    => 0,        // Atau 0 jika belum ada rating
-                'null'       => FALSE
-            ),
+     
         ));
 
         $this->dbforge->add_key('id', TRUE);
