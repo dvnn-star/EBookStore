@@ -19,6 +19,6 @@ class Migration_Create_transactions_detail extends CI_Migration {
     }
 
     public function down() {
-        $this->dbforge->drop_table('transaction_detail', TRUE);
+        $this->dbforge->drop_table('transactions_detail', TRUE);
     }
 }
