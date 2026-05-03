@@ -29,7 +29,7 @@ class Migration_Create_buku extends CI_Migration
             ),
             'penerbit' => array(
                 'type' => 'VARCHAR',
-                'constraint'=> 100
+                'constraint' => 100
             ),
             'deskripsi' => array(
                 'type' => 'TEXT', // Bisa menampung sinopsis panjang
@@ -53,13 +53,15 @@ class Migration_Create_buku extends CI_Migration
             ),
             'kategori' => array(
                 'type'       => 'ENUM',
-                'constraint' => array('bisnis&ekonomi', 'fiksi','edukasi','sejarah'), // Nilai yang diizinkan
+                'constraint' => array('bisnis&ekonomi', 'fiksi', 'edukasi', 'sejarah'), // Nilai yang diizinkan
                 'null'       => FALSE
             ),
+            'total_terjual' => ['type' => 'INT', 'constraint' => 11, 'default' => 0],
+
         ));
 
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('Buku');
+        $this->dbforge->create_table('Buku');;
     }
 
     public function down()

@@ -15,7 +15,8 @@ class Seeder extends CI_Controller
 
     public function seed_buku()
     {
-        $this->db->truncate('Buku'); // Menghapus data lama agar tidak duplikat saat testing
+        $this->db->query('SET FOREIGN_KEY_CHECKS = 0'); // Menghapus data lama agar tidak duplikat saat testing
+        $this->db->truncate('Buku');
 
         $data = [
             [
@@ -62,7 +63,8 @@ class Seeder extends CI_Controller
                 'rating'     => 4,
                 'kategori'   => 'edukasi'
             ]
-        ];
+        ];  
+        $this->db->query('SET FOREIGN_KEY_CHECKS = 1');
 
         if ($this->db->insert_batch('Buku', $data)) {
             echo "Seeding Tabel Buku Berhasil!" . PHP_EOL;
@@ -72,7 +74,9 @@ class Seeder extends CI_Controller
     }
     public function seed_users()
     {
+        $this->db->query('SET FOREIGN_KEY_CHECKS = 0'); // Menghapus data lama agar tidak duplikat saat testing
         $this->db->truncate('users');
+
         $data = [
             [
                 'name' => 'delvin',
@@ -88,6 +92,8 @@ class Seeder extends CI_Controller
             ]
 
         ];
+        $this->db->query('SET FOREIGN_KEY_CHECKS = 1');
+
         if ($this->db->insert_batch('users', $data)) {
             echo('seeding data berhasil');
         }
