@@ -22,7 +22,9 @@
 <nav class="bg-white shadow-sm sticky top-0 z-50 transition-all duration-300">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
         <!-- Logo -->
-        <div class="text-2xl font-bold text-[#0E6D64]">E-PUSTAKA</div>
+        <div class="text-2xl font-bold text-[#0E6D64] cursor-pointer" onclick="window.location.href='<?= base_url(); ?>'">
+            E-PUSTAKA
+        </div>
         
         <!-- Mobile Menu Button -->
         <div class="md:hidden">
@@ -76,11 +78,28 @@
                         <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                     </svg>
                 </div>
-                <button 
-                    onclick="window.location.href='<?= base_url('login'); ?>'"
-                    class="bg-[#FF8C00] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#e67e00] transition-all shadow-md w-full md:w-auto">
-                    MASUK
-                </button>
+
+                <?php if ($this->session->userdata('logged_in')) : ?>
+                    
+                    <div class="flex items-center justify-between w-full md:w-auto space-x-3">
+                        <span class="text-[#0E6D64] font-medium truncate max-w-[120px] md:max-w-xs cursor-default">
+                            Halo, <?= htmlspecialchars($this->session->userdata('username')); ?>
+                        </span>
+                        
+                        <a href="<?= base_url('auth/logout'); ?>" class="bg-red-50 text-red-600 border border-red-200 px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-red-500 hover:text-white transition-all w-full md:w-auto text-center shadow-sm">
+                            Keluar
+                        </a>
+                    </div>
+
+                <?php else : ?>
+
+                    <button 
+                        onclick="window.location.href='<?= base_url('login'); ?>'"
+                        class="bg-[#FF8C00] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#e67e00] transition-all shadow-md w-full md:w-auto">
+                        MASUK
+                    </button>
+
+                <?php endif; ?>
             </div>
         </div>
     </div>
