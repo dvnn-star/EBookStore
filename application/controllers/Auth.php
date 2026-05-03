@@ -42,7 +42,7 @@ class Auth extends CI_Controller
 
                         redirect('dashboard');
                     } else {
-                        redirect($_ENV['BASE_URL']);
+                        redirect('');
                     }
                 } else {
                     $this->session->set_flashdata('error', 'Password salah.');
@@ -63,7 +63,7 @@ class Auth extends CI_Controller
             return;
         }
 
-      
+
         $this->form_validation->set_rules('full_name', 'Full Name', 'required|trim|min_length[3]|max_length[100]');
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[users.email]', [
             'is_unique' => 'Email ini sudah terdaftar!'
@@ -75,8 +75,7 @@ class Auth extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('error', validation_errors());
             $this->session->set_flashdata('old_input', $this->input->post());
-            redirect('register'); 
-
+            redirect('register');
         } else {
             // 2. Data Valid: Siapkan Array untuk Database
             $data = [
@@ -94,19 +93,23 @@ class Auth extends CI_Controller
                     $user_id = $this->db->insert_id();
 
 
-                    $session_data = [
-                        'user_id'   => $user_id,
-                        'username'  => $data->name,
-                        'role'      => $data->role,
-                        'logged_in' => TRUE
-                    ];
-                    $this->session->set_userdata($session_data);
-                    session_regenerate_id(TRUE);
+                    $user_info = $this->db->get_where('users', ['id' => $user_id])->row();
 
-                    $this->session->set_flashdata('success', 'Registrasi berhasil! ' . $data['name']);
-                    // 6. Keamanan tambahan: Regenerasi ID Session
+                    if ($user_info) {
+                        $session_data = [
+                            'user_id'   => $user_info->id,
+                            'username' => $user_info->name, // Pastikan kolom di DB adalah 'name'
+                            'role'      => $user_info->role,
+                            'logged_in' => TRUE
+                        ];
+                        $this->session->set_userdata($session_data);
+                        session_regenerate_id(TRUE);
 
-                    redirect('Home');
+                        $this->session->set_flashdata('success', 'Registrasi berhasil! ' . $user_info->name);
+                        // 6. Keamanan tambahan: Regenerasi ID Session
+
+                        redirect('');
+                    }
                 } else {
                     $this->session->set_flashdata('error', 'Terjadi kesalahan saat mendaftar. Silakan coba lagi.');
                     redirect('register');

@@ -8,7 +8,7 @@ $koleksi_buku = [];
 // Judul referensi untuk masing-masing id kategori
 $judul_referensi = [
     'fiksi'          => 'Koleksi Fiksi',
-    'bisnis&ekonomi' => 'Koleksi Bisnis & Ekonomi',
+    'bisnis_ekonomi' => 'Koleksi Bisnis & Ekonomi',
     'sejarah'        => 'Koleksi Sejarah',
     'edukasi'        => 'Koleksi Edukasi'
 ];

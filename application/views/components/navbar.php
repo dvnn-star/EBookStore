@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -37,20 +38,37 @@
         <!-- Navigation Links -->
         <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white flex-col p-6 shadow-xl md:static md:flex md:flex-row md:shadow-none md:w-auto md:p-0 md:space-x-8 md:items-center font-medium">
             
-            <!-- Link Beranda (Kondisi Aktif) -->
-            <a href="<?= base_url(); ?>" class="nav-link text-[#0E6D64] border-b-2 border-[#0E6D64] py-2 md:py-0 transition-all duration-300">
+            <?php 
+                // Mengambil segment pertama dari URL (misal: 'kategori', 'populer', dsb)
+                $current_page = $this->uri->segment(1); 
+            ?>
+
+            <!-- Link Beranda -->
+            <a href="<?= base_url(); ?>" 
+            class="nav-link <?= ($current_page == '' || $current_page == 'beranda') ? 'text-[#0E6D64] border-b-2 border-[#0E6D64]' : 'text-gray-500'; ?> py-2 md:py-0 transition-all duration-300">
                 Beranda
             </a>
-            <!-- Link Lainnya -->
-            <a href="<?= base_url('kategori'); ?>" class="nav-link text-gray-500 hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
+
+            <!-- Link Kategori -->
+            <a href="<?= base_url('kategori'); ?>" 
+            class="nav-link <?= ($current_page == 'kategori') ? 'text-[#0E6D64] border-b-2 border-[#0E6D64]' : 'text-gray-500'; ?> hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
                 Kategori
             </a>
-            <a href="<?= base_url('populer'); ?>" class="nav-link text-gray-500 hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
+
+            <!-- Link Terpopuler -->
+            <a href="<?= base_url('populer'); ?>" 
+            class="nav-link <?= ($current_page == 'populer') ? 'text-[#0E6D64] border-b-2 border-[#0E6D64]' : 'text-gray-500'; ?> hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
                 Terpopuler
             </a>
-            <a href="<?= base_url('tentang'); ?>" class="nav-link text-gray-500 hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
+
+            <!-- Link Tentang Kami -->
+            <a href="<?= base_url('tentang'); ?>" 
+            class="nav-link <?= ($current_page == 'tentang') ? 'text-[#0E6D64] border-b-2 border-[#0E6D64]' : 'text-gray-500'; ?> hover:text-[#0E6D64] hover:scale-105 transition-all duration-300 py-2 md:py-0 block">
                 Tentang Kami
             </a>
+
+            <!-- ... rest of search & button ... -->
+        </div>
             
             <!-- Search & Button Container -->
             <div class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-4 mt-4 md:mt-0">
