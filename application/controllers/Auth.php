@@ -12,7 +12,7 @@ class Auth extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             // Jika validasi gagal, kembalikan ke view login
-            $this->load->view('login');
+            redirect('login');
         } else {
             $email = $this->input->post('email');
             $password = $this->input->post('password');
