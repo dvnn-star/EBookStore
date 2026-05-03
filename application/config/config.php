@@ -23,11 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-<<<<<<< HEAD
-$config['base_url'] = $_ENV['BASE_URL'] ?? 'http://localhost/';
-=======
 $config['base_url'] = $_ENV['BASE_URL'] ?? 'http://localhost/EBookStore';
->>>>>>> 0774b30da3399ee5f0030d061a1565931e9b2357
 
 /*
 |--------------------------------------------------------------------------
@@ -56,11 +52,7 @@ $config['index_page'] = '';
 |
 | WARNING: If you set this to 'PATH_INFO', URIs will always be URL-decoded!
 */
-<<<<<<< HEAD
 $config['uri_protocol']	= 'QUERY_STRING';
-=======
-$config['uri_protocol']    = 'REQUEST_URI';
->>>>>>> 0774b30da3399ee5f0030d061a1565931e9b2357
 
 /*
 |--------------------------------------------------------------------------
