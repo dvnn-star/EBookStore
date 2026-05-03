@@ -25,10 +25,18 @@ class Pages extends CI_Controller
         $this->load->view('login');
     }
     public function register()
-{
+    {
         if ($this->session->userdata('logged_in')) {
             redirect('');
         }
         $this->load->view('register');
+    }
+    public function terpopuler()
+    {
+        $this->load->view('pages/terpopuler');
+    }
+    public function about()
+    {
+        $this->load->view('pages/about');
     }
 }

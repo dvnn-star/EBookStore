@@ -52,6 +52,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // halaman kategori
 $route['kategori'] = 'pages/kategori';
 $route['default_controller'] = 'welcome';
+$route['terpopuler'] = 'pages/terpopuler';
+$route['about'] = 'pages/about';
 
 
 // halaman untuk login dan register
