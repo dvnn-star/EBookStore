@@ -70,4 +70,29 @@ class Seeder extends CI_Controller
             echo "Gagal melakukan seeding.";
         }
     }
+    public function seed_users()
+    {
+        $this->db->truncate('users');
+        $data = [
+            [
+                'name' => 'delvin',
+                'email' => 'delvinn12.0@gmail.com',
+                'password' => 'delvin',
+                'role' => 'admin'
+            ],
+            [
+                'name' => 'adi',
+                'email' => 'adi@test.com',
+                'password' => password_hash('adi12',PASSWORD_DEFAULT),
+                'role' => 'user'
+            ]
+
+        ];
+        if ($this->db->insert_batch('users', $data)) {
+            echo('seeding data berhasil');
+        }
+        else{
+            echo "gagal seeding";
+        }
+    }
 }
