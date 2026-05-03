@@ -21,18 +21,18 @@
     </script>
 </head>
 
-<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700">
+<body class="bg-gray-50">
 
 <div class="min-h-screen flex items-center justify-center px-4 py-6 sm:px-6">
 
     <div class="w-full max-w-5xl mx-auto 
-                bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl overflow-hidden 
+                bg-white rounded-2xl shadow-2xl overflow-hidden 
                 grid grid-cols-1 md:grid-cols-2">
 
         <!-- LEFT SIDE -->
-        <div class="flex flex-col justify-center items-center text-white p-6 md:p-10 bg-gradient-to-br from-black/70 to-gray-900/70">
+        <div class="flex flex-col justify-center items-center text-white p-6 md:p-10 bg-[#0b5c5d]">
             <h1 class="text-3xl font-bold mb-4">EBookStore</h1>
-            <p class="text-gray-300 text-center text-sm">
+            <p class="text-gray-100 text-center text-sm">
                 Buat akun untuk mulai menjelajahi ribuan e-book terbaik.
             </p>
         </div>
@@ -69,7 +69,7 @@
                     type="text" 
                     name="full_name"
                     value="<?= set_value('full_name'); ?>"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black focus:outline-none"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0b5c5d] focus:border-[#0b5c5d] focus:outline-none"
                     placeholder="Your full name"
                     required
                 >
@@ -89,7 +89,7 @@
                     type="email" 
                     name="email"
                     value="<?= set_value('email'); ?>"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black focus:outline-none"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0b5c5d] focus:border-[#0b5c5d] focus:outline-none"
                     placeholder="name@example.com"
                     required
                 >
@@ -111,7 +111,7 @@
                         id="password"
                         type="password" 
                         name="password"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black focus:outline-none pr-12"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0b5c5d] focus:border-[#0b5c5d] focus:outline-none pr-12"
                         placeholder="••••••••"
                         minlength="6"
                         required
@@ -119,7 +119,7 @@
                     <button 
                         type="button"
                         onclick="togglePassword('password', this)"
-                        class="absolute right-3 top-2.5 text-gray-500 hover:text-black text-xs font-semibold transition"
+                        class="absolute right-3 top-2.5 text-gray-500 hover:text-[#0b5c5d] text-xs font-semibold transition"
                     >
                         Show
                     </button>
@@ -143,7 +143,7 @@
                         id="confirm_password"
                         type="password" 
                         name="confirm_password"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black focus:outline-none pr-12"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0b5c5d] focus:border-[#0b5c5d] focus:outline-none pr-12"
                         placeholder="••••••••"
                         minlength="6"
                         required
@@ -151,7 +151,7 @@
                     <button 
                         type="button"
                         onclick="togglePassword('confirm_password', this)"
-                        class="absolute right-3 top-2.5 text-gray-500 hover:text-black text-xs font-semibold transition"
+                        class="absolute right-3 top-2.5 text-gray-500 hover:text-[#0b5c5d] text-xs font-semibold transition"
                     >
                         Show
                     </button>
@@ -167,7 +167,7 @@
             <!-- Submit Button -->
             <button 
                 type="submit"
-                class="w-full bg-black text-white font-semibold py-2.5 rounded-lg hover:bg-gray-800 active:bg-gray-900 transition duration-200"
+                class="w-full bg-[#f3821a] text-white font-semibold py-2.5 rounded-lg hover:bg-[#d67012] hover:scale-105 transition duration-200"
             >
                 Create Account
             </button>
@@ -178,7 +178,7 @@
             <p class="text-center text-sm text-gray-600 mt-6">
                 Already have an account?
                 <a href="<?= base_url('login'); ?>" 
-                   class="text-blue-600 font-semibold hover:text-blue-800 transition">
+                   class="text-[#f3821a] font-semibold hover:underline transition">
                     Login here
                 </a>
             </p>
