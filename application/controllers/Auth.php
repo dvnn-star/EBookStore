@@ -58,41 +58,61 @@ class Auth extends CI_Controller
     public function register()
     {
         // Proteksi: Jika sudah login, tidak boleh daftar lagi
-        if ($this->session->userdata('logged_in')) {
+        if ($this->session->userdata('logged_in') and $this->user->role == 'admin') {
             redirect('dashboard');
+            return;
         }
 
-        // 1. Set Aturan Validasi
-        $this->form_validation->set_rules('full_name', 'Full Name', 'required|trim');
+      
+        $this->form_validation->set_rules('full_name', 'Full Name', 'required|trim|min_length[3]|max_length[100]');
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[users.email]', [
             'is_unique' => 'Email ini sudah terdaftar!'
         ]);
-        $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|max_length[50]');
         $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[password]', [
             'matches' => 'Konfirmasi password tidak cocok!'
         ]);
-
         if ($this->form_validation->run() == FALSE) {
-            // Tampilkan view register jika validasi gagal atau baru akses halaman
-            $this->load->view('register');
+            $this->session->set_flashdata('error', validation_errors());
+            $this->session->set_flashdata('old_input', $this->input->post());
+            redirect('register'); 
+
         } else {
             // 2. Data Valid: Siapkan Array untuk Database
             $data = [
-                'name'     => $this->input->post('full_name', TRUE),
-                'email'    => $this->input->post('email', TRUE),
+                'name'       => $this->input->post('full_name', TRUE),
+                'email'      => $this->input->post('email', TRUE),
                 // WAJIB: Gunakan password_hash, jangan MD5!
-                'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                'role'     => 'user', // Default role
-                'created_at' => date('Y-m-d H:i:s')
+                'password'   => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+                'role'       => 'user', // Default role
             ];
-            // 3. Simpan via Model
-            $insert = $this->db->insert('users', $data);
 
-            if ($insert) {
-                $this->session->set_flashdata('success', 'Registrasi berhasil! Silakan login.');
-                redirect('login');
-            } else {
-                $this->session->set_flashdata('error', 'Terjadi kesalahan saat mendaftar.');
+            // 3. Simpan via Model dengan Error Handling
+            try {
+                $insert = $this->db->insert('users', $data);
+                if ($insert) {
+                    $user_id = $this->db->insert_id();
+
+
+                    $session_data = [
+                        'user_id'   => $user_id,
+                        'username'  => $data->name,
+                        'role'      => $data->role,
+                        'logged_in' => TRUE
+                    ];
+                    $this->session->set_userdata($session_data);
+                    session_regenerate_id(TRUE);
+
+                    $this->session->set_flashdata('success', 'Registrasi berhasil! ' . $data['name']);
+                    // 6. Keamanan tambahan: Regenerasi ID Session
+
+                    redirect('Home');
+                } else {
+                    $this->session->set_flashdata('error', 'Terjadi kesalahan saat mendaftar. Silakan coba lagi.');
+                    redirect('register');
+                }
+            } catch (Exception $e) {
+                $this->session->set_flashdata('error', 'Error: ' . $e->getMessage());
                 redirect('register');
             }
         }
