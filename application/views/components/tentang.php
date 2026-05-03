@@ -92,3 +92,106 @@
         </button>
     </div>
 </section>
+
+<!-- Bagian FAQ -->
+<section class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900">Pertanyaan yang Sering Diajukan</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- FAQ 1: Pengaksesan mirip Google Books -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-teal-600">
+                <h3 class="text-lg font-bold text-teal-800 mb-2">Bagaimana cara mengakses buku yang sudah dibeli?</h3>
+                <p class="text-gray-600">Buku akan otomatis masuk ke menu <strong>"Koleksi Saya"</strong>. Anda bisa membacanya langsung melalui web reader atau mengunduhnya melalui aplikasi E-PUSTAKA untuk akses offline permanen.</p>
+            </div>
+
+            <!-- FAQ 2: Format File -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-teal-600">
+                <h3 class="text-lg font-bold text-teal-800 mb-2">Apakah saya memiliki buku tersebut selamanya?</h3>
+                <p class="text-gray-600">Ya. Sekali Anda membeli buku, akses unduhan akan tetap tersedia di akun Anda selamanya, mirip dengan sistem pembelian digital pada Google Play Books.</p>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-teal-600">
+                <h3 class="text-lg font-bold text-teal-800 mb-2">Metode pembayaran apa saja yang tersedia?</h3>
+                <p class="text-gray-600">Kami mendukung berbagai metode pembayaran mulai dari transfer bank, e-wallet (GoPay, OVO, Dana), hingga kartu kredit.</p>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-teal-600">
+                <h3 class="text-lg font-bold text-teal-800 mb-2">Apakah saya bisa mencetak (print) e-book tersebut?</h3>
+                <p class="text-gray-600">Sesuai kebijakan hak cipta penerbit, koleksi kami hanya tersedia untuk dibaca secara digital dan tidak untuk dicetak demi melindungi karya penulis.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Bagian Kontak -->
+<section class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+            <!-- Info Kontak -->
+            <div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Hubungi Kami</h2>
+                <p class="text-lg text-gray-600 mb-8">
+                    Ada kendala teknis atau ingin memberikan saran? Tim dukungan kami siap membantu Anda setiap hari kerja.
+                </p>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 text-teal-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold text-gray-900">Kantor Pusat</h4>
+                            <p class="text-gray-600">Jl. Raden Patah No.12A, Lubuk Baja Kota, Kec. Lubuk Baja, Kota Batam, Indonesia</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 text-teal-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold text-gray-900">Email Dukungan</h4>
+                            <p class="text-gray-600">support@e-pustaka.id</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-8 rounded-2xl shadow-inner border border-gray-100">
+                <form action="https://api.web3forms.com/submit" method="POST" class="space-y-4">
+                    <input type="hidden" name="access_key" value="5fa372dc-c55a-4ac5-a152-947e21b1a47b">
+                    <!-- Honeypot Spam Protection (Opsional tapi disarankan) -->
+                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                        <input type="text" name="name" id="name" required placeholder="Masukkan nama Anda" 
+                            class="w-full px-4 py-2 rounded-lg border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 border outline-none transition shadow-sm">
+                    </div>
+
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" name="email" id="email" required placeholder="email@contoh.com" 
+                            class="w-full px-4 py-2 rounded-lg border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 border outline-none transition shadow-sm">
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Pesan</label>
+                        <textarea name="message" id="message" rows="4" required placeholder="Apa yang bisa kami bantu?" 
+                            class="w-full px-4 py-2 rounded-lg border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 border outline-none transition shadow-sm"></textarea>
+                    </div>
+
+                    <button type="submit" 
+                        class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform active:scale-95 shadow-md">
+                        Kirim Pesan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
