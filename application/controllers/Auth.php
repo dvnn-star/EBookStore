@@ -7,7 +7,6 @@ class Auth extends CI_Controller
     public function login()
     {
 
-        // 1. Set aturan validasi
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required');
 
@@ -18,11 +17,10 @@ class Auth extends CI_Controller
             $email = $this->input->post('email');
             $password = $this->input->post('password');
 
-            // 2. Panggil Model untuk cek user
+
             $user = $this->User->get_by_email($email);
 
             if ($user) {
-                // 3. Verifikasi Password (Password di DB harus hasil password_hash)
                 if (password_verify($password, $user->password)) {
 
                     // 4. Siapkan data session
