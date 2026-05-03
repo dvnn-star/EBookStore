@@ -1,4 +1,4 @@
-e<?php
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 2), '.env');
 $dotenv->load();
