@@ -60,7 +60,14 @@ $route['about'] = 'pages/about';
 $route['login'] = 'pages/login';
 $route['register'] = 'pages/register';
 
+$route['dashboard'] = 'pages/dashboard';
 
+
+
+//route transaction 
+$route['transaction'] = 'transaction/index';
+$route['transaction/create'] = 'transaction/create';
+$route['transactions/(:num)'] = 'transactions/show/$1';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

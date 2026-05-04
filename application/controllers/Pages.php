@@ -39,4 +39,13 @@ class Pages extends CI_Controller
     {
         $this->load->view('pages/about');
     }
+
+    public function dashboard()
+    {
+        if ($this->session->userdata('role') == 'admin') {
+            $this->load->view('admin/dashboard');
+        } else {
+            show_error('You do not have permission to access this resource.', 403);
+        }
+    }
 }

@@ -81,7 +81,7 @@ class Seeder extends CI_Controller
             [
                 'name' => 'delvin',
                 'email' => 'delvinn12.0@gmail.com',
-                'password' => 'delvin',
+                'password' => password_hash('delvin',PASSWORD_DEFAULT),
                 'role' => 'admin'
             ],
             [
