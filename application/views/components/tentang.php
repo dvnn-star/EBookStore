@@ -94,7 +94,7 @@
 </section>
 
 <!-- Bagian FAQ -->
-<section class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+<section id="sec-FAQ" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12">
             <h2 class="text-3xl font-bold text-gray-900">Pertanyaan yang Sering Diajukan</h2>
@@ -129,7 +129,7 @@
 </section>
 
 <!-- Bagian Kontak -->
-<section class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+<section id="sec-Kontak" class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
     <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
             <!-- Info Kontak -->

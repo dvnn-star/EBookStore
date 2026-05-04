@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,7 @@ $footerData = [
         'Beranda'      => '', // Sesuaikan dengan controller utama Anda
         'Kategori'     => 'kategori', // Ganti dengan nama controller kategori Anda
         'Terpopuler'   => 'terpopuler',
-        'Tentang Kami' => 'tentang'],
+        'Tentang Kami' => 'about'],
 
     'Kategori' => [
         // Format: 'NAMA_CONTROLLER/index#sec-ID_KATEGORI'
@@ -31,8 +31,8 @@ $footerData = [
     ],
     
     'Bantuan' => [
-        'FAQ'    => '#sec-FAQ', 
-        'Kontak' => '#sec-Kontak'
+        'FAQ'    => 'about#sec-FAQ', 
+        'Kontak' => 'about#sec-Kontak'
     ]
 ];
 ?>
@@ -77,7 +77,7 @@ $footerData = [
 
         <!-- Garis Tipis & Copyright -->
         <div class="border-t border-white/10 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2024 E-PUSTAKA. All Rights Reserved.</p>
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> E-PUSTAKA. All Rights Reserved.</p>
         </div>
     </div>
 
