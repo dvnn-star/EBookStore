@@ -94,7 +94,7 @@
 </section>
 
 <!-- Bagian FAQ -->
-<section class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+<section id="sec-FAQ" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12">
             <h2 class="text-3xl font-bold text-gray-900">Pertanyaan yang Sering Diajukan</h2>
@@ -129,7 +129,7 @@
 </section>
 
 <!-- Bagian Kontak -->
-<section class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+<section id="sec-Kontak" class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
     <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
             <!-- Info Kontak -->
@@ -163,31 +163,36 @@
             </div>
 
             <div class="bg-gray-50 p-8 rounded-2xl shadow-inner border border-gray-100">
-                <form action="https://api.web3forms.com/submit" method="POST" class="space-y-4">
+                <!-- Tambahkan ID 'form' agar script JavaScript bisa mengenalinya -->
+                <form action="https://api.web3forms.com/submit" method="POST" id="form" class="space-y-4">
+                    
                     <input type="hidden" name="access_key" value="5fa372dc-c55a-4ac5-a152-947e21b1a47b">
-                    <!-- Honeypot Spam Protection (Opsional tapi disarankan) -->
                     <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
+                    <!-- Input Fields -->
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
                         <input type="text" name="name" id="name" required placeholder="Masukkan nama Anda" 
-                            class="w-full px-4 py-2 rounded-lg border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 border outline-none transition shadow-sm">
+                            class="w-full px-4 py-2 rounded-lg border-gray-300 border outline-none">
                     </div>
 
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                         <input type="email" name="email" id="email" required placeholder="email@contoh.com" 
-                            class="w-full px-4 py-2 rounded-lg border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 border outline-none transition shadow-sm">
+                            class="w-full px-4 py-2 rounded-lg border-gray-300 border outline-none">
                     </div>
 
                     <div>
                         <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Pesan</label>
                         <textarea name="message" id="message" rows="4" required placeholder="Apa yang bisa kami bantu?" 
-                            class="w-full px-4 py-2 rounded-lg border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 border outline-none transition shadow-sm"></textarea>
+                            class="w-full px-4 py-2 rounded-lg border-gray-300 border outline-none"></textarea>
                     </div>
 
-                    <button type="submit" 
-                        class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform active:scale-95 shadow-md">
+                    <!-- TEMPAT TERBAIK UNTUK DIV RESULT -->
+                    <div id="result" class="hidden p-4 rounded-lg text-sm text-center transition-all duration-300"></div>
+
+                    <button type="submit" id="submit-btn"
+                        class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
                         Kirim Pesan
                     </button>
                 </form>
@@ -195,3 +200,55 @@
         </div>
     </div>
 </section>
+
+<script>
+const form = document.getElementById('form');
+const result = document.getElementById('result');
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const formData = new FormData(form);
+  const object = Object.fromEntries(formData);
+  const json = JSON.stringify(object);
+
+  result.innerHTML = "Sedang mengirim...";
+  result.classList.remove('hidden');
+  result.className = "p-4 rounded-lg text-sm text-center bg-gray-100 text-gray-600"; // Reset class
+
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: json
+  })
+  .then(async (response) => {
+    if (response.status == 200) {
+      result.className = "p-4 rounded-lg text-sm text-center bg-teal-50 text-teal-900 border border-teal-200";
+      result.innerHTML = `
+        <div class="flex flex-col items-center gap-1">
+            <span class="text-xl">📖</span>
+            <p><strong>Pesan Anda telah kami terima!</strong><br>
+            ✅ Terima kasih! Pesan Anda sudah masuk ke sistem kami. Kami menghargai setiap masukan dari pembaca setia. Mohon tunggu kabar dari tim dukungan kami melalui email yang Anda daftarkan. Tetaplah terinspirasi!</p>
+        </div>
+      `;
+      form.reset(); // Kosongkan form setelah sukses
+    } else {
+      result.className = "p-4 rounded-lg text-sm text-center bg-red-50 text-red-800 border border-red-200";
+      result.innerHTML = "Maaf, terjadi kendala. Silakan coba lagi.";
+    }
+  })
+  .catch(error => {
+    result.innerHTML = "Koneksi terputus. Pastikan internet Anda aktif.";
+  });
+});
+
+// --- BAGIAN BARU: MENGHILANGKAN PESAN SAAT MENGETIK ---
+const inputFields = form.querySelectorAll('input, textarea');
+inputFields.forEach(field => {
+    field.addEventListener('input', () => {
+        result.classList.add('hidden');
+    });
+});
+</script>

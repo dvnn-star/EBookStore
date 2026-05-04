@@ -31,7 +31,7 @@ function togglePassword() {
 
         <!-- LEFT SIDE (Branding / Info) -->
         <div class="order-2 md:order-1 flex flex-col justify-center items-center text-white p-6 md:p-10 bg-[#0b5c5d]">
-            <h1 class="text-3xl font-bold mb-4">EBookStore</h1>
+            <h1 class="text-3xl font-bold mb-4" onclick="window.location.href='<?= base_url(); ?>'">EBookStore</h1>
             <p class="text-gray-100 text-center text-sm">
                 Jelajahi ribuan e-book terbaik dari berbagai kategori.
                 Belajar, berkembang, dan temukan wawasan baru.
@@ -119,10 +119,10 @@ function togglePassword() {
             <?php endif; ?>
             <!-- Register Link -->
             <p class="text-center text-sm text-gray-600 mt-4">
-                Jika tidak ada akun,
+                If you don't have an account,
                 <a href="<?= base_url('/register'); ?>" 
                    class="text-[#f3821a] font-semibold hover:underline">
-                    Register
+                    Register Here
                 </a>
             </p>
 

@@ -31,7 +31,7 @@
 
         <!-- LEFT SIDE -->
         <div class="flex flex-col justify-center items-center text-white p-6 md:p-10 bg-[#0b5c5d]">
-            <h1 class="text-3xl font-bold mb-4">EBookStore</h1>
+            <h1 class="text-3xl font-bold mb-4" onclick="window.location.href='<?= base_url(); ?>'">EBookStore</h1>
             <p class="text-gray-100 text-center text-sm">
                 Buat akun untuk mulai menjelajahi ribuan e-book terbaik.
             </p>
