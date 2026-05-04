@@ -1,42 +1,65 @@
 <?php
-$data = $this->session->all_userdata();
+$sessions = $this->session->all_userdata();
 ?>
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-50">
+<html lang="en" class="h-full">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Pro</title>
+    <title>E-BookStore | Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+    </style>
 </head>
-<body class="h-full font-sans antialiased text-slate-900">
+
+<body class="h-full bg-[#fbfcfd] text-slate-900 antialiased">
 
     <div class="flex min-h-screen">
-        <!-- Sidebar: Navigasi yang Konsisten -->
-        <aside class="w-64 bg-white border-r border-slate-200 hidden md:flex flex-col">
-            <div class="p-6">
-                <h1 class="text-xl font-bold tracking-tight text-indigo-600">CORE SYSTEM</h1>
+        <!-- Sidebar: Dark & Elegant -->
+        <aside class="w-64 bg-slate-900 flex flex-col transition-all duration-300">
+            <div class="p-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                        <span class="text-white font-bold text-xl">B</span>
+                    </div>
+                    <h1 class="text-lg font-bold tracking-tight text-white uppercase">E-Book<span class="text-indigo-400">Store</span></h1>
+                </div>
             </div>
-            <nav class="flex-1 px-4 space-y-1">
-                <a href="#" class="flex items-center px-4 py-3 text-sm font-medium bg-indigo-50 text-indigo-700 rounded-lg">
+
+            <nav class="flex-1 px-4 space-y-2 mt-4">
+                <p class="px-4 text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-2">Main Menu</p>
+                <a href="#" class="flex items-center px-4 py-3 text-sm font-medium bg-indigo-600 text-white rounded-xl shadow-md shadow-indigo-600/20">
                     Dashboard
                 </a>
-                <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-lg transition">
+                <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all group">
                     Analytics
                 </a>
-                <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-lg transition">
-                    Projects
+                <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all">
+                    Books Collection
                 </a>
-                <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-lg transition">
-                    Settings
+                <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all">
+                    Transactions
                 </a>
             </nav>
-            <div class="p-4 border-t border-slate-200">
-                <div class="flex items-center gap-3 px-2">
-                    <div class="w-8 h-8 rounded-full bg-slate-300"></div>
-                    <div class="text-xs">
-                        <p class="font-semibold text-black capitalize"><?= $data['username'] ?></p>
-                        <p class="text-slate-500"><?= $data['role'] ?></p>
+
+            <div class="p-4 m-4 bg-slate-800/50 rounded-2xl border border-slate-700/50">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold shadow-inner">
+                        <?= strtoupper(substr($sessions['username'], 0, 1)) ?>
+                    </div>
+                    <div class="overflow-hidden">
+                        <p class="text-sm font-semibold text-white truncate capitalize"><?= $sessions['username'] ?></p>
+                        <p class="text-[10px] text-slate-400 font-medium uppercase tracking-tighter"><?= $sessions['role'] ?></p>
                     </div>
                 </div>
             </div>
@@ -44,93 +67,119 @@ $data = $this->session->all_userdata();
 
         <!-- Main Content -->
         <main class="flex-1 flex flex-col">
-            <!-- Header/Navbar -->
-            <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8">
-                <h2 class="text-lg font-semibold">Overview</h2>
+            <!-- Header -->
+            <header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/60 flex items-center justify-between px-10 sticky top-0 z-10">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">Dashboard Overview</h2>
+                    <p class="text-xs text-slate-500 font-medium">Welcome back, <?= $sessions['username'] ?>!</p>
+                </div>
                 <div class="flex items-center gap-4">
-                    <button class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition">
-                        Generate Report
+                    <button class="p-2 text-slate-400 hover:text-indigo-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor font-bold">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                    </button>
+                    <button class="px-5 py-2.5 text-sm font-semibold text-white bg-slate-900 rounded-xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10">
+                        Export Data
                     </button>
                 </div>
             </header>
 
-            <!-- Dashboard Content -->
-            <section class="p-8 space-y-8">
-                
-                <!-- Stats Grid: Indikator Kinerja Utama (KPI) -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-                        <p class="text-sm font-medium text-slate-500">Total Revenue</p>
-                        <p class="text-3xl font-bold mt-1">$45,231.89</p>
-                        <p class="text-xs text-emerald-600 font-medium mt-2">↑ 12% vs last month</p>
+            <!-- Content Area -->
+            <section class="p-10 space-y-10">
+
+                <!-- KPI Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="group p-8 bg-white border border-slate-200/60 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-300">
+                        <div class="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 mb-6 group-hover:scale-110 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Total Revenue</p>
+                        <p class="text-4xl font-black mt-2 text-slate-900 tracking-tight">Rp <?= number_format($data->total_sales, 0, ',', '.') ?></p>
                     </div>
-                    <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-                        <p class="text-sm font-medium text-slate-500">Active Users</p>
-                        <p class="text-3xl font-bold mt-1">2,340</p>
-                        <p class="text-xs text-rose-600 font-medium mt-2">↓ 3% vs last month</p>
+
+                    <div class="group p-8 bg-white border border-slate-200/60 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-300">
+                        <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-6 group-hover:scale-110 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Active Users</p>
+                        <p class="text-4xl font-black mt-2 text-slate-900 tracking-tight"><?= $data->total_users ?></p>
                     </div>
-                    <div class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-                        <p class="text-sm font-medium text-slate-500">Conversion Rate</p>
-                        <p class="text-3xl font-bold mt-1">4.2%</p>
-                        <p class="text-xs text-emerald-600 font-medium mt-2">↑ 0.4% vs last month</p>
+
+                    <div class="group p-8 bg-white border border-slate-200/60 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-amber-500/5 transition-all duration-300">
+                        <div class="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 mb-6 group-hover:scale-110 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Total Buku</p>
+                        <p class="text-4xl font-black mt-2 text-slate-900 tracking-tight"><?= $data->total_books ?></p>
                     </div>
                 </div>
 
-                <!-- Main Section: Data Kompleks -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Table: Informasi Detail -->
-                    <div class="lg:col-span-2 bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
-                        <div class="px-6 py-4 border-b border-slate-200">
-                            <h3 class="font-semibold text-slate-800">Recent Transactions</h3>
-                        </div>
+                <!-- Table Section -->
+                <div class="bg-white border border-slate-200/60 rounded-3xl shadow-sm overflow-hidden">
+                    <div class="px-8 py-6 border-b border-slate-100 flex items-center justify-between">
+                        <h3 class="font-bold text-slate-800 text-lg">Recent Transactions</h3>
+                        <a href="<?= base_url('transactions') ?>" class="text-sm font-semibold text-indigo-600 hover:text-indigo-700">View All</a>
+                    </div>
+                    <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="bg-slate-50 text-xs uppercase text-slate-500 font-semibold">
-                                    <th class="px-6 py-3">Client</th>
-                                    <th class="px-6 py-3">Status</th>
-                                    <th class="px-6 py-3 text-right">Amount</th>
+                                <tr class="bg-slate-50/50 text-[11px] uppercase tracking-widest text-slate-400 font-bold">
+                                    <th class="px-8 py-4">Customer & Date</th>
+                                    <th class="px-8 py-4">Transaction Status</th>
+                                    <th class="px-8 py-4 text-right">Revenue</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100">
-                                <tr class="hover:bg-slate-50 transition">
-                                    <td class="px-6 py-4 text-sm">TechFlow Inc.</td>
-                                    <td class="px-6 py-4 italic text-sm">
-                                        <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded text-xs">Success</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-right font-medium">$1,200.00</td>
-                                </tr>
-                                <tr class="hover:bg-slate-50 transition">
-                                    <td class="px-6 py-4 text-sm">Acme Corp.</td>
-                                    <td class="px-6 py-4 italic text-sm">
-                                        <span class="px-2 py-1 bg-amber-100 text-amber-700 rounded text-xs">Pending</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-right font-medium">$850.00</td>
-                                </tr>
+                                <?php if (!empty($total_transactions)): ?>
+                                    <?php foreach ($total_transactions as $tr): ?>
+                                        <tr class="group hover:bg-slate-50/80 transition-all">
+                                            <td class="px-8 py-5">
+                                                <!-- Asumsi field nama adalah 'full_name' dari hasil JOIN tabel users -->
+                                                <p class="text-sm font-bold text-slate-800"><?= $tr->full_name ?? 'Unknown User' ?></p>
+                                                <p class="text-[10px] text-slate-400">ID: #<?= $tr->kode_transaksi ?> • <?= date('d M Y, H:i', strtotime($tr->tanggal)) ?></p>
+                                            </td>
+                                            <td class="px-8 py-5">
+                                                <?php
+                                                // Logika penentuan warna badge berdasarkan status enum
+                                                $status_classes = [
+                                                    'success' => 'bg-emerald-100 text-emerald-700',
+                                                    'pending' => 'bg-amber-100 text-amber-700',
+                                                    'failed'  => 'bg-rose-100 text-rose-700',
+                                                    'expired' => 'bg-slate-100 text-slate-600'
+                                                ];
+                                                $class = $status_classes[$tr->status] ?? 'bg-slate-100 text-slate-600';
+                                                ?>
+                                                <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold <?= $class ?> uppercase tracking-tighter">
+                                                    <?= $tr->status ?>
+                                                </span>
+                                            </td>
+                                            <td class="px-8 py-5 text-sm text-right font-black text-slate-900">
+                                                Rp <?= number_format($tr->total_bayar, 0, ',', '.') ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="3" class="px-8 py-10 text-center text-slate-400 text-sm italic">
+                                            No transactions found.
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
-
-                    <!-- Side Card: Insight Tambahan -->
-                    <div class="bg-indigo-900 text-white p-8 rounded-xl shadow-lg flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-xl font-bold mb-2">System Health</h3>
-                            <p class="text-indigo-200 text-sm">All services are operating normally. No outages reported in the last 24 hours.</p>
-                        </div>
-                        <div class="mt-8">
-                            <div class="flex justify-between text-xs mb-1">
-                                <span>Storage Limit</span>
-                                <span>85%</span>
-                            </div>
-                            <div class="w-full bg-indigo-700 h-2 rounded-full overflow-hidden">
-                                <div class="bg-white h-full" style="width: 85%"></div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
             </section>
         </main>
     </div>
 
 </body>
+
 </html>

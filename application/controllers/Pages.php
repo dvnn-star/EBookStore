@@ -43,7 +43,16 @@ class Pages extends CI_Controller
     public function dashboard()
     {
         if ($this->session->userdata('role') == 'admin') {
-            $this->load->view('admin/dashboard');
+
+            $data = [];
+            $data['data'] = $this->db->select('
+        (SELECT COUNT(*) FROM users) as total_users,
+        (SELECT COUNT(*) FROM Buku) as total_books,
+        (SELECT COALESCE(SUM(total_bayar),0) FROM transactions WHERE status="success") as total_sales,
+        ')->get()->row();
+        $data['total_transactions'] = $this->db->get('transactions')->result();
+
+            $this->load->view('admin/dashboard', $data);
         } else {
             show_error('You do not have permission to access this resource.', 403);
         }
