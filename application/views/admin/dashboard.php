@@ -25,45 +25,8 @@ $sessions = $this->session->all_userdata();
 <body class="h-full bg-[#fbfcfd] text-slate-900 antialiased">
 
     <div class="flex min-h-screen">
-        <!-- Sidebar: Dark & Elegant -->
-        <aside class="w-64 bg-slate-900 flex flex-col transition-all duration-300">
-            <div class="p-8">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/30">
-                        <span class="text-white font-bold text-xl">B</span>
-                    </div>
-                    <h1 class="text-lg font-bold tracking-tight text-white uppercase">E-Book<span class="text-indigo-400">Store</span></h1>
-                </div>
-            </div>
-
-            <nav class="flex-1 px-4 space-y-2 mt-4">
-                <p class="px-4 text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-2">Main Menu</p>
-                <a href="#" class="flex items-center px-4 py-3 text-sm font-medium bg-indigo-600 text-white rounded-xl shadow-md shadow-indigo-600/20">
-                    Dashboard
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all group">
-                    Analytics
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all">
-                    Books Collection
-                </a>
-                <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all">
-                    Transactions
-                </a>
-            </nav>
-
-            <div class="p-4 m-4 bg-slate-800/50 rounded-2xl border border-slate-700/50">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold shadow-inner">
-                        <?= strtoupper(substr($sessions['username'], 0, 1)) ?>
-                    </div>
-                    <div class="overflow-hidden">
-                        <p class="text-sm font-semibold text-white truncate capitalize"><?= $sessions['username'] ?></p>
-                        <p class="text-[10px] text-slate-400 font-medium uppercase tracking-tighter"><?= $sessions['role'] ?></p>
-                    </div>
-                </div>
-            </div>
-        </aside>
+        
+        <?php $this->load->view('components/sidebarAdmin', ['sessions' => $sessions]); ?>
 
         <!-- Main Content -->
         <main class="flex-1 flex flex-col">
@@ -71,11 +34,11 @@ $sessions = $this->session->all_userdata();
             <header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/60 flex items-center justify-between px-10 sticky top-0 z-10">
                 <div>
                     <h2 class="text-xl font-bold text-slate-800">Dashboard Overview</h2>
-                    <p class="text-xs text-slate-500 font-medium">Welcome back, <?= $sessions['username'] ?>!</p>
+                    <p class="text-xs text-slate-500 font-medium">Welcome back, <?= $sessions['username'] ?? 'User' ?>!</p>
                 </div>
                 <div class="flex items-center gap-4">
                     <button class="p-2 text-slate-400 hover:text-indigo-600 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor font-bold">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                         </svg>
                     </button>
@@ -97,7 +60,7 @@ $sessions = $this->session->all_userdata();
                             </svg>
                         </div>
                         <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Total Revenue</p>
-                        <p class="text-4xl font-black mt-2 text-slate-900 tracking-tight">Rp <?= number_format($data->total_sales, 0, ',', '.') ?></p>
+                        <p class="text-4xl font-black mt-2 text-slate-900 tracking-tight">Rp <?= number_format($data->total_sales ?? 0, 0, ',', '.') ?></p>
                     </div>
 
                     <div class="group p-8 bg-white border border-slate-200/60 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-300">
@@ -107,7 +70,7 @@ $sessions = $this->session->all_userdata();
                             </svg>
                         </div>
                         <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Active Users</p>
-                        <p class="text-4xl font-black mt-2 text-slate-900 tracking-tight"><?= $data->total_users ?></p>
+                        <p class="text-4xl font-black mt-2 text-slate-900 tracking-tight"><?= $data->total_users ?? 0 ?></p>
                     </div>
 
                     <div class="group p-8 bg-white border border-slate-200/60 rounded-3xl shadow-sm hover:shadow-xl hover:shadow-amber-500/5 transition-all duration-300">
@@ -117,7 +80,7 @@ $sessions = $this->session->all_userdata();
                             </svg>
                         </div>
                         <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Total Buku</p>
-                        <p class="text-4xl font-black mt-2 text-slate-900 tracking-tight"><?= $data->total_books ?></p>
+                        <p class="text-4xl font-black mt-2 text-slate-900 tracking-tight"><?= $data->total_books ?? 0 ?></p>
                     </div>
                 </div>
 
@@ -141,13 +104,11 @@ $sessions = $this->session->all_userdata();
                                     <?php foreach ($total_transactions as $tr): ?>
                                         <tr class="group hover:bg-slate-50/80 transition-all">
                                             <td class="px-8 py-5">
-                                                <!-- Asumsi field nama adalah 'full_name' dari hasil JOIN tabel users -->
                                                 <p class="text-sm font-bold text-slate-800"><?= $tr->full_name ?? 'Unknown User' ?></p>
                                                 <p class="text-[10px] text-slate-400">ID: #<?= $tr->kode_transaksi ?> • <?= date('d M Y, H:i', strtotime($tr->tanggal)) ?></p>
                                             </td>
                                             <td class="px-8 py-5">
                                                 <?php
-                                                // Logika penentuan warna badge berdasarkan status enum
                                                 $status_classes = [
                                                     'success' => 'bg-emerald-100 text-emerald-700',
                                                     'pending' => 'bg-amber-100 text-amber-700',
