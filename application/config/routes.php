@@ -60,7 +60,10 @@ $route['about'] = 'pages/about';
 $route['login'] = 'pages/login';
 $route['register'] = 'pages/register';
 
-$route['dashboard'] = 'pages/dashboard';
+// untuk admin
+$route['dashboard'] = 'PagesAdmin/dashboard';
+$route['DaftarBuku'] = 'PagesAdmin/DaftarBuku';
+$route['DaftarUser'] = 'PagesAdmin/DaftarUser';
 
 
 
@@ -68,6 +71,7 @@ $route['dashboard'] = 'pages/dashboard';
 $route['transaction'] = 'transaction/index';
 $route['transaction/create'] = 'transaction/create';
 $route['transactions/(:num)'] = 'transactions/show/$1';
+
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
