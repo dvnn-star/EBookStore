@@ -64,6 +64,8 @@ $route['register'] = 'pages/register';
 $route['dashboard'] = 'PagesAdmin/dashboard';
 $route['DaftarBuku'] = 'PagesAdmin/DaftarBuku';
 $route['DaftarUser'] = 'PagesAdmin/DaftarUser';
+$route['DaftarTransactions'] = 'PagesAdmin/DaftarTransactions';
+
 
 
 
