@@ -13,4 +13,21 @@ class Buku extends CI_Model
     {
         return $this->db->count_all('Buku');
     }
+    public function getById($slug)
+    {
+        return $this->db->get_where('Buku', ['id' => $slug])->row();
+    }
+    public function update($id, $data)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('Buku', $data);
+    }
+    public function Delete($id)
+    {
+        $this->db->delete('Buku', ['id' => $id]);
+    }
+    public function insert_buku($data)
+    {
+        return $this->db->insert('Buku', $data);
+    }
 }

@@ -15,4 +15,18 @@ class User extends CI_Model {
     {
         return $this->db->count_all('users');
     }
+        public function getById($slug)
+    {
+        return $this->db->get_where('users', ['id' => $slug])->row();
+    }
+    public function update($id, $data)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('users', $data);
+    }
+    public function Delete($id)
+    {
+        $this->db->delete('users',['id' => $id]);
+
+    }
 }
