@@ -13,7 +13,6 @@ class UserController extends CI_Controller
         if (!$this->session->userdata('role') === 'admin') {
             show_error('You do not have permission to access this resource.', 403);
         }
-        // Proteksi: Hanya bisa dijalankan di mode development atau CLI
         if (ENVIRONMENT !== 'development' && !is_cli()) {
             show_error('Akses tidak diizinkan.');
         }
@@ -31,16 +30,13 @@ class UserController extends CI_Controller
             show_error('Method Not Allowed', 405);
         }
 
-        // 2. Ambil data lama & Validasi Eksistensi
         $user_lama = $this->User->getById($slug);
         if (!$user_lama) {
             show_404();
         }
 
-        // Definisikan ID dari data yang sudah ditemukan
         $id_buku = $user_lama->id;
 
-        // 3. Siapkan data teks
         $data = [
             'name' => $this->input->post('name', true),
             'email'    => $this->input->post('email', true),
@@ -50,7 +46,6 @@ class UserController extends CI_Controller
 
 
 
-        // 5. Eksekusi Update menggunakan ID yang valid
         $update_status = $this->User->update($id_buku, $data);
 
         if ($update_status) {

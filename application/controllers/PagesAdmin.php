@@ -14,7 +14,6 @@ class PagesAdmin extends CI_Controller
         if (!$this->session->userdata('role') === 'admin') {
             show_error('You do not have permission to access this resource.', 403);
         }
-        // Proteksi: Hanya bisa dijalankan di mode development atau CLI
         if (ENVIRONMENT !== 'development' && !is_cli()) {
             show_error('Akses tidak diizinkan.');
         }
@@ -90,7 +89,6 @@ class PagesAdmin extends CI_Controller
         $this->pagination->initialize($config);
 
 
-        // Ambil offset dari URL (default 0)
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
         $data['transactions'] = $this->TransactionModel->GetPaginationTransactions($config['per_page'], $page);
