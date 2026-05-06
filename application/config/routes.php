@@ -62,8 +62,25 @@ $route['register'] = 'pages/register';
 
 // untuk admin
 $route['dashboard'] = 'PagesAdmin/dashboard';
-$route['DaftarBuku'] = 'PagesAdmin/DaftarBuku';
 $route['DaftarUser'] = 'PagesAdmin/DaftarUser';
+$route['DaftarTransactions'] = 'PagesAdmin/DaftarTransactions';
+$route['DaftarBuku/tambah_buku'] = 'PagesAdmin/TambahBuku';
+$route['DaftarUser/tambah_user'] = 'PagesAdmin/TambahUser';
+
+
+
+$route['DaftarUser/(:num)'] = 'UserController/DaftarBuku/$1';
+$route['DaftarUser/update_user/(:num)'] = 'UserController/UpdateUser/$1';
+$route['DaftarUser/edit/(:num)'] = 'UserController/EditUser/$1';
+$route['DaftarUser/delete/(:num)'] = 'UserController/Delete/$1';
+
+
+$route['DaftarBuku/admin/TambahBuku'] = 'BukuController/TambahBuku';
+$route['DaftarBuku/edit/(:num)'] = 'BukuController/EditBuku/$1';
+$route['DaftarBuku'] = 'BukuController/DaftarBuku';
+$route['DaftarBuku/(:num)'] = 'BukuController/DaftarBuku/$1';
+$route['DaftarBuku/update_buku/(:num)'] = 'BukuController/UpdateBuku/$1';
+$route['DaftarBuku/delete/(:num)'] = 'BukuController/Delete/$1';
 
 
 
