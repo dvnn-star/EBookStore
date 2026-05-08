@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-BookStore | Daftar Buku</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="<?= base_url('assets/vendor/sweetalert2/sweetalert2.min.js') ?>"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -20,7 +21,15 @@
     <div class="flex min-h-screen">
         <!-- PANGGIL SIDEBAR PARTIAL -->
         <?php $this->load->view('components/sidebarAdmin'); ?>
-
+        <?php if ($this->session->flashdata('success')) : ?>
+            <script>
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: 'Data berhasil ditambahkan',
+                    icon: 'success'
+                });
+            </script>
+        <?php endif; ?>
         <!-- Main Content -->
         <main class="flex-1 flex flex-col">
             <!-- Header -->
@@ -141,4 +150,5 @@
     </div>
 
 </body>
+
 </html>

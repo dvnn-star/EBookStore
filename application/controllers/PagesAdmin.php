@@ -102,6 +102,9 @@ class PagesAdmin extends CI_Controller
     public function TambahBuku(){
         $this->load->view('admin/tambahbuku');
     }
-
+    
+    public function TambahUser(){
+        $this->load->view('admin/tambahuser');
+    }
 
 }

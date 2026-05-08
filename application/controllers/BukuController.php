@@ -133,13 +133,23 @@
         public function TambahBuku()
         {
             ini_set('memory_limit', '512M');
-            $this->form_validation->set_rules('judul_buku', 'Judul Buku', 'required|trim');
-            $this->form_validation->set_rules('penulis', 'Penulis', 'required|trim');
-            $this->form_validation->set_rules('harga', 'Harga', 'required|numeric');
-            $this->form_validation->set_rules('kategori', 'Kategori', 'required');
+            $this->form_validation->set_rules('judul_buku', 'judul_buku', 'required|trim');
+            $this->form_validation->set_rules('penulis', 'penulis', 'required|trim');
+            $this->form_validation->set_rules('harga', 'harga', 'required|numeric');
+            $this->form_validation->set_rules('kategori', 'kategori', 'required');
+            $this->form_validation->set_rules('penerbit', 'penerbit', 'required');
+            $this->form_validation->set_rules('halaman', 'halaman', 'required');
+            $this->form_validation->set_rules('rating', 'rating', 'required|numeric');
+            $check_judul = $this->Buku->CheckJudulDiDatabase($this->input->post('judul_buku'));
+            if ($this->form_validation->run() == FALSE || $check_judul) {
+                $error = validation_errors();
 
-            if ($this->form_validation->run() == FALSE) {
-                $this->TambahBuku();
+                if ($check_judul){
+                    $error .= 'Judul Buku ini sudah ada ';
+                    $this->session->set_flashdata('old_input', $this->input->post());
+                }
+                $this->session->set_flashdata('error',$error);
+                redirect('DaftarBuku/tambah_buku');
             } else {
                 // 3. Konfigurasi Upload Gambar
                 $config['upload_path']   = './assets/images/'; // Pastikan folder ini ada
@@ -151,10 +161,9 @@
                 
                 $this->upload->initialize($config, true); // Parameter true akan mereset konfigurasi sebelumnya
                 if (!$this->upload->do_upload('gambar')) {
-                    // Jika upload gagal (format salah/terlalu besar)
                     $error = $this->upload->display_errors();
                     $this->session->set_flashdata('error', $error);
-                    $this->TambahBuku();
+                    redirect('DaftarBuku/tambah_buku');
                 } else {
                     // Jika upload berhasil, ambil nama filenya
                     $upload_data = $this->upload->data();

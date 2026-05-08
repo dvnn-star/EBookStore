@@ -1,3 +1,5 @@
+<?php $old = $this->session->flashdata('old_input'); ?>
+
 <!DOCTYPE html>
 <html lang="id" class="h-full">
 
@@ -8,7 +10,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
     </style>
 </head>
 
@@ -34,6 +38,14 @@
             </header>
 
             <section class="p-8 lg:p-10 max-w-5xl">
+                <?php if ($this->session->flashdata('success')) : ?>
+                    <?= $this->session->flashdata('success'); ?>
+                <?php endif; ?>
+                <?php if ($this->session->flashdata('error')) : ?>
+
+                    <p class="text-xl text-red-600 font-serif font-bold"><?= $this->session->flashdata('error'); ?></p>
+                <?php endif; ?>
+
                 <!-- Form Card -->
                 <div class="bg-white border border-slate-200/60 rounded-[2rem] shadow-sm overflow-hidden">
                     <div class="px-8 py-5 border-b border-slate-100 bg-slate-50/30">
@@ -42,77 +54,205 @@
 
                     <!-- Gunakan form_open_multipart untuk upload file -->
                     <?= form_open_multipart('DaftarBuku/admin/TambahBuku', ['class' => 'p-8 space-y-6']) ?>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Judul Buku -->
-                            <div class="space-y-2">
-                                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Judul Buku</label>
-                                <input type="text" name="judul_buku" required placeholder="Contoh: Atomic Habits" 
-                                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm font-medium">
-                            </div>
 
-                            <!-- Penulis -->
-                            <div class="space-y-2">
-                                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Penulis / Author</label>
-                                <input type="text" name="penulis" required placeholder="Nama penulis" 
-                                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm font-medium">
-                            </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Judul Buku -->
+                        <!-- Judul Buku -->
+                        <div class="space-y-2">
+                            <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">
+                                Judul Buku
+                            </label>
 
-                            <!-- Kategori -->
-                            <div class="space-y-2">
-                                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Kategori</label>
-                                <select name="kategori" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm font-medium appearance-none">
-                                    <option value="bisnis&ekonomi">Bisnis & Ekonomi</option>
-                                    <option value="fiksi">Fiksi</option>
-                                    <option value="sejarah">Sejarah</option>
-                                    <option value="edukasi">Edukasi</option>
-                                    <option value="pengembangan-diri">Pengembangan Diri</option>
-                                </select>
-                            </div>
+                            <input
+                                type="text"
+                                name="judul_buku"
+                                value="<?= isset($old['judul_buku']) ? html_escape($old['judul_buku']) : '' ?>"
+                                placeholder="Contoh: Atomic Habits"
+                                class="w-full px-4 py-3 bg-slate-50 border <?= form_error('judul_buku') ? 'border-red-500' : 'border-slate-200' ?> rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm font-medium">
 
-                            <!-- Penerbit -->
-                            <div class="space-y-2">
-                                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Penerbit</label>
-                                <input type="text" name="penerbit" required placeholder="Nama penerbit" 
-                                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm font-medium">
-                            </div>
+                            <?= form_error(
+                                'judul_buku',
+                                '<p class="text-red-500 text-xs font-semibold mt-1 ml-1">',
+                                '</p>'
+                            ) ?>
+                        </div>
 
-                            <!-- Harga -->
-                            <div class="space-y-2">
-                                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Harga (Rp)</label>
-                                <input type="number" name="harga" required placeholder="Contoh: 95000" 
-                                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm font-medium font-mono">
-                            </div>
+                        <!-- Penulis -->
+                        <div class="space-y-2">
+                            <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">
+                                Penulis / Author
+                            </label>
 
-                            <!-- Halaman & Rating -->
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="space-y-2">
-                                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Halaman</label>
-                                    <input type="number" name="halaman" required placeholder="0" 
-                                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm font-medium">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Rating (1-5)</label>
-                                    <input type="number" name="rating" min="1" max="5" required placeholder="5" 
-                                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm font-medium">
-                                </div>
-                            </div>
+                            <input
+                                type="text"
+                                name="penulis"
+                                value="<?= isset($old['penulis']) ? html_escape($old['penulis']) : '' ?>"
+                                placeholder=" Nama penulis"
+                                class="w-full px-4 py-3 bg-slate-50 border <?= form_error('penulis') ? 'border-red-500' : 'border-slate-200' ?> rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm font-medium">
+
+                            <?= form_error(
+                                'penulis',
+                                '<p class="text-red-500 text-xs font-semibold mt-1 ml-1">',
+                                '</p>'
+                            ) ?>
+                        </div>
+
+                        <!-- Kategori -->
+                        <div class="space-y-2">
+                            <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">
+                                Kategori
+                            </label>
+
+                            <select
+                                name="kategori"
+                                class="w-full px-4 py-3 bg-slate-50 border <?= form_error('kategori') ? 'border-red-500' : 'border-slate-200' ?> rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm font-medium appearance-none">
+
+
+                                <option value="bisnis&ekonomi" <?= set_select('kategori', 'bisnis&ekonomi') ?>>
+                                    Bisnis & Ekonomi
+                                </option>
+
+                                <option value="fiksi" <?= set_select('kategori', 'fiksi') ?>>
+                                    Fiksi
+                                </option>
+
+                                <option value="sejarah" <?= set_select('kategori', 'sejarah') ?>>
+                                    Sejarah
+                                </option>
+
+                                <option value="edukasi" <?= set_select('kategori', 'edukasi') ?>>
+                                    Edukasi
+                                </option>
+
+                                <option value="pengembangan-diri" <?= set_select('kategori', 'pengembangan-diri') ?>>
+                                    Pengembangan Diri
+                                </option>
+                            </select>
+
+                            <?= form_error(
+                                'kategori',
+                                '<p class="text-red-500 text-xs font-semibold mt-1 ml-1">',
+                                '</p>'
+                            ) ?>
+                        </div>
+
+                        <!-- Penerbit -->
+                        <div class="space-y-2">
+                            <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">
+                                Penerbit
+                            </label>
+
+                            <input
+                                type="text"
+                                name="penerbit"
+                                value="<?= isset($old['penerbit']) ? html_escape($old['penerbit']) : '' ?>"
+                                placeholder=" Nama penerbit"
+                                class="w-full px-4 py-3 bg-slate-50 border <?= form_error('penerbit') ? 'border-red-500' : 'border-slate-200' ?> rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm font-medium">
+
+                            <?= form_error(
+                                'penerbit',
+                                '<p class="text-red-500 text-xs font-semibold mt-1 ml-1">',
+                                '</p>'
+                            ) ?>
+                        </div>
+
+                        <!-- Harga -->
+                        <div class="space-y-2">
+                            <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">
+                                Harga (Rp)
+                            </label>
+
+                            <input
+                                type="number"
+                                name="harga"
+                                value="<?= isset($old['harga']) ? html_escape($old['harga']) : '' ?>"
+                                placeholder="Contoh: 95000"
+                                class="w-full px-4 py-3 bg-slate-50 border <?= form_error('harga') ? 'border-red-500' : 'border-slate-200' ?> rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm font-medium font-mono">
+
+                            <?= form_error(
+                                'harga',
+                                '<p class="text-red-500 text-xs font-semibold mt-1 ml-1">',
+                                '</p>'
+                            ) ?>
+                        </div>
+
+                        <!-- Halaman -->
+                        <div class="space-y-2">
+                            <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">
+                                Halaman
+                            </label>
+
+                            <input
+                                type="number"
+                                name="halaman"
+                                value="<?= isset($old['halaman']) ? html_escape($old['halaman']) : '' ?>"
+                                placeholder="0"
+                                class="w-full px-4 py-3 bg-slate-50 border <?= form_error('halaman') ? 'border-red-500' : 'border-slate-200' ?> rounded-xl">
+
+                            <?= form_error(
+                                'halaman',
+                                '<p class="text-red-500 text-xs font-semibold mt-1 ml-1">',
+                                '</p>'
+                            ) ?>
+                        </div>
+
+                        <!-- Rating -->
+                        <div class="space-y-2">
+                            <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">
+                                Rating
+                            </label>
+
+                            <input
+                                type="number"
+                                name="rating"
+                                value="<?= isset($old['rating']) ? html_escape($old['rating']) : '' ?>"
+                                min="1"
+                                max="5"
+                                placeholder="5"
+                                class="w-full px-4 py-3 bg-slate-50 border <?= form_error('rating') ? 'border-red-500' : 'border-slate-200' ?> rounded-xl">
+
+                            <?= form_error(
+                                'rating',
+                                '<p class="text-red-500 text-xs font-semibold mt-1 ml-1">',
+                                '</p>'
+                            ) ?>
                         </div>
 
                         <!-- Deskripsi -->
                         <div class="space-y-2">
-                            <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Sinopsis / Deskripsi</label>
-                            <textarea name="deskripsi" rows="4" required placeholder="Tuliskan deskripsi singkat mengenai isi buku..." 
-                                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm font-medium resize-none"></textarea>
+                            <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">
+                                Sinopsis / Deskripsi
+                            </label>
+
+                            <textarea
+                                name="deskripsi"
+                                rows="4"
+                                placeholder="Tuliskan deskripsi singkat mengenai isi buku..."
+                                class="w-full px-4 py-3 bg-slate-50 border <?= form_error('deskripsi') ? 'border-red-500' : 'border-slate-200' ?> rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-sm font-medium resize-none"><?= set_value('deskripsi') ?></textarea>
+
+                            <?= form_error(
+                                'deskripsi',
+                                '<p class="text-red-500 text-xs font-semibold mt-1 ml-1">',
+                                '</p>'
+                            ) ?>
                         </div>
 
                         <!-- Upload Gambar -->
                         <div class="space-y-2">
-                            <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">Cover Buku (JPG/PNG)</label>
-                            <div class="relative group">
-                                <input type="file" name="gambar" required 
-                                    class="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-[11px] file:font-bold file:uppercase file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100 transition-all cursor-pointer border border-slate-200 bg-slate-50 rounded-xl p-1">
-                            </div>
+                            <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider ml-1">
+                                Cover Buku (JPG/PNG)
+                            </label>
+
+                            <input
+                                type="file"
+                                name="gambar"
+                                class="block w-full text-sm text-slate-500 border <?= form_error('gambar') ? 'border-red-500' : 'border-slate-200' ?> bg-slate-50 rounded-xl p-1">
+
+                            <?= form_error(
+                                'gambar',
+                                '<p class="text-red-500 text-xs font-semibold mt-1 ml-1">',
+                                '</p>'
+                            ) ?>
                         </div>
 
                         <!-- Action Buttons -->
@@ -120,16 +260,15 @@
                             <button type="submit" class="flex-1 md:flex-none px-10 py-3.5 bg-indigo-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 active:scale-95 transition-all">
                                 Simpan Data Buku
                             </button>
-                            <button type="reset" class="px-6 py-3.5 bg-slate-100 text-slate-500 text-sm font-bold rounded-xl hover:bg-slate-200 transition-all">
-                                Reset
-                            </button>
+                          
                         </div>
 
-                    <?= form_close() ?>
-                </div>
+                        <?= form_close() ?>
+                    </div>
             </section>
         </main>
     </div>
 
 </body>
+
 </html>

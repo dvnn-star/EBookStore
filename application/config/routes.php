@@ -73,7 +73,7 @@ $route['DaftarUser/(:num)'] = 'UserController/DaftarBuku/$1';
 $route['DaftarUser/update_user/(:num)'] = 'UserController/UpdateUser/$1';
 $route['DaftarUser/edit/(:num)'] = 'UserController/EditUser/$1';
 $route['DaftarUser/delete/(:num)'] = 'UserController/Delete/$1';
-
+$route['DaftarUser/admin/StoreUser'] = 'UserController/StoreUser';
 
 $route['DaftarBuku/admin/TambahBuku'] = 'BukuController/TambahBuku';
 $route['DaftarBuku/edit/(:num)'] = 'BukuController/EditBuku/$1';
