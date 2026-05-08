@@ -6,18 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-BookStore | Daftar Pengguna</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="<?= base_url('assets/vendor/sweetalert2/sweetalert2.min.js') ?>"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="h-full bg-[#fbfcfd] text-slate-900 antialiased">
 
     <div class="flex min-h-screen">
         <?php $this->load->view('components/sidebarAdmin'); ?>
+        <?php if ($this->session->flashdata('success')) : ?>
+            <script>
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: 'Data berhasil ditambahkan',
+                    icon: 'success'
+                });
+            </script>
+        <?php endif; ?>
+           <?php if ($this->session->flashdata('perubahan')) : ?>
+            <script>
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: 'Data berhasil diubah',
+                    icon: 'success'
+                });
+            </script>
+        <?php endif; ?>
 
         <main class="flex-1 flex flex-col">
             <!-- Header -->
@@ -26,7 +46,7 @@
                     <h2 class="text-xl font-bold text-slate-800 tracking-tight">Manajemen Pengguna</h2>
                     <p class="text-[11px] text-slate-500 font-medium uppercase tracking-wider">Otoritas Akses & Pengaturan Akun</p>
                 </div>
-                <a href="<?= base_url('admin/tambah_user') ?>" class="px-5 py-2.5 text-sm font-bold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20 flex items-center gap-2 active:scale-95">
+                <a href="<?= base_url('DaftarUser/tambah_user') ?>" class="px-5 py-2.5 text-sm font-bold text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20 flex items-center gap-2 active:scale-95">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                     </svg>

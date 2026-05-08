@@ -30,4 +30,14 @@ class Buku extends CI_Model
     {
         return $this->db->insert('Buku', $data);
     }
+    public function CheckJudulDiDatabase($judul)
+    {
+        $data = $this->db
+            ->select('id')
+            ->where('judul_buku', $judul)
+            ->limit(1)
+            ->get('Buku')
+            ->row();
+        return $data;   
+    }
 }
