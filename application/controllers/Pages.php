@@ -41,7 +41,10 @@ class Pages extends CI_Controller
         $this->load->view('pages/about');
     }
 
-
+    public function keranjang()
+    {
+        $this->load->view('pages/keranjang');
+    }
 
 
 

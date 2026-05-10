@@ -54,6 +54,7 @@ $route['kategori'] = 'pages/kategori';
 $route['default_controller'] = 'welcome';
 $route['terpopuler'] = 'pages/terpopuler';
 $route['about'] = 'pages/about';
+$route['keranjang'] = 'pages/keranjang';
 
 
 // halaman untuk login dan register
