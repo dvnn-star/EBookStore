@@ -151,7 +151,6 @@
                 $this->session->set_flashdata('error',$error);
                 redirect('DaftarBuku/tambah_buku');
             } else {
-                // 3. Konfigurasi Upload Gambar
                 $config['upload_path']   = './assets/images/'; // Pastikan folder ini ada
                 $config['allowed_types'] = 'gif|jpg|png|jpeg';
                 $config['max_size']      = 2048; // 2MB
@@ -159,13 +158,12 @@
 
                 $this->load->library('upload', $config);
                 
-                $this->upload->initialize($config, true); // Parameter true akan mereset konfigurasi sebelumnya
+                $this->upload->initialize($config, true); 
                 if (!$this->upload->do_upload('gambar')) {
                     $error = $this->upload->display_errors();
                     $this->session->set_flashdata('error', $error);
                     redirect('DaftarBuku/tambah_buku');
                 } else {
-                    // Jika upload berhasil, ambil nama filenya
                     $upload_data = $this->upload->data();
                     $file_name   = $upload_data['file_name'];
 

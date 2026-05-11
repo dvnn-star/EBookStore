@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Pages extends CI_Controller
 {
-    
+
 
     // Nama fungsi ini harus sama dengan yang ada di routes.php
     public function kategori()
@@ -34,19 +34,32 @@ class Pages extends CI_Controller
     }
     public function terpopuler()
     {
-        $this->load->view('pages/terpopuler');
+
+        $semua_buku = $this->Buku->GetHighRating();
+    
+    $koleksi = [];
+    
+    foreach ($semua_buku as $b) {
+        $kat = $b->kategori; 
+        
+        if (!isset($koleksi[$kat])) {
+            $koleksi[$kat] = [
+                'judul' => ucwords(str_replace('&', ' & ', $kat)), 
+                'data'  => []
+            ];
+        }
+        $koleksi[$kat]['data'][] = $b;
+    }
+
+    $data['koleksi_buku'] = $koleksi;
+    $this->load->view('pages/terpopuler', $data);
     }
     public function about()
     {
         $this->load->view('pages/about');
     }
-
     public function keranjang()
     {
         $this->load->view('pages/keranjang');
     }
-
-
-
-
 }

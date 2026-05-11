@@ -40,4 +40,13 @@ class Buku extends CI_Model
             ->row();
         return $data;   
     }
+        public function GetHighRating()
+    {
+        $this->db->select('*');
+        $this->db->from('Buku');
+        $this->db->where('rating =','5');
+        $query = $this->db->get();
+        return $query->result();
+    }
 }
+

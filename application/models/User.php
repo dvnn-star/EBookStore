@@ -11,7 +11,11 @@ class User extends CI_Model
     }
     public function GetPaginationUser($limit, $start)
     {
-        return $this->db->get('users', $limit, $start)->result();
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where('id !=',$this->session->userdata('user_id'));
+        $query = $this->db->get();
+        return $query->result();
     }
     public function count_all_users()
     {
