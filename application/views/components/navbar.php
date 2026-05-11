@@ -75,6 +75,15 @@
                         </svg>
                     </div>
 
+                    <a href="<?= base_url('keranjang'); ?>" class="flex items-center space-x-3 md:space-x-0 text-[#0E6D64] hover:text-[#FF8C00] transition-colors group w-full md:w-auto">
+                        <div class="relative flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <span class="md:hidden font-medium text-gray-500 group-hover:text-[#FF8C00] transition-colors">Keranjang</span>
+                    </a>
+
                     <?php if ($this->session->userdata('logged_in')) : ?>
                         <div class="relative inline-block text-left">
                             <!-- Trigger Dropdown -->
@@ -85,7 +94,7 @@
                                 <!-- Icon Arrow -->
                                 <svg class="w-4 h-4 text-[#0E6D64] transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                </svg>
+                                </svg> 
                             </button>
 
                             <!-- Menu Dropdown -->
