@@ -154,6 +154,7 @@ foreach ($semua_buku as $item) {
          * STATE CONFIGURATION
          */
         const CURRENT_USER = "<?= htmlspecialchars($this->session->userdata('username') ?? 'guest'); ?>";
+        const LOGIN_URL = "<?= base_url('login'); ?>";
         const STORAGE_KEY = `cart_storage_${CURRENT_USER}`;
 
         /**
@@ -193,6 +194,11 @@ foreach ($semua_buku as $item) {
          * CART LOGIC: STATE MANAGEMENT
          */
         function cartAction(buttonElement, isRedirect) {
+            if (CURRENT_USER === 'guest') {
+                window.location.href = LOGIN_URL;
+                return; 
+            }
+
             const card = buttonElement.closest('[data-buku]');
             const dataBuku = JSON.parse(card.getAttribute('data-buku'));
             
