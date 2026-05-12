@@ -55,6 +55,7 @@ $route['default_controller'] = 'welcome';
 $route['terpopuler'] = 'pages/terpopuler';
 $route['about'] = 'pages/about';
 $route['keranjang'] = 'pages/keranjang';
+$route['payments/(:any)'] = 'pages/payment/$1';
 
 
 // halaman untuk login dan register
@@ -87,7 +88,7 @@ $route['DaftarBuku/delete/(:num)'] = 'BukuController/Delete/$1';
 
 //route transaction 
 $route['transaction'] = 'transaction/index';
-$route['transaction/create'] = 'transaction/create';
+$route['transactions/create'] = 'transaction/create';
 $route['transactions/(:num)'] = 'transactions/show/$1';
 
 

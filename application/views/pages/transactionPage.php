@@ -1,5 +1,10 @@
 <?php $this->load->view('components/navbar'); ?>
+<?php
 
+// var_dump($data);
+$i = 0 ;
+
+?>
 <!-- Main Content Area: Background abu-abu sangat muda untuk kontras dengan kartu putih -->
 <main class="min-h-screen bg-gray-50 text-gray-800 py-12 px-4 md:px-8">
     <div class="max-w-6xl mx-auto">
@@ -40,13 +45,13 @@
                             </div>
                             <div>
                                 <h3 class="text-lg font-bold text-gray-900">
-                                    #<?= $row['id']; ?>
+                                    #<?= $i +=1 ?>
                                 </h3>
                                 <div class="flex items-center text-sm text-gray-500 mt-1">
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                     </svg>
-                                    <?= date('d F Y', strtotime($row['tanggal'])); ?>
+                                    <?= date('d F Y', strtotime($row->tanggal)); ?>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +59,7 @@
                         <!-- Status & Price -->
                         <div class="flex flex-row md:flex-col justify-between items-center md:items-end gap-2">
                             <span class="text-lg font-bold text-[#0E6D64]">
-                                Rp <?= number_format($row['total_bayar'], 0, ',', '.'); ?>
+                                Rp <?= number_format($row->total_bayar, 0, ',', '.'); ?>
                             </span>
                             
                             <?php 
@@ -66,7 +71,7 @@
                             ];
                                 $label = ['success' => 'Berhasil', 'pending' => 'Menunggu', 'failed' => 'Gagal'];
                                 
-                                $current_status = $row['status'];
+                                $current_status = $row->status;
                                 $class = $status_class[$current_status] ?? 'bg-gray-100 text-gray-700';
                                 $text = $label[$current_status] ?? $current_status;
                             ?>
@@ -78,7 +83,7 @@
 
                         <!-- Action -->
                         <div class="md:ml-4 border-t md:border-t-0 pt-4 md:pt-0">
-                            <a href="<?= base_url('transaction/' . $row['order_id']); ?>" class="block w-full text-center px-6 py-2.5 bg-[#0E6D64] text-white font-semibold rounded-xl hover:bg-[#0a5a52] transition-colors shadow-sm active:scale-95 transform">
+                            <a href="<?= base_url('transaction/' . $row->kode_transaksi); ?>" class="block w-full text-center px-6 py-2.5 bg-[#0E6D64] text-white font-semibold rounded-xl hover:bg-[#0a5a52] transition-colors shadow-sm active:scale-95 transform">
                                 Lihat Detail
                             </a>
                         </div>

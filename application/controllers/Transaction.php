@@ -23,13 +23,24 @@ class Transaction extends CI_Controller
 
     {
         if ($this->input->method() !== 'post') {
-            show_error('Method does not match lol', 405);
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode([
+                    'status' => 'error',
+                    'message' => 'Methode tidak cocok'
+                ]));
         }
-        if (!$items || !is_array($items)) {
-            show_error('Invalid input');
-        }
+        $items = json_decode($this->input->post('cart_data'), true);
         $user_id = $this->session->userdata('user_id');
-        $items = $this->input->post('items');
+        if (!$items || !is_array($items)) {
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode([
+                    'status' => 'error',
+                    'message' => 'Buku tidak ditemukan'
+                ]));
+        }
+
         $total = 0;
         $details = [];
 
@@ -38,8 +49,12 @@ class Transaction extends CI_Controller
                 'id' => $item['buku_id']
             ])->row();
             if (!$book) {
-                print_r('error bang');
-                return show_error('bukunya kaga ada', 404);
+                return $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode([
+                        'status' => 'error',
+                        'message' => 'Buku tidak ditemukan'
+                    ]));
             }
             $subtotal = $book->harga * $item['qty'];
             $total += $subtotal;
@@ -51,12 +66,13 @@ class Transaction extends CI_Controller
         }
 
         try {
-            // menggunakan transacition
+            // menggunakan transaction
             $this->db->trans_start();
+            $KodeTransaksi = $this->TransactionModel->generate_kode_transaksi();
             $this->db->insert('transactions', [
                 'user_id' => $user_id,
-                'kode_transaksi' => $this->TransactionModel->generate_kode_transaksi(),
-                'total_harga' => $total,
+                'kode_transaksi' => $KodeTransaksi,
+                'total_bayar' => $total,
                 'tanggal' => date("Y/m/d")
             ]);
             // ambil data id yang telah diinsert
@@ -64,7 +80,7 @@ class Transaction extends CI_Controller
             foreach ($details as $item) {
 
 
-                $this->db->insert('transactions_details', [
+                $this->db->insert('transactions_detail', [
                     'transactions_id' => $transaction_id,
                     'buku_id'  => $item['buku_id'],
                     'qty' => $item['qty'],
@@ -74,11 +90,24 @@ class Transaction extends CI_Controller
             $this->db->trans_complete();
             // ngecek hasil transaction
             if ($this->db->trans_status() === FALSE) {
-                show_error('Transaction failed');
+                return $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode([
+                        'status' => 'error',
+                        'message' => 'erorr pada saat melakukan transaksi'
+                    ]));
             }
-            redirect('payments/index/' . $transaction_id);
+            return $this->output->set_content_type('application/json')->set_output(json_encode([
+                'status' => 'success',
+                'redirect_url' => base_url('payments/' . $KodeTransaksi)
+            ]));
         } catch (\Throwable $th) {
-            throw $th;
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode([
+                    'status' => 'error',
+                    'message' => $th->getMessage()
+                ]));
         }
     }
 }

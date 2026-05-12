@@ -196,7 +196,7 @@
         btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> MEMPROSES...';
 
         try {
-            const response = await fetch('<?= base_url("cart/process_checkout") ?>', {
+            const response = await fetch('<?= base_url("transactions/create") ?>', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -204,11 +204,15 @@
                 },
                 body: new URLSearchParams({
                     [CSRF_NAME]: CSRF_HASH,
-                    'cart_data': JSON.stringify(data)
+                    'cart_data': JSON.stringify(data.map(item=>({
+                        'buku_id':item.id,
+                        'qty' : 1
+                    })))
                 })
             });
 
             const result = await response.json();
+            console.log(result)
             if (result.status === 'success') {
                 localStorage.removeItem(CART_KEY);
                 window.location.href = result.redirect_url;
