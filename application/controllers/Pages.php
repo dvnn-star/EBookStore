@@ -36,23 +36,23 @@ class Pages extends CI_Controller
     {
 
         $semua_buku = $this->Buku->GetHighRating();
-    
-    $koleksi = [];
-    
-    foreach ($semua_buku as $b) {
-        $kat = $b->kategori; 
-        
-        if (!isset($koleksi[$kat])) {
-            $koleksi[$kat] = [
-                'judul' => ucwords(str_replace('&', ' & ', $kat)), 
-                'data'  => []
-            ];
-        }
-        $koleksi[$kat]['data'][] = $b;
-    }
 
-    $data['koleksi_buku'] = $koleksi;
-    $this->load->view('pages/terpopuler', $data);
+        $koleksi = [];
+
+        foreach ($semua_buku as $b) {
+            $kat = $b->kategori;
+
+            if (!isset($koleksi[$kat])) {
+                $koleksi[$kat] = [
+                    'judul' => ucwords(str_replace('&', ' & ', $kat)),
+                    'data'  => []
+                ];
+            }
+            $koleksi[$kat]['data'][] = $b;
+        }
+
+        $data['koleksi_buku'] = $koleksi;
+        $this->load->view('pages/terpopuler', $data);
     }
     public function about()
     {
@@ -61,5 +61,26 @@ class Pages extends CI_Controller
     public function keranjang()
     {
         $this->load->view('pages/keranjang');
+    }
+    public function payment($slug)
+    {
+      
+        $this->load->model('TransactionModel');
+        $transactions = $this->TransactionModel->GetTransactionRecord($slug);
+        if (!$transactions or $transactions->user_id !=  $this->session->userdata('user_id')) {
+            show_error('unathorized', 401);
+        }
+        
+        $data['transaction'] = $transactions;
+        $data['details'] = $this->db->select('
+        transactions_detail.qty,
+        transactions_detail.harga_beli,
+        Buku.judul_buku,
+        Buku.penulis,
+        Buku.harga')
+        ->from('transactions_detail')
+        ->join('Buku', 'Buku.id = transactions_detail.buku_id', 'inner') ->where('transactions_detail.transactions_id', $transactions->id)->get()->result();
+
+        $this->load->view('payments/index', $data);
     }
 }

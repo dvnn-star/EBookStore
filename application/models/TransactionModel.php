@@ -6,6 +6,9 @@ class TransactionModel extends CI_Model
     {
         return $this->db->get_where('transactions', ['user_id' => $user_id])->result();
     }
+    public function GetTransactionRecord($kode){
+        return $this->db->get_where('transactions',['kode_transaksi' => $kode])->row();
+    }
     public function generate_kode_transaksi()
     {
         $date = date('Ymd');
