@@ -94,7 +94,7 @@
                                 <!-- Icon Arrow -->
                                 <svg class="w-4 h-4 text-[#0E6D64] transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                </svg> 
+                                </svg>
                             </button>
 
                             <!-- Menu Dropdown -->
@@ -107,6 +107,15 @@
                                         </svg>
                                         Riwayat Transaksi
                                     </a>
+                                    <?php if ($this->session->userdata('role') == 'admin'):?>
+                                    <a href="<?= base_url('dashboard/'); ?>" class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors" role="menuitem">
+                                        <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                        </svg>
+                                        Dashboard
+                                    </a>
+                                    <?php endif; ?>
+
 
                                     <hr class="border-gray-100">
 
