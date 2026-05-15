@@ -69,6 +69,20 @@ $dotenv->load();
 | make active.  By default there is only one group (the 'default' group).
 */
 $active_group = 'default';
+// Deteksi apakah sedang berjalan di GitHub Actions atau Lokal
+if (getenv('GITHUB_ACTIONS')) {
+    // Pengaturan untuk GitHub Actions (Linux MySQL)
+    $db['default'] = array(
+        'dsn'   => '',
+        'hostname' => '127.0.0.1',
+        'username' => 'travis',
+        'password' => 'travis',
+        'database' => 'ci_test',
+        'dbdriver' => 'mysqli',
+        // ... sisanya
+    );
+} else {
+
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
@@ -90,3 +104,4 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+}
