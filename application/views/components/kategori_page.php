@@ -213,7 +213,7 @@ foreach ($semua_buku as $item) {
                 showToast(`Buku ini sudah ada di keranjang.`, 'info');
             }
 
-            if (isRedirect) setTimeout(() => window.location.href = "<?= base_url('keranjang'); ?>", 800);
+            if (isRedirect) setTimeout(() => window.location.href = "<?= base_url('keranjang'); ?>", 100);
         }
 
         /**

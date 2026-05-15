@@ -68,6 +68,8 @@ $route['DaftarUser'] = 'PagesAdmin/DaftarUser';
 $route['DaftarTransactions'] = 'PagesAdmin/DaftarTransactions';
 $route['DaftarBuku/tambah_buku'] = 'PagesAdmin/TambahBuku';
 $route['DaftarUser/tambah_user'] = 'PagesAdmin/TambahUser';
+$route['dashboard/(:num)'] = 'PagesAdmin/dashboard/$1';
+$route['export_csv'] = 'PagesAdmin/ExportCsv';
 
 
 

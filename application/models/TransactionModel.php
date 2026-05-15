@@ -22,7 +22,7 @@ class TransactionModel extends CI_Model
         $this->db->select('transactions.*, users.name as full_name, users.email');
 
         $this->db->from('transactions');
-        +$this->db->join('users', 'users.id = transactions.user_id', 'left');
+        $this->db->join('users', 'users.id = transactions.user_id', 'left');
 
 
         $this->db->order_by('transactions.tanggal', 'DESC');
@@ -52,5 +52,12 @@ class TransactionModel extends CI_Model
         $this->db->from('transactions');
         $this->db->where('kode_transaksi', $kode);
         return $this->db->get()->row();
+    }
+    public function GetAllTransactionAndJoin(){
+        $this->db->select('transactions.*,users.name');
+        $this->db->from('transactions');
+        $this->db->join('users','users.id = transactions.user_id','left');
+        $query = $this->db->get()->result_array();
+        return $query;
     }
 }

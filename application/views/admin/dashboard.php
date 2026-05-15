@@ -1,5 +1,6 @@
 <?php
 $sessions = $this->session->all_userdata();
+
 ?>
 <!DOCTYPE html>
 <html lang="en" class="h-full">
@@ -25,7 +26,7 @@ $sessions = $this->session->all_userdata();
 <body class="h-full bg-[#fbfcfd] text-slate-900 antialiased">
 
     <div class="flex min-h-screen">
-        
+
         <?php $this->load->view('components/sidebarAdmin', ['sessions' => $sessions]); ?>
 
         <!-- Main Content -->
@@ -42,7 +43,7 @@ $sessions = $this->session->all_userdata();
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                         </svg>
                     </button>
-                    <button class="px-5 py-2.5 text-sm font-semibold text-white bg-slate-900 rounded-xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10">
+                    <button onclick="window.location.href='<?= base_url('export_csv') ?>'" class="px-5 py-2.5 text-sm font-semibold text-white bg-slate-900 rounded-xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10">
                         Export Data
                     </button>
                 </div>
@@ -99,44 +100,61 @@ $sessions = $this->session->all_userdata();
                                     <th class="px-8 py-4 text-right">Revenue</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-100">
-                                <?php if (!empty($total_transactions)): ?>
-                                    <?php foreach ($total_transactions as $tr): ?>
-                                        <tr class="group hover:bg-slate-50/80 transition-all">
+                            <tbody class="divide-y divide-slate-800/50">
+                                <?php if (!empty($all_transactions)): ?>
+                                    <?php foreach ($all_transactions as $tr): ?>
+                                        <tr class="group hover:bg-slate-800/30 transition-all duration-300">
                                             <td class="px-8 py-5">
-                                                <p class="text-sm font-bold text-slate-800"><?= $tr->full_name ?? 'Unknown User' ?></p>
-                                                <p class="text-[10px] text-slate-400">ID: #<?= $tr->kode_transaksi ?> • <?= date('d M Y, H:i', strtotime($tr->tanggal)) ?></p>
+                                                <div class="flex flex-col">
+                                                    <!-- Menampilkan Nama hasil JOIN, bukan sekadar ID -->
+                                                    <span class="text-sm font-semibold text-slate-200 group-hover:text-white transition-colors">
+                                                        <?= htmlspecialchars($tr->full_name ?? 'Guest User') ?>
+                                                    </span>
+                                                    <span class="text-[11px] text-slate-500 font-mono mt-1">
+                                                        #<?= $tr->kode_transaksi ?> • <?= date('d M Y, H:i', strtotime($tr->tanggal)) ?>
+                                                    </span>
+                                                </div>
                                             </td>
                                             <td class="px-8 py-5">
                                                 <?php
-                                                $status_classes = [
-                                                    'success' => 'bg-emerald-100 text-emerald-700',
-                                                    'pending' => 'bg-amber-100 text-amber-700',
-                                                    'failed'  => 'bg-rose-100 text-rose-700',
-                                                    'expired' => 'bg-slate-100 text-slate-600'
+                                                $status_map = [
+                                                    'success' => 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400',
+                                                    'pending' => 'border-amber-500/30 bg-amber-500/10 text-amber-400',
+                                                    'failed'  => 'border-rose-500/30 bg-rose-500/10 text-rose-400',
+                                                    'expired' => 'border-slate-500/30 bg-slate-500/10 text-slate-400'
                                                 ];
-                                                $class = $status_classes[$tr->status] ?? 'bg-slate-100 text-slate-600';
+                                                $theme = $status_map[$tr->status] ?? $status_map['expired'];
                                                 ?>
-                                                <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold <?= $class ?> uppercase tracking-tighter">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded border text-[10px] font-bold uppercase tracking-wider <?= $theme ?>">
+                                                    <span class="w-1 h-1 rounded-full bg-current mr-1.5 animate-pulse"></span>
                                                     <?= $tr->status ?>
                                                 </span>
                                             </td>
-                                            <td class="px-8 py-5 text-sm text-right font-black text-slate-900">
-                                                Rp <?= number_format($tr->total_bayar, 0, ',', '.') ?>
+                                            <td class="px-8 py-5 text-right">
+                                                <span class="text-sm font-mono font-bold text-slate-100">
+                                                    Rp <?= number_format($tr->total_bayar, 0, ',', '.') ?>
+                                                </span>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
                                     <tr>
-                                        <td colspan="3" class="px-8 py-10 text-center text-slate-400 text-sm italic">
-                                            No transactions found.
+                                        <td colspan="3" class="px-8 py-20 text-center">
+                                            <div class="flex flex-col items-center justify-center space-y-2">
+                                                <span class="text-slate-600 text-sm">No transaction records found in the vault.</span>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
-                </div>
+                    <div class="mt-6 flex justify-between items-center text-xs text-slate-500 px-2">
+                        <p>Showing <span class="text-slate-300"><?= count($all_transactions) ?></span> of <span class="text-slate-300"><?= $total ?></span> transactions</p>
+                        <div class="pagination-custom">
+                            <?= $pagination ?>
+                        </div>
+                    </div>
             </section>
         </main>
     </div>
