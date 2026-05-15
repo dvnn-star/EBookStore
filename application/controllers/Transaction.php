@@ -6,18 +6,45 @@ class Transaction extends CI_Controller
     {
         parent::__construct();
 
-
+        $this->load->library('pagination');
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
         }
+        $this->load->model('TransactionModel');
     }
     public function index()
     {
+        $userId = $this->session->userdata('user_id');
+        $config['base_url']   = base_url('transaction');
+        $config['total_rows'] = $this->TransactionModel->count_transaction_user($userId);
+        $config['per_page']   = 5;
+        $config['uri_segment'] = 2; // Sesuaikan dengan posisi angka di URL
+        $config['reuse_query_string'] = TRUE;
 
-        $user_id = $this->session->userdata('user_id');
-        $result['data'] = $this->TransactionModel->getAllDataByUser($user_id);
+        $config['full_tag_open']    = '<nav class="flex items-center space-x-2">';
+        $config['full_tag_close']   = '</nav>';
+        $config['num_tag_open']     = '<span class="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50">';
+        $config['num_tag_close']    = '</span>';
+        $config['cur_tag_open']     = '<span class="px-4 py-2 text-sm font-bold text-white bg-indigo-600 border border-indigo-600 rounded-lg shadow-sm">';
+        $config['cur_tag_close']    = '</span>';
+        $config['next_link']        = 'Next &rarr;';
+        $config['prev_link']        = '&larr; Prev';
 
-        $this->load->view('pages/transactionPage', $result);
+
+        $this->pagination->initialize($config);
+
+
+        // Ambil offset dari URL (default 0)
+        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+
+        $data['transaction'] = $this->TransactionModel->GetPaginationTransactionsUser($config['per_page'], $page, $userId);
+        $data['pagination'] = $this->pagination->create_links();
+        $data['start']      = $page;
+        $data['total']      = $config['total_rows'];
+
+
+
+        $this->load->view('pages/transactionPage', $data);
     }
     public function create()
 
@@ -109,5 +136,19 @@ class Transaction extends CI_Controller
                     'message' => $th->getMessage()
                 ]));
         }
+    }
+    public function show($slug)
+    {
+        $id = $this->TransactionModel->GetId($slug);
+        $data['details'] = $this->db->select('
+        transactions_detail.qty,
+        transactions_detail.harga_beli,
+        Buku.judul_buku,
+        Buku.penulis,
+        Buku.harga')
+            ->from('transactions_detail')
+            ->join('Buku', 'Buku.id = transactions_detail.buku_id', 'inner')->where('transactions_detail.transactions_id', $id->id)->get()->result();
+        $data['kode_transaksi'] = $slug;
+        $this->load->view('pages/transactionshow', $data);
     }
 }

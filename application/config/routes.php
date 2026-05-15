@@ -68,10 +68,12 @@ $route['DaftarUser'] = 'PagesAdmin/DaftarUser';
 $route['DaftarTransactions'] = 'PagesAdmin/DaftarTransactions';
 $route['DaftarBuku/tambah_buku'] = 'PagesAdmin/TambahBuku';
 $route['DaftarUser/tambah_user'] = 'PagesAdmin/TambahUser';
+$route['dashboard/(:num)'] = 'PagesAdmin/dashboard/$1';
+$route['export_csv'] = 'PagesAdmin/ExportCsv';
 
 
 
-$route['DaftarUser/(:num)'] = 'UserController/DaftarBuku/$1';
+$route['DaftarUser/(:num)'] = 'UserController/DaftarUser/$1';
 $route['DaftarUser/update_user/(:num)'] = 'UserController/UpdateUser/$1';
 $route['DaftarUser/edit/(:num)'] = 'UserController/EditUser/$1';
 $route['DaftarUser/delete/(:num)'] = 'UserController/Delete/$1';
@@ -88,8 +90,9 @@ $route['DaftarBuku/delete/(:num)'] = 'BukuController/Delete/$1';
 
 //route transaction 
 $route['transaction'] = 'transaction/index';
+$route['transaction/(:num)'] = 'transaction/index/$1';
 $route['transactions/create'] = 'transaction/create';
-$route['transactions/(:num)'] = 'transactions/show/$1';
+$route['transactions/index/(:any)'] = 'transaction/show/$1';
 
 
 $route['404_override'] = '';
