@@ -1,29 +1,19 @@
-name: PHPUnit Cross-Platform
+name: PHPUnit Test
 
 on: [push, pull_request]
 
 jobs:
   tests:
-    name: PHP ${{ matrix.php }} - ${{ matrix.os }} - DB ${{ matrix.db }}
-    # Menggunakan matrix untuk OS
-    runs-on: ${{ matrix.os }}
-    
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        php: ['7.4', '8.0', '8.1'] # Saya pangkas versi purba agar efisien
-        db: ['pdo_sqlite']
-        include:
-          # MySQL hanya dijalankan di Linux karena butuh Docker Service
-          - os: ubuntu-latest
-            php: '8.1'
-            db: 'pdo_mysql'
+        php: ['7.4', '8.0', '8.1']
+        db_driver: ['mysqli', 'pdo_mysql', 'sqlite3'] # Sesuaikan dengan kebutuhan driver Anda
 
-    # Service hanya aktif jika OS adalah Linux
     services:
       mysql:
-        image: ${{ matrix.db == 'pdo_mysql' && 'mysql:5.7' || '' }}
+        image: mysql:5.7
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_DATABASE: ci_test
@@ -32,20 +22,24 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: mysqli, pdo, pdo_mysql, pdo_sqlite, mbstring, xml
-          coverage: xdebug
+          extensions: mysqli, pdo, pdo_mysql, sqlite3, mbstring
+          coverage: none
 
       - name: Install Dependencies
-        run: composer install --no-progress --prefer-dist --optimize-autoloader
+        run: composer install --no-progress --prefer-dist
 
       - name: Run PHPUnit Tests
-        # Perintah ini akan berjalan baik di PowerShell (Windows) maupun Bash (Linux)
-        run: vendor/bin/phpunit --configuration tests/travis/${{ matrix.db }}.phpunit.xml
+        # Perhatikan: -c mengarah ke folder tests/phpunit.xml anda
+        run: vendor/bin/phpunit -c tests/phpunit.xml
         env:
-          DB_TYPE: ${{ matrix.db }}
+          DB_DRIVER: ${{ matrix.db_driver }}
+          DB_HOST: 127.0.0.1
+          DB_USER: root
+          DB_PASS: ''
+          DB_NAME: ci_test
