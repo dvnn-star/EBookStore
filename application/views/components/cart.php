@@ -1,6 +1,5 @@
 <!-- Container Utama: Layout Sidebar-Content -->
 <div class="container mx-auto px-4 py-12 flex flex-col lg:flex-row gap-10 min-h-[70vh]">
-
     <!-- AREA KONTEN UTAMA (DAFTAR ITEM) -->
     <div class="flex-grow">
         <header class="mb-10">
@@ -26,7 +25,6 @@
             <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
                 <i class="fas fa-file-invoice-dollar text-ep-green"></i> Ringkasan
             </h3>
-
             <div class="space-y-4 pb-6 border-b border-slate-100">
                 <div class="flex justify-between text-slate-500">
                     <span>Subtotal</span>
@@ -37,12 +35,10 @@
                     <span class="italic text-ep-green uppercase font-black">Free</span>
                 </div>
             </div>
-
             <div class="py-6 flex justify-between items-center">
                 <span class="font-bold text-slate-800">Total Harga</span>
                 <span id="grand-total-val" class="text-2xl font-black text-ep-green tracking-tighter">Rp0</span>
             </div>
-
             <button id="checkout-trigger" onclick="handleCheckout()" class="w-full bg-orange-500 text-white py-4 rounded-2xl font-extrabold shadow-lg shadow-ep-orange/30 hover:bg-orange-600 transition-all duration-300 active:scale-95 flex items-center justify-center gap-3">
                 CHECKOUT SEKARANG <i class="fas fa-lock text-sm"></i>
             </button>
@@ -63,32 +59,68 @@
     const CSRF_HASH = "<?= $this->security->get_csrf_hash(); ?>";
 
     /**
-     * UI COMPONENT: TOAST NOTIFICATION
+     * UI COMPONENT: HIGH-CONTRAST TOAST NOTIFICATION
+     * Menggunakan strategi Polymorphic Style Mapping untuk mengubah skema warna secara total
+     * berdasarkan tingkat urgensi atau jenis destruksi aksi (seperti penghapusan item).
      */
     function showToast(message, type = 'success', duration = 3000) {
         const container = document.getElementById('toast-container');
         const toastId = 'toast-' + Date.now();
-        const colorClass = type === 'success' ? 'border-ep-green' : 'border-ep-orange';
+
+        // Matrix tema untuk memberikan diferensiasi visual yang kontras tinggi di viewport
+        const themes = {
+            success: {
+                bg: 'bg-white',
+                border: 'border-l-4 border-ep-green',
+                text: 'text-slate-700',
+                meta: 'text-slate-400',
+                iconWrapper: 'bg-emerald-50 text-ep-green',
+                icon: 'fa-check'
+            },
+            info: { // Dikonfigurasi khusus untuk aksi penghapusan item (Destructive Alert)
+                bg: 'bg-slate-950',          // Latar belakang gelap pekat untuk kontras maksimal di atas halaman putih
+                border: 'border-l-4 border-red-500', // Batas kiri merah menyala sebagai indikator warning
+                text: 'text-white',          // Teks putih murni untuk keterbacaan tingkat tinggi (WCAG AAA Compliant)
+                meta: 'text-red-400 font-bold',
+                iconWrapper: 'bg-red-950/50 text-red-400',
+                icon: 'fa-trash-alt'          // Mengubah ikon menjadi representasi tempat sampah
+            },
+            error: {
+                bg: 'bg-red-900',
+                border: 'border-l-4 border-red-700',
+                text: 'text-white',
+                meta: 'text-red-200',
+                iconWrapper: 'bg-red-950 text-white',
+                icon: 'fa-exclamation-triangle'
+            }
+        };
+
+        const activeTheme = themes[type] || themes.success;
 
         const html = `
-            <div id="${toastId}" class="pointer-events-auto flex items-center gap-4 bg-white border-l-4 ${colorClass} p-5 pr-10 rounded-2xl shadow-2xl animate-fade-in relative overflow-hidden min-w-[320px]">
-                <div class="flex-none w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-slate-400">
-                    <i class="fas ${type === 'success' ? 'fa-check text-ep-green' : 'fa-info-circle text-ep-orange'}"></i>
+            <div id="${toastId}" class="pointer-events-auto flex items-center gap-4 ${activeTheme.bg} ${activeTheme.border} p-5 pr-10 rounded-2xl shadow-2xl animate-fade-in relative overflow-hidden min-w-[320px]">
+                <div class="flex-none w-10 h-10 ${activeTheme.iconWrapper} rounded-full flex items-center justify-center">
+                    <i class="fas ${activeTheme.icon}"></i>
                 </div>
                 <div>
-                    <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-0.5">System Message</p>
-                    <p class="text-sm font-bold text-slate-700">${message}</p>
+                    <p class="text-[10px] uppercase tracking-widest mb-0.5 ${activeTheme.meta}">System Message</p>
+                    <p class="text-sm font-bold ${activeTheme.text}">${message}</p>
                 </div>
-                <div class="absolute bottom-0 left-0 h-1 bg-slate-100 w-full">
-                    <div class="h-full bg-slate-200 transition-all ease-linear w-full" id="progress-${toastId}" style="transition-duration: ${duration}ms"></div>
+                <div class="absolute bottom-0 left-0 h-1 bg-slate-100/10 w-full">
+                    <div class="h-full bg-current opacity-30 transition-all ease-linear w-full" id="progress-${toastId}" style="transition-duration: ${duration}ms"></div>
                 </div>
             </div>
         `;
 
         container.insertAdjacentHTML('beforeend', html);
+        
+        // Sinkronisasi animasi progress bar penyusutan waktu
         setTimeout(() => {
-            if (document.getElementById(`progress-${toastId}`)) document.getElementById(`progress-${toastId}`).style.width = '0%';
+            const pb = document.getElementById(`progress-${toastId}`);
+            if (pb) pb.style.width = '0%';
         }, 10);
+
+        // Alur penghapusan komponen dari hirarki pohon DOM (Garbage Collection)
         setTimeout(() => {
             const el = document.getElementById(toastId);
             if (el) {
@@ -111,6 +143,8 @@
             let updated = current.filter(item => item.id != id);
             localStorage.setItem(CART_KEY, JSON.stringify(updated));
             this.render();
+            
+            // Memicu toast dengan parameter 'info' yang kini telah dikonfigurasi berlatar gelap kontras tinggi
             showToast(`${judul} dihapus dari keranjang.`, 'info');
         },
 
@@ -154,14 +188,13 @@
             const safeTitle = item.judul_buku.replace(/'/g, "\\'");
             return `
                 <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-6 group hover:border-ep-green transition-all duration-300">
-                    <img src="${item.gambar}" class="w-20 h-28 object-cover rounded-xl shadow-md group-hover:scale-105 transition-transform">
+                    <img src="${item.gambar}" class="w-20 h-28 object-cover rounded-xl shadow-md group-hover:scale-105 transition-transform" alt="${item.judul_buku}">
                     <div class="flex-grow">
                         <span class="text-[9px] font-black text-ep-green uppercase tracking-[0.2em] mb-1 block">${item.kategori || 'Digital Book'}</span>
                         <h4 class="font-bold text-slate-800 leading-tight">${item.judul_buku}</h4>
                         <p class="text-xs text-slate-400 mt-1">${item.penulis}</p>
                         <div class="mt-4 font-black text-slate-900">${this.formatIDR(item.harga)}</div>
                     </div>
-                    
                     <button onclick="CartEngine.removeItem('${item.id}', '${safeTitle}')" 
                             class="px-6 py-2.5 bg-[#e52828] hover:bg-red-700 text-white text-sm font-bold rounded-full shadow-lg shadow-red-500/30 transition-all active:scale-95 flex items-center justify-center min-w-[90px]">
                         Hapus
@@ -212,7 +245,6 @@
             });
 
             const result = await response.json();
-            console.log(result)
             if (result.status === 'success') {
                 localStorage.removeItem(CART_KEY);
                 window.location.href = result.redirect_url;
@@ -226,6 +258,5 @@
         }
     }
 
-    // Initialization
     document.addEventListener('DOMContentLoaded', () => CartEngine.render());
 </script>
