@@ -182,10 +182,8 @@
                     Login here
                 </a>
             </p>
-
         </div>
     </div>
-
 </div>
 
 </body>

@@ -55,6 +55,7 @@ $route['default_controller'] = 'welcome';
 $route['terpopuler'] = 'pages/terpopuler';
 $route['about'] = 'pages/about';
 $route['keranjang'] = 'pages/keranjang';
+$route['payments/execute_payment'] = 'Payment/execute_payment';
 $route['payments/(:any)'] = 'pages/payment/$1';
 
 
@@ -71,6 +72,11 @@ $route['DaftarUser/tambah_user'] = 'PagesAdmin/TambahUser';
 $route['dashboard/(:num)'] = 'PagesAdmin/dashboard/$1';
 $route['export_csv'] = 'PagesAdmin/ExportCsv';
 
+
+// route daftar transactions untuk admin
+$route['DaftarTransactions/(:num)'] = 'PagesAdmin/DaftarTransactions/$1';
+$route['DaftarTransactions/edit/(:any)'] = 'PagesAdmin/EditTransactions/$1';
+$route['DaftarTransactions/update_status/(:any)/(:any)'] = 'PagesAdmin/UpdateStatus/$1/$2';
 
 
 $route['DaftarUser/(:num)'] = 'UserController/DaftarUser/$1';
@@ -94,6 +100,7 @@ $route['transaction/(:num)'] = 'transaction/index/$1';
 $route['transactions/create'] = 'transaction/create';
 $route['transactions/index/(:any)'] = 'transaction/show/$1';
 
+// route Payments
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
