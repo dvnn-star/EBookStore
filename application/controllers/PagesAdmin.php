@@ -91,10 +91,10 @@ class PagesAdmin extends CI_Controller
     }
     public function DaftarTransactions()
     {
-        $config['base_url']   = base_url('admin/daftartransactions');
+        $config['base_url']   = base_url('DaftarTransactions');
         $config['total_rows'] = $this->TransactionModel->count_all_transactions();
         $config['per_page']   = 10;
-        $config['uri_segment'] = 3; // Sesuaikan dengan posisi angka di URL
+        $config['uri_segment'] = 2; // Sesuaikan dengan posisi angka di URL
         $config['reuse_query_string'] = TRUE;
 
         $config['full_tag_open']    = '<nav class="flex items-center space-x-2">';
@@ -110,7 +110,7 @@ class PagesAdmin extends CI_Controller
         $this->pagination->initialize($config);
 
 
-        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
 
         $data['transactions'] = $this->TransactionModel->GetPaginationTransactions($config['per_page'], $page);
         $data['pagination'] = $this->pagination->create_links();
@@ -150,6 +150,7 @@ class PagesAdmin extends CI_Controller
 
         $header = array("ID", "User ID", "Status", "Kode Transaksi", "Total Bayar", "Tanggal", "Username");
         fputcsv($file, $header);
+        // 2. Tabel Pondasi Utama
 
         foreach ($transactions as $line) {
             $row = (array) $line;
@@ -159,5 +160,29 @@ class PagesAdmin extends CI_Controller
         fclose($file);
 
         exit;
+    }
+
+    // untuk edit transaksi 
+    public function EditTransactions($slug)
+    {
+        $data['details'] = $this->TransactionModel->Get3TableJoin($slug);
+        $this->load->view('admin/edittransaksi', $data);
+    }
+    public function UpdateStatus($kode_transaksi, $status)
+    {
+        if (!in_array($status, ['success', 'failed'])) {
+            show_error("Aksi tidak valid.", 400);
+        }
+
+        $this->load->model('TransactionModel');
+
+        // 2. Eksekusi update di model
+        $proses = $this->TransactionModel->ChangeStatus($kode_transaksi, $status);
+
+        if ($proses) {
+            redirect('DaftarTransactions/');
+        } else {
+            show_error("Gagal memperbarui transaksi. Transaksi mungkin sudah diproses sebelumnya.", 500);
+        }
     }
 }
