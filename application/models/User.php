@@ -13,7 +13,7 @@ class User extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('users');
-        $this->db->where('id !=',$this->session->userdata('user_id'));
+        $this->db->where('id !=', $this->session->userdata('user_id'));
         $query = $this->db->get();
         return $query->result();
     }
@@ -46,6 +46,6 @@ class User extends CI_Model
             ->limit(1)
             ->get('users')
             ->row();
-    return $user;
+        return $user;
     }
 }
