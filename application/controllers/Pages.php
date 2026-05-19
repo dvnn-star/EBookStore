@@ -64,13 +64,15 @@ class Pages extends CI_Controller
     }
     public function payment($slug)
     {
-      
         $this->load->model('TransactionModel');
         $transactions = $this->TransactionModel->GetTransactionRecord($slug);
         if (!$transactions or $transactions->user_id !=  $this->session->userdata('user_id')) {
             show_error('unathorized', 401);
         }
-        
+        if ($transactions->status == 'success') {
+            show_error('pembayaran berhasil', 404);
+        }
+
         $data['transaction'] = $transactions;
         $data['details'] = $this->db->select('
         transactions_detail.qty,
@@ -78,8 +80,8 @@ class Pages extends CI_Controller
         Buku.judul_buku,
         Buku.penulis,
         Buku.harga')
-        ->from('transactions_detail')
-        ->join('Buku', 'Buku.id = transactions_detail.buku_id', 'inner') ->where('transactions_detail.transactions_id', $transactions->id)->get()->result();
+            ->from('transactions_detail')
+            ->join('Buku', 'Buku.id = transactions_detail.buku_id', 'inner')->where('transactions_detail.transactions_id', $transactions->id)->get()->result();
 
         $this->load->view('payments/index', $data);
     }

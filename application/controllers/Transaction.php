@@ -49,49 +49,56 @@ class Transaction extends CI_Controller
     public function create()
 
     {
-        if ($this->input->method() !== 'post') {
+        $user_id = $this->session->userdata('user_id');
+        $items = json_decode($this->input->post('cart_data'), true);
+
+        if (!$items || !is_array($items)) {
+            return error('Data tidak valid');
+        }
+
+        // ambil semua id
+        $buku_ids = array_column($items, 'buku_id');
+
+        $pending = $this->TransactionModel->HasPendingBook($user_id, $buku_ids);
+
+        if (!empty($pending)) {
             return $this->output
                 ->set_content_type('application/json')
                 ->set_output(json_encode([
                     'status' => 'error',
-                    'message' => 'Methode tidak cocok'
+                    'message' => 'Masih ada buku yang pending',
+                    'redirect_url' => base_url('EBookStore/transaction/')
                 ]));
         }
-        $items = json_decode($this->input->post('cart_data'), true);
-        $user_id = $this->session->userdata('user_id');
-        if (!$items || !is_array($items)) {
-            return $this->output
-                ->set_content_type('application/json')
-                ->set_output(json_encode([
-                    'status' => 'error',
-                    'message' => 'Buku tidak ditemukan'
-                ]));
+        // ambil semua buku sekaligus
+        $books = $this->db->where_in('id', $buku_ids)->get('Buku')->result();
+
+        // mapping
+        $bookMap = [];
+        foreach ($books as $b) {
+            $bookMap[$b->id] = $b;
         }
 
         $total = 0;
         $details = [];
 
         foreach ($items as $item) {
-            $book = $this->db->get_where('Buku', [
-                'id' => $item['buku_id']
-            ])->row();
-            if (!$book) {
-                return $this->output
-                    ->set_content_type('application/json')
-                    ->set_output(json_encode([
-                        'status' => 'error',
-                        'message' => 'Buku tidak ditemukan'
-                    ]));
+            if (!isset($bookMap[$item['buku_id']])) {
+                return error('Buku tidak ditemukan');
             }
-            $subtotal = $book->harga * $item['qty'];
+
+            $book = $bookMap[$item['buku_id']];
+            $qty = max(1, (int)$item['qty']);
+
+            $subtotal = $book->harga * $qty;
             $total += $subtotal;
-            $details[] =  [
+
+            $details[] = [
                 'buku_id' => $book->id,
-                'qty' => $item['qty'],
+                'qty' => $qty,
                 'harga_beli' => $book->harga
             ];
         }
-
         try {
             // menggunakan transaction
             $this->db->trans_start();
