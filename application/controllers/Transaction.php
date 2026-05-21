@@ -158,4 +158,28 @@ class Transaction extends CI_Controller
         $data['kode_transaksi'] = $slug;
         $this->load->view('pages/transactionshow', $data);
     }
+    public function updatestatus()
+    {
+        $this->load->model('TransactionModel');
+        $kode_transaksi = $this->input->post('kode_transaksi');
+        $proses = $this->TransactionModel->ChangeStatus($kode_transaksi, 'failed');
+
+        if ($proses) {
+            return $this->output
+                ->set_status_header(200)
+                ->set_content_type('application/json')
+                ->set_output(json_encode([
+                    'status' => 'success',
+                    'message' => 'berhasil diubah'
+                ]));
+        } else {
+            return $this->output
+                ->set_status_header(422)
+                ->set_content_type('application/json')
+                ->set_output(json_encode([
+                    'status' => 'error',
+                    'message' => 'gagal update'
+                ]));
+        }
+    }
 }

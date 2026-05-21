@@ -11,7 +11,7 @@ class PagesAdmin extends CI_Controller
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
         }
-        if (!$this->session->userdata('role') === 'admin') {
+        if ($this->session->userdata('role') !== 'admin') {
             show_error('You do not have permission to access this resource.', 403);
         }
         if (ENVIRONMENT !== 'development' && !is_cli()) {
@@ -21,6 +21,7 @@ class PagesAdmin extends CI_Controller
     // Untuk admin
     public function dashboard()
     {
+    
         $config['base_url']   = base_url('dashboard');
         $config['total_rows'] = $this->TransactionModel->count_all_transactions();
         $config['per_page']   = 10;
