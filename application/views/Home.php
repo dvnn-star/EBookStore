@@ -1,4 +1,5 @@
 <?php
+
 $this->load->view('templates/header.php');
 $this->load->view('components/navbar');
 $this->load->view('components/hero');

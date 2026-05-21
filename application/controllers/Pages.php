@@ -68,7 +68,7 @@ class Pages extends CI_Controller
         $transactions = $this->TransactionModel->GetTransactionRecord($slug);
         if (!$transactions or $transactions->user_id !=  $this->session->userdata('user_id')) {
             show_error('unathorized', 401);
-        }
+        } 
         if ($transactions->status == 'success') {
             show_error('pembayaran berhasil', 404);
         }
@@ -85,4 +85,15 @@ class Pages extends CI_Controller
 
         $this->load->view('payments/index', $data);
     }
+    public function mybooks($slug)
+    {
+        $this->load->model('User_libraries');
+        if ($this->session->userdata('user_id') != $slug){
+            show_error('gabisa brow',403);
+        }
+        $data['books'] = $this->User_libraries->getdatabyuserid($slug);
+
+        $this->load->view('pages/Bukusaya',$data);
+    }
 }
+  

@@ -78,7 +78,7 @@
         <h1>Akses Dilarang, Anjay.</h1>
         <p>Maaf, kamu tidak punya otoritas untuk masuk ke wilayah ini. Silakan kembali ke jalan yang benar atau hubungi admin jika kamu merasa ini kesalahan.</p>
         
-        <a href="<?= config_item('base_url') . 'dashboard' ?>">Kembali</a>
+        <a href="<?= config_item('base_url') . '' ?>">Kembali</a>
     </div>
 
 </body>

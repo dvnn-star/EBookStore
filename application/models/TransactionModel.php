@@ -103,18 +103,15 @@ class TransactionModel extends CI_Model
 
 
 
-        // 2. JIKA ADMIN MAU MENGUBAH JADI SUCCESS, LAKUKAN VALIDASI PROTEKSI LAPIS BAJA
         if ($status === 'success') {
             $items = $this->db->get_where('transactions_detail', ['transactions_id' => $transaksi->id])->result();
 
             foreach ($items as $item) {
-                // Cek apakah buku ini sudah ada di library user akibat transaksi lain yang sudah sukses duluan
                 $this->db->where('user_id', $transaksi->user_id);
                 $this->db->where('buku_id', $item->buku_id);
                 $sudah_punya = $this->db->get('user_libraries')->num_rows();
 
                 if ($sudah_punya > 0) {
-                    // FORCE FAIL: Jika sudah punya, batalkan seluruh transaksi database dan kembalikan false
                     $this->db->trans_rollback();
                     return false;
                 }

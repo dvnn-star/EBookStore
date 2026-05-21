@@ -55,6 +55,7 @@ $route['default_controller'] = 'welcome';
 $route['terpopuler'] = 'pages/terpopuler';
 $route['about'] = 'pages/about';
 $route['keranjang'] = 'pages/keranjang';
+$route['bukusaya/(:any)'] = 'pages/mybooks/$1';
 $route['payments/execute_payment'] = 'Payment/execute_payment';
 $route['payments/(:any)'] = 'pages/payment/$1';
 
@@ -99,7 +100,7 @@ $route['transaction'] = 'transaction/index';
 $route['transaction/(:num)'] = 'transaction/index/$1';
 $route['transactions/create'] = 'transaction/create';
 $route['transactions/index/(:any)'] = 'transaction/show/$1';
-
+$route['transaction/updatestatusfailed']  = 'transaction/updatestatus/';
 // route Payments
 
 $route['404_override'] = '';

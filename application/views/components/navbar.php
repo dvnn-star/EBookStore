@@ -100,6 +100,13 @@
                             <!-- Menu Dropdown -->
                             <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 z-50">
                                 <div class="py-1" role="menu" aria-orientation="vertical">
+                                    <!-- daftar buku saya -->
+                                     <a href="<?= base_url('bukusaya/'.$this->session->userdata('user_id')); ?>" class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors" role="menuitem">
+                                        <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                        </svg>
+                                        Buku saya
+                                    </a>
                                     <!-- Riwayat Transaksi -->
                                     <a href="<?= base_url('transaction/'); ?>" class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors" role="menuitem">
                                         <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

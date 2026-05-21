@@ -10,7 +10,7 @@
             if (!$this->session->userdata('logged_in')) {
                 redirect('login');
             }
-            if (!$this->session->userdata('role') === 'admin') {
+            if ($this->session->userdata('role') !== 'admin') {
                 show_error('You do not have permission to access this resource.', 403);
             }
             // Proteksi: Hanya bisa dijalankan di mode development atau CLI
