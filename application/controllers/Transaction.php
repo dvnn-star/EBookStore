@@ -49,6 +49,7 @@ class Transaction extends CI_Controller
     public function create()
 
     {
+        $this->load->model('User_libraries');
         $user_id = $this->session->userdata('user_id');
         $items = json_decode($this->input->post('cart_data'), true);
 
@@ -59,6 +60,16 @@ class Transaction extends CI_Controller
         // ambil semua id
         $buku_ids = array_column($items, 'buku_id');
 
+        $already_owned = $this->User_libraries->userlibraryjoin($user_id, $buku_ids);
+        if (!empty($already_owned)) {
+            $judul_terbeli = array_column($already_owned, 'judul_buku');
+            return $this->output
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'status' => 'error',
+                    'message' => 'Gagal! Buku berikut sudah Anda miliki: ' . implode(', ', $judul_terbeli)
+                ]));
+        }
         $pending = $this->TransactionModel->HasPendingBook($user_id, $buku_ids);
 
         if (!empty($pending)) {
