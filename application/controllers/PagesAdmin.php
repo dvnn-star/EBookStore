@@ -183,7 +183,7 @@ class PagesAdmin extends CI_Controller
         if ($proses) {
             redirect('DaftarTransactions/');
         } else {
-            show_error("Gagal memperbarui transaksi. Transaksi mungkin sudah diproses sebelumnya.", 500);
+            show_error("Gagal memperbarui transaksi. Transaksi mungkin sudah diproses sebelumnya kemungkinan transaksinya failed.", 500);
         }
     }
 }
