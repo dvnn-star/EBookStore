@@ -19,11 +19,11 @@ $footerData = [
         'Beranda'      => '', // Sesuaikan dengan controller utama Anda
         'Kategori'     => 'kategori', // Ganti dengan nama controller kategori Anda
         'Terpopuler'   => 'terpopuler',
-        'Tentang Kami' => 'about'],
+        'Tentang Kami' => 'tentang'],
 
     'Kategori' => [
         // Format: 'NAMA_CONTROLLER/index#sec-ID_KATEGORI'
-        // Sesuaikan 'kategori' dengan nama controller tempat form kategori Anda berada
+        // Sesuaikan 'kategori' dengan nama controller tempat form kategori Anda beradac
         'Sejarah'          => 'kategori#sec-sejarah',
         'Bisnis & Ekonomi' => 'kategori#sec-bisnis&ekonomi',
         'Edukasi'          => 'kategori#sec-edukasi',
