@@ -4,6 +4,7 @@
  * Strategi memetakan data relasional linear (flat array dari database) menjadi 
  * struktur data pohon (tree/nested associative array) di layer presentasi.
  */
+define('BOOK_IMAGE_PATH', 'assets/images/Buku/');
 $semua_buku = isset($semua_buku) ? $semua_buku : [];
 $koleksi_buku = [];
 $judul_referensi = [
@@ -107,7 +108,7 @@ foreach ($semua_buku as $item) {
                         
                         <!-- ASPRATIO BLOCK: Mengunci dimensi layout gambar via aspect ratio untuk mencegah layout shifting (CLS) saat rendering -->
                         <div class="relative aspect-[3/4.5] mb-5 overflow-hidden rounded-xl bg-slate-100 shadow-inner">
-                            <img src="<?= htmlspecialchars($book['gambar'] ?? '') ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 z-10" alt="<?= htmlspecialchars($book['judul_buku']) ?>">
+                            <img src="<?= BOOK_IMAGE_PATH . htmlspecialchars($book['gambar'] ?? '') ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 z-10" alt="<?= htmlspecialchars($book['judul_buku']) ?>">
                         </div>
                         <div class="flex-grow flex flex-col">
                             <h3 class="font-bold text-slate-800 text-sm line-clamp-2 min-h-[2.5rem] leading-snug"><?= htmlspecialchars($book['judul_buku']) ?></h3>
