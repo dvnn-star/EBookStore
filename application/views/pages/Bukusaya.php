@@ -86,10 +86,9 @@
 
     </main>
 
-    <?php
+</body>
+
+<?php
         $this->load->view('components/Footer');
     ?>
-
-
-</body>
-</html> 
+</html>
