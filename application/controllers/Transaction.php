@@ -186,7 +186,7 @@ class Transaction extends CI_Controller
                 ->set_content_type('application/json')
                 ->set_output(json_encode([
                     'status' => 'success',
-                    'message' => 'berhasil diubah'
+                    'message' => 'berhasil diubah'  
                 ]));
         } else {
             return $this->output
