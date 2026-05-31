@@ -163,6 +163,7 @@ class Transaction extends CI_Controller
     public function show($slug)
     {
         $id = $this->TransactionModel->GetId($slug);
+        $status = $this->input->post('status');
         $data['details'] = $this->db->select('
         transactions_detail.qty,
         transactions_detail.harga_beli,
@@ -172,6 +173,7 @@ class Transaction extends CI_Controller
             ->from('transactions_detail')
             ->join('Buku', 'Buku.id = transactions_detail.buku_id', 'inner')->where('transactions_detail.transactions_id', $id->id)->get()->result();
         $data['kode_transaksi'] = $slug;
+        $data['status'] = $status;
         $this->load->view('pages/transactionshow', $data);
     }
     public function updatestatus()
