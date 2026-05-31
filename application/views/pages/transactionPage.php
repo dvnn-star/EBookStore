@@ -1,8 +1,10 @@
-<?php $this->load->view('components/navbar'); ?>
+<?php $this->load->view('components/navbar');
+?>
+
 
 <main class="min-h-screen bg-[#F8F9FA] text-[#2C3E50] py-12 px-4 md:px-8">
     <div class="max-w-5xl mx-auto">
-        
+
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
                 <h1 class="text-3xl font-black text-[#2C3E50] tracking-tight">
@@ -10,7 +12,7 @@
                 </h1>
                 <p class="text-[#2C3E50]/70 mt-1 text-sm font-medium">Pantau status pesanan dan unduh e-book Anda.</p>
             </div>
-            
+
             <div class="inline-flex bg-white p-1 rounded-xl border border-[#2C3E50]/10 shadow-sm">
                 <button class="px-4 py-2 text-xs font-bold bg-[#F8F9FA] text-[#005B52] rounded-lg">Semua</button>
                 <button class="px-4 py-2 text-xs font-bold text-[#2C3E50]/60 hover:text-[#005B52]">Pending</button>
@@ -21,29 +23,29 @@
         <div id="transaction-container" class="space-y-4">
             <?php if (!empty($transaction)): ?>
                 <?php foreach ($transaction as $row): ?>
-                    <?php 
-                        $status = strtolower($row->status);
-                        $styles = [
-                            'success' => 'bg-emerald-50 text-emerald-600 border-emerald-100',
-                            'pending' => 'bg-[#E67E22]/10 text-[#E67E22] border-[#E67E22]/20',
-                            'failed'  => 'bg-red-50 text-red-600 border-red-100'
-                        ];
-                        $labels = ['success' => 'Berhasil', 'pending' => 'Menunggu', 'failed' => 'Gagal'];
-                        
-                        $current_style = $styles[$status] ?? 'bg-[#F8F9FA] text-[#2C3E50]/50 border-[#2C3E50]/10';
-                        $current_label = $labels[$status] ?? $status;
+                    <?php
+                    $status = strtolower($row->status);
+                    $styles = [
+                        'success' => 'bg-emerald-50 text-emerald-600 border-emerald-100',
+                        'pending' => 'bg-[#E67E22]/10 text-[#E67E22] border-[#E67E22]/20',
+                        'failed'  => 'bg-red-50 text-red-600 border-red-100'
+                    ];
+                    $labels = ['success' => 'Berhasil', 'pending' => 'Menunggu', 'failed' => 'Gagal'];
+
+                    $current_style = $styles[$status] ?? 'bg-[#F8F9FA] text-[#2C3E50]/50 border-[#2C3E50]/10';
+                    $current_label = $labels[$status] ?? $status;
                     ?>
 
                     <div id="card-trx-<?= $row->kode_transaksi ?>" class="transaction-card bg-white border border-[#2C3E50]/10 p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-[#005B52]/20 transition-all duration-500">
                         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                            
+
                             <div class="flex items-center space-x-5">
                                 <div class="w-12 h-12 flex items-center justify-center bg-[#F8F9FA] rounded-xl border border-[#2C3E50]/5">
                                     <svg class="w-6 h-6 text-[#2C3E50]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                                     </svg>
                                 </div>
-                                
+
                                 <div>
                                     <div class="flex items-center gap-2">
                                         <span class="text-xs font-mono font-bold text-[#2C3E50]/40 uppercase">#<?= $row->kode_transaksi ?></span>
@@ -60,27 +62,27 @@
                                 <span class="text-lg font-black text-[#2C3E50]">
                                     Rp <?= number_format($row->total_bayar, 0, ',', '.'); ?>
                                 </span>
-                                
+
                                 <span id="badge-<?= $row->kode_transaksi ?>" class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-all duration-500 <?= $current_style; ?>">
                                     <?= $current_label; ?>
                                 </span>
                             </div>
 
                             <div class="border-t border-[#F8F9FA] md:border-t-0 pt-4 md:pt-0 flex items-center gap-3 justify-end">
-                                
+
                                 <div id="action-buttons-<?= $row->kode_transaksi ?>" class="flex items-center gap-3">
                                     <?php if ($status === 'pending'): ?>
-                                        <button onclick="openCancelModal('<?= $row->kode_transaksi ?>')" 
-                                                class="inline-flex items-center justify-center px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-red-600/10 active:scale-95 whitespace-nowrap">
+                                        <button onclick="openCancelModal('<?= $row->kode_transaksi ?>')"
+                                            class="inline-flex items-center justify-center px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-red-600/10 active:scale-95 whitespace-nowrap">
                                             Batalkan Pembelian
                                         </button>
                                     <?php endif; ?>
                                 </div>
 
-                                <a href="<?= base_url('transactions/index/' . $row->kode_transaksi); ?>" 
-                                   class="inline-flex items-center justify-center px-6 py-2.5 bg-[#005B52] rounded-xl hover:bg-[#00443d] text-white text-xs font-bold transition-all shadow-md shadow-[#005B52]/10 active:scale-95 whitespace-nowrap">
+                                <button onclick="goToDetail('<?= $row->kode_transaksi ?>', '<?= $status ?>')"
+                                    class="inline-flex items-center justify-center px-6 py-2.5 bg-[#005B52] rounded-xl hover:bg-[#00443d] text-white text-xs font-bold transition-all shadow-md shadow-[#005B52]/10 active:scale-95 whitespace-nowrap">
                                     Detail Transaksi
-                                </a>
+                                </button>
                             </div>
 
                         </div>
@@ -140,11 +142,11 @@
     function showToast(message, type = 'success') {
         const container = document.getElementById('toast-container');
         if (!container) return;
-        
+
         const toastId = 'toast-' + Date.now();
         const colorClass = type === 'success' ? 'border-red-600 text-red-600' : 'border-slate-400 text-slate-500';
         const iconClass = type === 'success' ? 'fa-minus-circle' : 'fa-info-circle';
-        
+
         const toastHTML = `
             <div id="${toastId}" class="pointer-events-auto flex items-center gap-4 bg-white border-l-4 ${colorClass} p-5 pr-10 rounded-2xl shadow-2xl shadow-slate-200/50 transition-all duration-500 transform translate-x-0 overflow-hidden min-w-[320px]">
                 <div class="flex-none w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center">
@@ -159,17 +161,17 @@
                 </div>
             </div>
         `;
-        
+
         container.insertAdjacentHTML('beforeend', toastHTML);
         const toastElement = document.getElementById(toastId);
-        
+
         setTimeout(() => {
             const progressBar = document.getElementById(`progress-${toastId}`);
-            if(progressBar) progressBar.style.width = '0%';
+            if (progressBar) progressBar.style.width = '0%';
         }, 10);
-        
+
         setTimeout(() => {
-            if(toastElement) {
+            if (toastElement) {
                 toastElement.classList.add('opacity-0', 'translate-x-10');
                 setTimeout(() => toastElement.remove(), 500);
             }
@@ -218,37 +220,57 @@
         const formData = new FormData();
         formData.append('kode_transaksi', kodeTransaksi);
 
-        fetch(targetUrl, { 
-            method: 'POST',
-            body: formData 
-        })
-        .then(response => {
-            if (!response.ok) throw new Error('HTTP error');
-            return response.json();
-        })
-        .then(data => {
-            if (data.status === 'success') {
-                showToast(`Pesanan #${kodeTransaksi} telah dibatalkan.`, 'success');
-                
-                // Ubah gaya visual Badge status secara realtime menjadi 'Gagal'
-                const badge = document.getElementById('badge-' + kodeTransaksi);
-                if (badge) {
-                    badge.className = "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-all duration-500 bg-red-50 text-red-600 border-red-100";
-                    badge.innerText = "Gagal";
-                }
+        fetch(targetUrl, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('HTTP error');
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    showToast(`Pesanan #${kodeTransaksi} telah dibatalkan.`, 'success');
 
-                // Kosongkan pembungkus aksi agar tombol "Batalkan Pembelian" hilang sepenuhnya
-                const btnWrapper = document.getElementById('action-buttons-' + kodeTransaksi);
-                if (btnWrapper) {
-                    btnWrapper.innerHTML = ''; 
+                    // Ubah gaya visual Badge status secara realtime menjadi 'Gagal'
+                    const badge = document.getElementById('badge-' + kodeTransaksi);
+                    if (badge) {
+                        badge.className = "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-all duration-500 bg-red-50 text-red-600 border-red-100";
+                        badge.innerText = "Gagal";
+                    }
+
+                    // Kosongkan pembungkus aksi agar tombol "Batalkan Pembelian" hilang sepenuhnya
+                    const btnWrapper = document.getElementById('action-buttons-' + kodeTransaksi);
+                    if (btnWrapper) {
+                        btnWrapper.innerHTML = '';
+                    }
+                } else {
+                    showToast(data.message || 'Gagal merubah status.', 'info');
                 }
-            } else {
-                showToast(data.message || 'Gagal merubah status.', 'info');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showToast('Sistem gagal memproses pembatalan.', 'info');
-        });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast('Sistem gagal memproses pembatalan.', 'info');
+            });
+    }
+
+    function goToDetail(kodeTransaksi, statusTransaksi) {
+        // 1. Buat elemen form dinamis
+        const form = document.createElement('form');
+        form.method = 'POST';
+
+        // SUNTIKKAN KODE TRANSAKSI SEBAGAI SLUG DI URL ACTION
+        form.action = "<?= base_url('transactions/index/') ?>" + kodeTransaksi;
+
+        // 2. Tambahkan input hidden HANYA untuk 'status'
+        const inputStatus = document.createElement('input');
+        inputStatus.type = 'hidden';
+        inputStatus.name = 'status'; // Namanya tetap 'status'
+        inputStatus.value = statusTransaksi; // Berisi 'pending'/'success'/'failed'
+        form.appendChild(inputStatus);
+
+        // 3. Submit form ke backend
+        document.body.appendChild(form);
+        form.submit();
     }
 </script>

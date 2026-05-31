@@ -84,7 +84,7 @@ $sessions = $this->session->all_userdata();
                 <div class="bg-white border border-neutral-200 rounded-3xl shadow-sm overflow-hidden">
                     <div class="px-8 py-6 border-b border-neutral-100 flex items-center justify-between">
                         <h3 class="font-bold text-[#1F2937] text-lg">Recent Transactions</h3>
-                        <a href="<?= base_url('transactions') ?>" class="text-sm font-bold text-[#005B52] hover:text-[#00443d]">View All</a>
+                        <a href="<?= base_url('DaftarTransactions') ?>" class="text-sm font-bold text-[#005B52] hover:text-[#00443d]">View All</a>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
