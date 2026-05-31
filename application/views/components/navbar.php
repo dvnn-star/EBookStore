@@ -7,28 +7,11 @@
     <title>E-PUSTAKA - Toko Buku Digital</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
         }
-
-        .bg-primary {
-            background-color: #0E6D64;
-        }
-
-        .text-primary {
-            color: #0E6D64;
-        }
-
-        .bg-accent {
-            background-color: #FF8C00;
-        }
-
-        .hover-accent:hover {
-            background-color: #e67e00;
-        }
-
-        /* Transisi smooth untuk navbar */
         nav {
             transition: all 0.3s ease-in-out;
         }
@@ -36,160 +19,179 @@
 </head>
 
 <body class="bg-gray-50 text-gray-800">
-    <nav class="bg-white shadow-sm sticky top-0 z-50 transition-all duration-300">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+    <nav class="bg-white/95 border-b border-slate-100 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
 
-            <div class="text-2xl font-bold text-[#0E6D64] cursor-pointer shrink-0" onclick="window.location.href='<?= base_url(); ?>'">
-                E-PUSTAKA
-            </div>
-
-            <div class="md:hidden flex items-center">
-                <button id="menu-btn" class="text-[#0E6D64] focus:outline-none">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                    </svg>
-                </button>
-            </div>
-
-            <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white flex-col p-6 shadow-xl md:static md:flex md:flex-row md:justify-between md:items-center md:flex-1 md:ml-10 md:p-0 md:shadow-none font-medium">
-
-                <div class="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-8 mb-6 md:mb-0">
-                    <?php $current_page = $this->uri->segment(1); ?>
-                    <a href="<?= base_url(); ?>" class="nav-link <?= ($current_page == '' || $current_page == 'beranda') ? 'text-[#0E6D64] border-b-2 border-[#0E6D64]' : 'text-gray-500'; ?> hover:text-[#0E6D64] transition-all duration-300 py-2 md:py-0 w-fit">Beranda</a>
-                    <a href="<?= base_url('kategori'); ?>" class="nav-link <?= ($current_page == 'kategori') ? 'text-[#0E6D64] border-b-2 border-[#0E6D64]' : 'text-gray-500'; ?> hover:text-[#0E6D64] transition-all duration-300 py-2 md:py-0 w-fit">Kategori</a>
-                    <a href="<?= base_url('terpopuler'); ?>" class="nav-link <?= ($current_page == 'terpopuler') ? 'text-[#0E6D64] border-b-2 border-[#0E6D64]' : 'text-gray-500'; ?> hover:text-[#0E6D64] transition-all duration-300 py-2 md:py-0 w-fit">Terpopuler</a>
-                    <a href="<?= base_url('about'); ?>" class="nav-link <?= ($current_page == 'about') ? 'text-[#0E6D64] border-b-2 border-[#0E6D64]' : 'text-gray-500'; ?> hover:text-[#0E6D64] transition-all duration-300 py-2 md:py-0 w-fit">Tentang Kami</a>
+                <div class="text-2xl font-black text-[#0E6D64] tracking-tight cursor-pointer shrink-0" onclick="window.location.href='<?= base_url(); ?>'">
+                    E-<span class="text-[#FF8C00]">PUSTAKA</span>
                 </div>
 
-                <div class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-4 border-t border-gray-100 md:border-none pt-6 md:pt-0">
-                    <div class="relative w-full md:w-auto">
-                        <input type="text" placeholder="Cari buku..." class="w-full pl-10 pr-4 py-2 border rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-[#0E6D64] md:w-64">
-                        <svg class="w-4 h-4 absolute left-3 top-2.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-                        </svg>
+                <div class="hidden md:flex items-center space-x-8 font-semibold text-sm">
+                    <?php $current_page = $this->uri->segment(1); ?>
+                    <a href="<?= base_url(); ?>" class="<?= ($current_page == '' || $current_page == 'beranda') ? 'text-[#0E6D64]' : 'text-slate-500 hover:text-[#0E6D64]'; ?> transition-colors py-2">Beranda</a>
+                    <a href="<?= base_url('kategori'); ?>" class="<?= ($current_page == 'kategori') ? 'text-[#0E6D64]' : 'text-slate-500 hover:text-[#0E6D64]'; ?> transition-colors py-2">Kategori</a>
+                    <a href="<?= base_url('terpopuler'); ?>" class="<?= ($current_page == 'terpopuler') ? 'text-[#0E6D64]' : 'text-slate-500 hover:text-[#0E6D64]'; ?> transition-colors py-2">Terpopuler</a>
+                    <a href="<?= base_url('about'); ?>" class="<?= ($current_page == 'about') ? 'text-[#0E6D64]' : 'text-slate-500 hover:text-[#0E6D64]'; ?> transition-colors py-2">Tentang Kami</a>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    
+                    <div class="relative hidden lg:block">
+                        <input type="text" placeholder="Cari buku..." class="w-64 pl-10 pr-4 py-2 border border-slate-200 rounded-xl text-xs font-medium bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#0E6D64]/20 focus:border-[#0E6D64] transition-all">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
                     </div>
 
-                    <a href="<?= $this->session->userdata('logged_in') ? base_url('keranjang') : base_url('login'); ?>" class="flex items-center space-x-3 md:space-x-0 text-[#0E6D64] hover:text-[#FF8C00] transition-colors group w-full md:w-auto">
-                        <div class="relative flex items-center justify-center">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-                        </div>
-                        <span class="md:hidden font-medium text-gray-500 group-hover:text-[#FF8C00] transition-colors">Keranjang</span>
+                    <a href="<?= $this->session->userdata('logged_in') ? base_url('keranjang') : base_url('login'); ?>" class="relative p-2.5 bg-slate-50 text-[#0E6D64] hover:bg-[#0E6D64] hover:text-white rounded-xl transition-all group">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
                     </a>
 
                     <?php if ($this->session->userdata('logged_in')) : ?>
-                        <div class="relative inline-block text-left">
-                            <button id="dropdownButton" class="flex items-center space-x-2 focus:outline-none group">
-                                <span class="text-[#0E6D64] font-medium truncate max-w-[150px] md:max-w-xs">
+                        <div class="relative hidden md:inline-block text-left">
+                            <button id="dropdownButton" class="flex items-center space-x-2 p-2 px-3 border border-slate-100 hover:bg-slate-50 rounded-xl focus:outline-none transition-colors group">
+                                <span class="text-[#0E6D64] font-bold text-xs truncate max-w-[120px]">
                                     Halo, <?= htmlspecialchars($this->session->userdata('username')); ?>
                                 </span>
-                                <svg class="w-4 h-4 text-[#0E6D64] transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                </svg>
+                                <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform duration-200 group-hover:rotate-180"></i>
                             </button>
 
-                            <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 z-50">
-                                <div class="py-1" role="menu" aria-orientation="vertical">
-                                    
-                                    <a href="<?= base_url('bukusaya/'.$this->session->userdata('user_id')); ?>" class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors" role="menuitem">
-                                        <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                                        </svg>
-                                        Buku saya
+                            <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-52 bg-white border border-slate-100 rounded-2xl shadow-2xl p-2 z-50 animate-slide-in">
+                                <a href="<?= base_url('bukusaya/'.$this->session->userdata('user_id')); ?>" class="flex items-center px-4 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-[#0E6D64] rounded-xl transition-colors">
+                                    <i class="fa-solid fa-book-bookmark mr-3 text-slate-400 text-sm w-4"></i>Buku Saya
+                                </a>
+                                <a href="<?= base_url('transaction/'); ?>" class="flex items-center px-4 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-[#0E6D64] rounded-xl transition-colors">
+                                    <i class="fa-solid fa-clock-rotate-left mr-3 text-slate-400 text-sm w-4"></i>Riwayat Transaksi
+                                </a>
+                                <?php if ($this->session->userdata('role') == 'admin'):?>
+                                    <a href="<?= base_url('dashboard/'); ?>" class="flex items-center px-4 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-[#0E6D64] rounded-xl transition-colors">
+                                        <i class="fa-solid fa-chart-pie mr-3 text-slate-400 text-sm w-4"></i>Dashboard
                                     </a>
-
-                                    <a href="<?= base_url('transaction/'); ?>" class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors" role="menuitem">
-                                        <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-                                        Riwayat Transaksi
-                                    </a>
-
-                                    <?php if ($this->session->userdata('role') == 'admin'):?>
-                                    <a href="<?= base_url('dashboard/'); ?>" class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors" role="menuitem">
-                                        <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                                        </svg>
-                                        Dashboard
-                                    </a>
-                                    <?php endif; ?>
-
-                                    <hr class="border-gray-100">
-
-                                    <a href="<?= base_url('auth/logout'); ?>" class="flex items-center px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors font-semibold" role="menuitem">
-                                        <svg class="w-4 h-4 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                                        </svg>
-                                        Keluar
-                                    </a>
-                                </div>
+                                <?php endif; ?>
+                                <hr class="border-slate-100 my-1">
+                                <a href="<?= base_url('auth/logout'); ?>" class="flex items-center px-4 py-3 text-xs font-bold text-red-600 hover:bg-red-50 rounded-xl transition-colors">
+                                    <i class="fa-solid fa-arrow-right-from-bracket mr-3 text-red-500 text-sm w-4"></i>Keluar
+                                </a>
                             </div>
                         </div>
                     <?php else : ?>
-                        <button onclick="window.location.href='<?= base_url('login'); ?>'" class="bg-[#FF8C00] text-white px-6 py-2 rounded-full font-semibold hover:bg-[#e67e00] transition-all shadow-md w-full md:w-auto text-center">
-                            MASUK
+                        <button onclick="window.location.href='<?= base_url('login'); ?>' " class="hidden md:block bg-[#FF8C00] hover:bg-[#e67e00] text-white px-6 h-11 text-xs font-black rounded-xl transition-all shadow-md shadow-[#FF8C00]/10 uppercase tracking-wider">
+                            Masuk
                         </button>
                     <?php endif; ?>
+
+                    <button id="menu-btn" class="md:hidden p-2.5 text-[#0E6D64] bg-slate-50 rounded-xl focus:outline-none hover:bg-slate-100">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <script>
-        const menuBtn = document.querySelector('#menu-btn');
-        const mobileMenu = document.querySelector('#mobile-menu');
-        const navLinks = document.querySelectorAll('.nav-link');
+    <div id="sidebar-backdrop" class="fixed inset-0 z-[100] bg-slate-950/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"></div>
+    
+    <div id="mobile-sidebar" class="fixed top-0 right-0 h-full w-[290px] bg-white z-[101] shadow-2xl p-6 flex flex-col justify-between translate-x-full transition-transform duration-300 ease-out md:hidden">
+        <div>
+            <div class="flex items-center justify-between pb-6 border-b border-slate-100">
+                <span class="text-lg font-black text-[#0E6D64]">E-PUSTAKA</span>
+                <button id="close-btn" class="w-9 h-9 flex items-center justify-center text-slate-400 bg-slate-50 hover:bg-slate-100 rounded-xl">
+                    <i class="fa-solid fa-xmark text-md"></i>
+                </button>
+            </div>
 
-        // 1. Toggle Menu Mobile
-        if (menuBtn && mobileMenu) {
-            menuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                mobileMenu.classList.toggle('flex');
-            });
+            <?php if ($this->session->userdata('logged_in')) : ?>
+                <div class="mt-6 p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center space-x-3">
+                    <div class="w-9 h-9 bg-[#0E6D64] rounded-xl flex items-center justify-center text-white font-bold text-sm uppercase">
+                        <?= substr($this->session->userdata('username'), 0, 1); ?>
+                    </div>
+                    <div class="overflow-hidden">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider leading-none">Selamat Datang,</p>
+                        <p class="text-sm font-bold text-slate-700 mt-0.5 truncate"><?= htmlspecialchars($this->session->userdata('username')); ?></p>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <div class="relative mt-6">
+                <input type="text" placeholder="Cari buku pilihanmu..." class="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl text-xs font-medium bg-slate-50 focus:outline-none">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
+            </div>
+
+            <div class="flex flex-col space-y-1 mt-8">
+                <p class="text-[10px] font-black tracking-widest text-slate-400 uppercase mb-2 px-3">Menu Utama</p>
+                <a href="<?= base_url(); ?>" class="flex items-center px-3 py-3 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-house mr-3 w-5 text-slate-400 text-sm"></i>Beranda</a>
+                <a href="<?= base_url('kategori'); ?>" class="flex items-center px-3 py-3 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-layer-group mr-3 w-5 text-slate-400 text-sm"></i>Kategori</a>
+                <a href="<?= base_url('terpopuler'); ?>" class="flex items-center px-3 py-3 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-fire mr-3 w-5 text-slate-400 text-sm"></i>Terpopuler</a>
+                <a href="<?= base_url('about'); ?>" class="flex items-center px-3 py-3 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-circle-info mr-3 w-5 text-slate-400 text-sm"></i>Tentang Kami</a>
+            </div>
+
+            <?php if ($this->session->userdata('logged_in')) : ?>
+                <div class="flex flex-col space-y-1 mt-6 pt-6 border-t border-slate-100">
+                    <p class="text-[10px] font-black tracking-widest text-slate-400 uppercase mb-2 px-3">Fitur Pengguna</p>
+                    <a href="<?= base_url('bukusaya/'.$this->session->userdata('user_id')); ?>" class="flex items-center px-3 py-3 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-book-bookmark mr-3 w-5 text-slate-400 text-sm"></i>Buku Saya</a>
+                    <a href="<?= base_url('transaction/'); ?>" class="flex items-center px-3 py-3 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-clock-rotate-left mr-3 w-5 text-slate-400 text-sm"></i>Riwayat Transaksi</a>
+                    <?php if ($this->session->userdata('role') == 'admin'):?>
+                        <a href="<?= base_url('dashboard/'); ?>" class="flex items-center px-3 py-3 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-chart-pie mr-3 w-5 text-slate-400 text-sm"></i>Dashboard</a>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <div class="pt-4 border-t border-slate-100">
+            <?php if ($this->session->userdata('logged_in')) : ?>
+                <a href="<?= base_url('auth/logout'); ?>" class="flex items-center justify-center w-full py-3 bg-red-50 hover:bg-red-100 text-red-600 font-bold text-xs rounded-xl transition-all">
+                    <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>Keluar Akun
+                </a>
+            <?php else: ?>
+                <button onclick="window.location.href='<?= base_url('login'); ?>'" class="w-full py-3.5 bg-[#FF8C00] text-white font-bold text-xs rounded-xl transition-all shadow-lg shadow-[#FF8C00]/10 uppercase tracking-wider">
+                    Masuk Aplikasi
+                </button>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const sidebar = document.getElementById('mobile-sidebar');
+        const backdrop = document.getElementById('sidebar-backdrop');
+
+        // Fungsi Buka Sidebar Mobile Drawer
+        function openSidebar() {
+            sidebar.classList.remove('translate-x-full');
+            backdrop.classList.remove('opacity-0', 'pointer-events-none');
+            backdrop.classList.add('opacity-100', 'pointer-events-auto');
+            document.body.style.overflow = 'hidden';
         }
 
-        // 2. Logika Smooth Scroll & Update Active Link
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                navLinks.forEach(l => {
-                    l.classList.remove('text-[#0E6D64]', 'border-b-2', 'border-[#0E6D64]');
-                    l.classList.add('text-gray-500');
-                });
-                this.classList.add('text-[#0E6D64]', 'border-b-2', 'border-[#0E6D64]');
-                this.classList.remove('text-gray-500');
+        // Fungsi Tutup Sidebar Mobile Drawer
+        function closeSidebar() {
+            sidebar.classList.add('translate-x-full');
+            backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+            backdrop.classList.add('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = 'auto';
+        }
 
-                if (window.innerWidth < 768) {
-                    mobileMenu.classList.add('hidden');
-                    mobileMenu.classList.remove('flex');
+        if(menuBtn) menuBtn.addEventListener('click', openSidebar);
+        if(closeBtn) closeBtn.addEventListener('click', closeSidebar);
+        if(backdrop) backdrop.addEventListener('click', closeSidebar);
+
+        // Dropdown Profil Destop System
+        const destopDropdownBtn = document.getElementById('dropdownButton');
+        const destopDropdownMenu = document.getElementById('dropdownMenu');
+
+        if (destopDropdownBtn && destopDropdownMenu) {
+            destopDropdownBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                destopDropdownMenu.classList.toggle('hidden');
+            });
+
+            window.addEventListener('click', () => {
+                if (!destopDropdownMenu.classList.contains('hidden')) {
+                    destopDropdownMenu.classList.add('hidden');
                 }
             });
-        });
-
-        // 3. Navbar Sticky Effect on Scroll
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 20) {
-                nav.classList.add('shadow-md', 'bg-white/95', 'backdrop-blur-md');
-            } else {
-                nav.classList.remove('shadow-md', 'bg-white/95', 'backdrop-blur-md');
-            }
-        });
-        const btn = document.getElementById('dropdownButton');
-        const menu = document.getElementById('dropdownMenu');
-
-        // Toggle Menu
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            menu.classList.toggle('hidden');
-        });
-
-        // Tutup menu jika klik di luar
-        window.addEventListener('click', () => {
-            if (!menu.classList.contains('hidden')) {
-                menu.classList.add('hidden');
-            }
-        });
+        }
     </script>
 </body>
 
