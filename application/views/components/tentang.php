@@ -1,5 +1,5 @@
 <!-- Bagian Hero / Header Tentang Kami -->
-<section class="bg-teal-800 py-20 px-4 sm:px-6 lg:px-8">
+<section style="background: linear-gradient(rgba(15, 118, 110, 0.8), rgba(15, 118, 110, 0.8)), url('<?= base_url('assets/images/tentang_bg.jfif'); ?>') no-repeat center center; background-size: cover;" class="py-20 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto text-center">
         <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-6">
             Tentang E-PUSTAKA
