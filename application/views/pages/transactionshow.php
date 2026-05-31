@@ -1,7 +1,6 @@
 <?php
 $this->load->view('templates/header');
 $this->load->view('components/navbar');
-// var_dump($details);
 ?>
 <div class="min-h-screen bg-neutral-100 p-8 text-[#1F2937] antialiased">
     <div class="max-w-2xl mx-auto bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)] rounded-3xl overflow-hidden border border-neutral-200">
