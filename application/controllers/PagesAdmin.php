@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+
 class PagesAdmin extends CI_Controller
 {
 
@@ -18,28 +19,38 @@ class PagesAdmin extends CI_Controller
             show_error('Akses tidak diizinkan.');
         }
     }
+
     // Untuk admin
     public function dashboard()
     {
-    
         $config['base_url']   = base_url('dashboard');
         $config['total_rows'] = $this->TransactionModel->count_all_transactions();
         $config['per_page']   = 10;
-        $config['uri_segment'] = 2; // Sesuaikan dengan posisi angka di URL
+        $config['uri_segment'] = 2; 
         $config['reuse_query_string'] = TRUE;
 
-        $config['full_tag_open']    = '<nav class="flex items-center space-x-2">';
+        // --- UPDATE CONFIG PAGINATION DASHBOARD ---
+        $config['full_tag_open']    = '<nav class="flex items-center space-x-1.5">';
         $config['full_tag_close']   = '</nav>';
-        $config['num_tag_open']     = '<span class="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50">';
+        
+        // Nomor Halaman Biasa (Kontras Lebih Tinggi & Hover Deep Teal)
+        $config['num_tag_open']     = '<span class="px-3.5 py-2 text-sm font-bold text-neutral-600 bg-white border border-neutral-200 rounded-xl hover:text-[#005B52] hover:bg-neutral-50 transition-colors">';
         $config['num_tag_close']    = '</span>';
-        $config['cur_tag_open']     = '<span class="px-4 py-2 text-sm font-bold text-white bg-indigo-600 border border-indigo-600 rounded-lg shadow-sm">';
-        $config['cur_tag_close']    = '</span>';
+        
+        // Nomor Halaman AKTIF (Menggunakan Deep Teal #005B52 Solid)
+        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link px-3 py-1.5 text-sm font-bold text-white bg-[#005B52] rounded-lg">';
+        $config['cur_tag_close']    = '</span></li>';
+        
+        // Tombol Next & Prev
         $config['next_link']        = 'Next &rarr;';
+        $config['next_tag_open']    = '<span class="px-3.5 py-2 text-sm font-bold text-neutral-600 bg-white border border-neutral-200 rounded-xl hover:text-[#005B52] hover:bg-neutral-50 transition-colors">';
+        $config['next_tag_close']   = '</span>';
+        
         $config['prev_link']        = '&larr; Prev';
-
+        $config['prev_tag_open']    = '<span class="px-3.5 py-2 text-sm font-bold text-neutral-600 bg-white border border-neutral-200 rounded-xl hover:text-[#005B52] hover:bg-neutral-50 transition-colors">';
+        $config['prev_tag_close']   = '</span>';
 
         $this->pagination->initialize($config);
-
 
         $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
 
@@ -48,7 +59,6 @@ class PagesAdmin extends CI_Controller
         $data['pagination'] = $this->pagination->create_links();
         $data['start']      = $page;
         $data['total']      = $config['total_rows'];
-
 
         $data['data'] = $this->db->select('
         (SELECT COUNT(*) FROM users) as total_users,
@@ -64,52 +74,72 @@ class PagesAdmin extends CI_Controller
         $config['base_url']   = base_url('admin/daftaruser');
         $config['total_rows'] = $this->User->count_all_users();
         $config['per_page']   = 10;
-        $config['uri_segment'] = 2; // Sesuaikan dengan posisi angka di URL
+        $config['uri_segment'] = 2; 
         $config['reuse_query_string'] = TRUE;
 
-        $config['full_tag_open']    = '<nav class="flex items-center space-x-2">';
+        // --- UPDATE CONFIG PAGINATION DAFTAR USER ---
+        $config['full_tag_open']    = '<nav class="flex items-center space-x-1.5">';
         $config['full_tag_close']   = '</nav>';
-        $config['num_tag_open']     = '<span class="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50">';
+        
+        // Nomor Halaman Biasa
+        $config['num_tag_open']     = '<span class="px-3.5 py-2 text-sm font-bold text-neutral-600 bg-white border border-neutral-200 rounded-xl hover:text-[#005B52] hover:bg-neutral-50 transition-colors">';
         $config['num_tag_close']    = '</span>';
-        $config['cur_tag_open']     = '<span class="px-4 py-2 text-sm font-bold text-white bg-indigo-600 border border-indigo-600 rounded-lg shadow-sm">';
-        $config['cur_tag_close']    = '</span>';
+        
+        // Nomor Halaman AKTIF (Diubah dari Indigo ke Deep Teal #005B52)
+        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link px-3 py-1.5 text-sm font-bold text-white bg-[#005B52] rounded-lg">';
+        $config['cur_tag_close']    = '</span></li>';
+        
+        // Tombol Next & Prev
         $config['next_link']        = 'Next &rarr;';
+        $config['next_tag_open']    = '<span class="px-3.5 py-2 text-sm font-bold text-neutral-600 bg-white border border-neutral-200 rounded-xl hover:text-[#005B52] hover:bg-neutral-50 transition-colors">';
+        $config['next_tag_close']   = '</span>';
+        
         $config['prev_link']        = '&larr; Prev';
-
+        $config['prev_tag_open']    = '<span class="px-3.5 py-2 text-sm font-bold text-neutral-600 bg-white border border-neutral-200 rounded-xl hover:text-[#005B52] hover:bg-neutral-50 transition-colors">';
+        $config['prev_tag_close']   = '</span>';
 
         $this->pagination->initialize($config);
 
-
-        // Ambil offset dari URL (default 0)
         $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
 
         $data['users'] = $this->User->GetPaginationUser($config['per_page'], $page);
-        $data['pagination'] = $this->pagination->create_links();
+        $data['pagination'] = $this->pagination->create_colors = $this->pagination->create_links();
         $data['start']      = $page;
         $data['total']      = $config['total_rows'];
 
         $this->load->view('admin/daftaruser', $data);
     }
+
     public function DaftarTransactions()
     {
         $config['base_url']   = base_url('DaftarTransactions');
         $config['total_rows'] = $this->TransactionModel->count_all_transactions();
         $config['per_page']   = 10;
-        $config['uri_segment'] = 2; // Sesuaikan dengan posisi angka di URL
+        $config['uri_segment'] = 2; 
         $config['reuse_query_string'] = TRUE;
 
-        $config['full_tag_open']    = '<nav class="flex items-center space-x-2">';
+        // --- UPDATE CONFIG PAGINATION DAFTAR TRANSAKSI ---
+        $config['full_tag_open']    = '<nav class="flex items-center space-x-1.5">';
         $config['full_tag_close']   = '</nav>';
-        $config['num_tag_open']     = '<span class="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50">';
+        
+        // Nomor Halaman Biasa
+        $config['num_tag_open']     = '<span class="px-3.5 py-2 text-sm font-bold text-neutral-600 bg-white border border-neutral-200 rounded-xl hover:text-[#005B52] hover:bg-neutral-50 transition-colors">';
         $config['num_tag_close']    = '</span>';
-        $config['cur_tag_open']     = '<span class="px-4 py-2 text-sm font-bold text-white bg-indigo-600 border border-indigo-600 rounded-lg shadow-sm">';
-        $config['cur_tag_close']    = '</span>';
+        
+        // Nomor Halaman AKTIF (Diubah dari Indigo ke Deep Teal #005B52)
+        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link px-3 py-1.5 text-sm font-bold text-white bg-[#005B52] rounded-lg">';
+        $config['cur_tag_close']    = '</span></li>';
+        
+        // Tombol Next & Prev
         $config['next_link']        = 'Next &rarr;';
+        $config['next_tag_open']    = '<span class="px-3.5 py-2 text-sm font-bold text-neutral-600 bg-white border border-neutral-200 rounded-xl hover:text-[#005B52] hover:bg-neutral-50 transition-colors">';
+        $config['next_tag_close']   = '</span>';
+        
         $config['prev_link']        = '&larr; Prev';
-
+        $config['prev_tag_open']    = '<span class="px-3.5 py-2 text-sm font-bold text-neutral-600 bg-white border border-neutral-200 rounded-xl hover:text-[#005B52] hover:bg-neutral-50 transition-colors">';
+        $config['prev_tag_close']   = '</span>';
 
         $this->pagination->initialize($config);
-
 
         $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
 
@@ -130,12 +160,10 @@ class PagesAdmin extends CI_Controller
     {
         $this->load->view('admin/tambahuser');
     }
+
     public function ExportCsv()
     {
         $this->load->model('TransactionModel');
-
-        // 1. Ambil data dalam bentuk ARRAY, bukan Object.
-        // Pastikan di model anda menggunakan result_array() atau kita konversi di sini.
         $transactions = $this->TransactionModel->GetAllTransactionAndJoin();
 
         if (ob_get_level()) ob_end_clean();
@@ -151,7 +179,6 @@ class PagesAdmin extends CI_Controller
 
         $header = array("ID", "User ID", "Status", "Kode Transaksi", "Total Bayar", "Tanggal", "Username");
         fputcsv($file, $header);
-        // 2. Tabel Pondasi Utama
 
         foreach ($transactions as $line) {
             $row = (array) $line;
@@ -159,7 +186,6 @@ class PagesAdmin extends CI_Controller
         }
 
         fclose($file);
-
         exit;
     }
 
@@ -169,6 +195,7 @@ class PagesAdmin extends CI_Controller
         $data['details'] = $this->TransactionModel->Get3TableJoin($slug);
         $this->load->view('admin/edittransaksi', $data);
     }
+
     public function UpdateStatus($kode_transaksi, $status)
     {
         if (!in_array($status, ['success', 'failed'])) {
@@ -176,8 +203,6 @@ class PagesAdmin extends CI_Controller
         }
 
         $this->load->model('TransactionModel');
-
-        // 2. Eksekusi update di model
         $proses = $this->TransactionModel->ChangeStatus($kode_transaksi, $status);
 
         if ($proses) {
