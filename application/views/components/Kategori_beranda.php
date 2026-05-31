@@ -18,7 +18,7 @@ $categories = [
     [
         'name'  => 'Bisnis & Ekonomi',
         'image' => 'assets/images/bisnis.jpg',
-        'slug'  => 'bisnis_ekonomi' // Nyambung ke id="sec-bisnis_ekonomi"
+        'slug'  => 'bisnis&ekonomi' // Nyambung ke id="sec-bisnis_ekonomi"
     ],
     [
         'name'  => 'Fiksi',
@@ -32,7 +32,7 @@ $categories = [
     ],
     [
         'name'  => 'Sejarah',
-        'image' => 'assets/images/Sejarah.png',
+        'image' => 'assets/images/Sejarah2.png',
         'slug'  => 'sejarah'        // Nyambung ke id="sec-sejarah"
     ]
 ];

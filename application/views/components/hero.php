@@ -28,6 +28,7 @@ $image = "assets/images/image_hero2.png";
 
         <div class="flex gap-4">
             <button 
+            onclick="window.location.href='<?= base_url('terpopuler'); ?>'"
             class="bg-orange-500 hover:bg-orange-600 px-5 py-3 rounded font-semibold">
             MULAI MEMBACA SEKARANG!
             </button>
