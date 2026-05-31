@@ -14,40 +14,7 @@
 
 <?php
 // Data buku untuk simulasi database
-$books = [
-    [
-        'title' => '',
-        'author' => '',
-        'price' => '',
-        'rating' => 5,
-        'image_bg' => '',
-        'cover_url' => ''
-    ],
-    [
-        'title' => '',
-        'author' => '',
-        'price' => '',
-        'rating' => 5,
-        'image_bg' => '',
-        'cover_url' => ''
-    ],
-    [
-        'title' => '',
-        'author' => '',
-        'price' => '',
-        'rating' => 5,
-        'image_bg' => '',
-        'cover_url' => ''
-    ],
-    [
-        'title' => '',
-        'author' => '',
-        'price' => '',
-        'rating' => 5,
-        'image_bg' => '',
-        'cover_url' => ''
-    ]
-];
+
 ?>
 
 <div class="max-w-7xl mx-auto px-4">
@@ -58,22 +25,22 @@ $books = [
 
     <!-- Grid Kartu Buku -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <?php foreach ($books as $book): ?>
+        <?php foreach ($buku as $book): ?>
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex flex-col h-full">
                 
                 <!-- Container Cover Buku -->
-                <div class="<?php echo $book['image_bg']; ?> rounded-xl p-6 mb-4 flex justify-center items-center">
-                    <img src="<?php echo $book['cover_url']; ?>" 
-                         alt="<?php echo $book['title']; ?>" 
+                <div class="<?php  ?> rounded-xl p-6 mb-4 flex justify-center items-center">
+                    <img src="<?php echo $book['gambar']; ?>" 
+                         alt="<?php echo $book['judul_buku']; ?>" 
                          class="shadow-2xl rounded-sm w-32 h-44 object-cover transform hover:scale-105 transition-transform duration-300">
                 </div>
 
                 <!-- Informasi Buku -->
                 <div class="flex-grow">
                     <h3 class="font-bold text-gray-900 text-sm md:text-base leading-tight mb-1 uppercase">
-                        <?php echo $book['title']; ?>
+                        <?php echo $book['judul_buku']; ?>
                     </h3>
-                    <p class="text-xs text-gray-500 mb-2">By <?php echo $book['author']; ?></p>
+                    <p class="text-xs text-gray-500 mb-2">By <?php echo $book['penulis']; ?></p>
                     
                     <!-- Rating Bintang -->
                     <div class="flex text-orange-400 mb-3">
@@ -82,7 +49,7 @@ $books = [
                         <?php endfor; ?>
                     </div>
 
-                    <p class="font-bold text-lg text-gray-900 mb-4">Rp <?php echo $book['price']; ?></p>
+                    <p class="font-bold text-lg text-gray-900 mb-4">Rp <?php echo $book['harga']; ?></p>
                 </div>
 
                 <!-- Tombol Aksi -->
