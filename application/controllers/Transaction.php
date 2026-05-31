@@ -54,7 +54,12 @@ class Transaction extends CI_Controller
         $items = json_decode($this->input->post('cart_data'), true);
 
         if (!$items || !is_array($items)) {
-            return error('Data tidak valid');
+            return $this->output
+                ->set_status_header(400)
+                ->set_output(json_encode([
+                    'status' => 'error',
+                    'message' => 'data tidak valid'
+                ]));
         }
 
         // ambil semua id
