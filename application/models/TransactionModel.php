@@ -44,7 +44,10 @@ class TransactionModel extends CI_Model
     }
     public function GetPaginationTransactionsUser($limit, $start, $userid)
     {
-        return $this->db->get_where('transactions', ['user_id' => $userid], $limit, $start)->result();
+
+        $this->db->order_by('transactions.tanggal','DESC');
+        $query = $this->db->get_where('transactions', ['user_id' => $userid], $limit, $start)->result();
+        return $query;
     }
     public function GetId($kode)
     {

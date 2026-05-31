@@ -25,10 +25,10 @@ class Transaction extends CI_Controller
         $config['full_tag_close']   = '</nav>';
         $config['num_tag_open']     = '<span class="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50">';
         $config['num_tag_close']    = '</span>';
-        $config['cur_tag_open']     = '<span class="px-4 py-2 text-sm font-bold text-white bg-indigo-600 border border-indigo-600 rounded-lg shadow-sm">';
+        $config['cur_tag_open']     = '<span class="px-4 py-2 text-sm font-bold text-white bg-[#005B52] border border-[#005B52] rounded-lg shadow-sm">';
         $config['cur_tag_close']    = '</span>';
         $config['next_link']        = 'Next &rarr;';
-        $config['prev_link']        = '&larr; Prev';
+        $config['prev_link']        = '&larr; Prev'; 
 
 
         $this->pagination->initialize($config);
@@ -186,7 +186,7 @@ class Transaction extends CI_Controller
                 ->set_content_type('application/json')
                 ->set_output(json_encode([
                     'status' => 'success',
-                    'message' => 'berhasil diubah'
+                    'message' => 'berhasil diubah'  
                 ]));
         } else {
             return $this->output
