@@ -1,6 +1,8 @@
 <?php
 $this->load->view('templates/header');
 $this->load->view('components/navbar');
+
+// var_dump($status); // Bisa dihapus atau dikomentari jika sudah tidak digunakan untuk debugging
 ?>
 <div class="min-h-screen bg-[#F8F9FA] p-8 text-[#2C3E50] antialiased">
     <div class="max-w-2xl mx-auto bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] rounded-3xl overflow-hidden border border-[#2C3E50]/10">
@@ -73,17 +75,25 @@ $this->load->view('components/navbar');
                 </div>
             </div>
 
-            <div class="pt-10">
-                <form action="<?= base_url('payments/execute_payment') ?>" method="POST">
-                    <input type="hidden" name="order_id" value="<?= $kode_transaksi ?>">
-                    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
-                    <input type="hidden" name="method" value="gopay">
+            <?php if (strtolower($status) !== 'success'): ?>
+                <div class="pt-10">
+                    <form action="<?= base_url('payments/execute_payment') ?>" method="POST">
+                        <input type="hidden" name="order_id" value="<?= $kode_transaksi ?>">
+                        <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
+                        <input type="hidden" name="method" value="gopay">
 
-                    <button type="submit" class="w-full py-4 bg-[#005B52] hover:bg-[#00443d] text-white font-black text-sm rounded-xl transition-all shadow-lg shadow-[#005B52]/20 active:scale-[0.98] text-center tracking-wide uppercase">
-                        Bayar Sekarang
-                    </button>
-                </form>
-            </div>
+                        <button type="submit" class="w-full py-4 bg-[#005B52] hover:bg-[#00443d] text-white font-black text-sm rounded-xl transition-all shadow-lg shadow-[#005B52]/20 active:scale-[0.98] text-center tracking-wide uppercase">
+                            Bayar Sekarang
+                        </button>
+                    </form>
+                </div>
+            <?php else: ?>
+                <div class="pt-10">
+                    <div class="w-full py-4 bg-emerald-50 border border-emerald-200 text-emerald-700 font-bold text-sm rounded-xl text-center tracking-wide uppercase">
+                        ✓ Transaksi Selesai
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
 
         <div class="bg-[#F8F9FA] px-10 py-6 border-t border-[#2C3E50]/10">
