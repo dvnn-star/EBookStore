@@ -48,5 +48,14 @@ class Buku extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    public function GetTotalSales()
+    {
+        $this->db->from('Buku');
+        $this->db->select('*');
+        $this->db->order_by('total_terjual','DESC');
+        $this->db->limit(4);
+        return $this->db->get()->result_array();
+
+    }
     
 }
