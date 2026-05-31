@@ -74,11 +74,6 @@
                                                 class="inline-flex items-center justify-center px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-red-600/10 active:scale-95 whitespace-nowrap">
                                             Batalkan Pembelian
                                         </button>
-                                    <?php elseif ($status === 'failed'): ?>
-                                        <button onclick="deleteTransaction('<?= $row->kode_transaksi ?>')" 
-                                                class="inline-flex items-center justify-center px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all active:scale-95 whitespace-nowrap">
-                                            Hapus Riwayat
-                                        </button>
                                     <?php endif; ?>
                                 </div>
 
@@ -110,19 +105,6 @@
                     <a href="<?= base_url('kategori'); ?>" class="mt-8 inline-flex px-8 py-3 bg-[#005B52] rounded-xl hover:bg-[#00443d] text-white font-bold transition-all shadow-md shadow-[#005B52]/10">Mulai Belanja</a>
                 </div>
             <?php endif; ?>
-        </div>
-
-        <div id="empty-state-template" class="hidden">
-            <div class="bg-white text-center py-24 rounded-[2.5rem] border border-[#2C3E50]/10 shadow-sm px-6 animate-slide-in">
-                <div class="w-20 h-20 bg-[#F8F9FA] rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg class="w-10 h-10 text-[#2C3E50]/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                    </svg>
-                </div>
-                <h2 class="text-xl font-bold text-[#2C3E50]">Belum Ada Riwayat</h2>
-                <p class="text-[#2C3E50]/50 mt-2 max-w-xs mx-auto text-sm">Jelajahi koleksi e-book kami dan mulailah membaca hari ini.</p>
-                <a href="<?= base_url('kategori'); ?>" class="mt-8 inline-flex px-8 py-3 bg-[#005B52] rounded-xl hover:bg-[#00443d] text-white font-bold transition-all shadow-md shadow-[#005B52]/10">Mulai Belanja</a>
-            </div>
         </div>
 
         <div id="toast-container" class="fixed top-5 right-5 z-[9999] flex flex-col gap-3 pointer-events-none"></div>
@@ -228,7 +210,7 @@
         if (e.target.id === 'cancel-modal') closeCancelModal();
     }
 
-    // 1. EXECUTE CANCEL: Merubah status transaksi menjadi Gagal di layar murni tanpa hapus/refresh
+    // EXECUTE CANCEL: Mengubah status menjadi 'Gagal' tanpa opsi menghapus card
     function executeCancel(kodeTransaksi) {
         closeCancelModal();
 
@@ -248,22 +230,17 @@
             if (data.status === 'success') {
                 showToast(`Pesanan #${kodeTransaksi} telah dibatalkan.`, 'success');
                 
-                // Ganti UI Badge status secara realtime
+                // Ubah gaya visual Badge status secara realtime menjadi 'Gagal'
                 const badge = document.getElementById('badge-' + kodeTransaksi);
                 if (badge) {
                     badge.className = "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-all duration-500 bg-red-50 text-red-600 border-red-100";
                     badge.innerText = "Gagal";
                 }
 
-                // Ubah tombol "Batalkan Pembelian" menjadi "Hapus Riwayat" secara realtime
+                // Kosongkan pembungkus aksi agar tombol "Batalkan Pembelian" hilang sepenuhnya
                 const btnWrapper = document.getElementById('action-buttons-' + kodeTransaksi);
                 if (btnWrapper) {
-                    btnWrapper.innerHTML = `
-                        <button onclick="deleteTransaction('${kodeTransaksi}')" 
-                                class="inline-flex items-center justify-center px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all active:scale-95 whitespace-nowrap animate-slide-in">
-                            Hapus Riwayat
-                        </button>
-                    `;
+                    btnWrapper.innerHTML = ''; 
                 }
             } else {
                 showToast(data.message || 'Gagal merubah status.', 'info');
@@ -273,41 +250,5 @@
             console.error('Error:', error);
             showToast('Sistem gagal memproses pembatalan.', 'info');
         });
-    }
-
-    // 2. DELETE TRANSACTION: Menghapus permanen card item dari dokumen list
-    function deleteTransaction(kodeTransaksi) {
-        // Ganti rute URL backend ini sesuai endpoint delete riwayat Anda jika ada
-        const targetUrl = "<?= base_url('transaction/deleteriwayat') ?>";
-        const formData = new FormData();
-        formData.append('kode_transaksi', kodeTransaksi);
-
-        fetch(targetUrl, {
-            method: 'POST',
-            body: formData
-        })
-        // .then(...) opsional jika ingin menghapus lewat DB terlebih dahulu.
-        // Di bawah ini langsung eksekusi visual DOM removal:
-        const card = document.getElementById('card-trx-' + kodeTransaksi);
-        if (card) {
-            card.style.transition = 'all 0.4s ease';
-            card.style.opacity = '0';
-            card.style.transform = 'scale(0.95) translateY(10px)';
-            
-            setTimeout(() => {
-                card.remove();
-                
-                // Cek state container kosong
-                const remainingCards = document.querySelectorAll('.transaction-card');
-                if (remainingCards.length === 0) {
-                    const pagination = document.getElementById('pagination-section');
-                    if (pagination) pagination.remove();
-                    
-                    const container = document.getElementById('transaction-container');
-                    const template = document.getElementById('empty-state-template');
-                    container.innerHTML = template.innerHTML;
-                }
-            }, 400);
-        }
     }
 </script>
