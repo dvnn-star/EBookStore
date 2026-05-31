@@ -28,7 +28,7 @@ class Transaction extends CI_Controller
         $config['cur_tag_open']     = '<span class="px-4 py-2 text-sm font-bold text-white bg-indigo-600 border border-indigo-600 rounded-lg shadow-sm">';
         $config['cur_tag_close']    = '</span>';
         $config['next_link']        = 'Next &rarr;';
-        $config['prev_link']        = '&larr; Prev';
+        $config['prev_link']        = '&larr; Prev'; 
 
 
         $this->pagination->initialize($config);
