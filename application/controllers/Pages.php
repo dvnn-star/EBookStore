@@ -10,8 +10,9 @@ class Pages extends CI_Controller
     {
         // Logika: ambil data dari model (jika ada)
         // Lalu lempar ke tampilan (View)
-        $this->load->model('Buku');
-        $data['semua_buku'] = $this->Buku->getALL();
+        $user_id = $this->session->userdata('user_id') ?? 0;
+        $this->load->model('User_libraries');
+        $data['semua_buku'] = $this->User_libraries->get_katalog_with_status($user_id);
         $this->load->view('pages/kategori', $data);
     }
 
