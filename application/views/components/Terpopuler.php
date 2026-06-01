@@ -1,3 +1,6 @@
+<?php
+define('BOOK_IMAGE_PATH', 'assets/images/Buku/');
+?>
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
@@ -19,27 +22,7 @@
 <body class="bg-slate-50 font-sans text-slate-900 antialiased">
 
 <?php
-// Data buku simulasi
-$buku = isset($buku) ? $buku : [
-    [
-        'id' => 1,
-        'judul_buku' => 'Membangun Arsitektur Web Modern dengan Tailwind CSS',
-        'penulis' => 'Albert Einstein',
-        'harga' => 145000,
-        'rating' => 4,
-        'gambar' => 'https://placehold.co/400x600?text=Web+Architecture',
-        'deskripsi' => 'Panduan mendalam mengenai implementasi utilitas CSS untuk menghasilkan antarmuka modern yang responsif dan performan.'
-    ],
-    [
-        'id' => 2,
-        'judul_buku' => 'Prinsip Desain Antarmuka Berorientasi Pengguna',
-        'penulis' => 'Grace Hopper',
-        'harga' => 120000,
-        'rating' => 5,
-        'gambar' => 'https://placehold.co/400x600?text=UI+Design+Principles',
-        'deskripsi' => 'Sebuah mahakarya yang membedah psikologi persepsi manusia dalam berinteraksi dengan sistem digital.'
-    ]
-];
+
 ?>
 
 <div class="container mx-auto max-w-6xl px-4 py-12">
@@ -55,7 +38,7 @@ $buku = isset($buku) ? $buku : [
                  class="bg-white p-3.5 rounded-xl border border-slate-100 shadow-sm hover:shadow-lg hover:border-ep-green/20 transition-all duration-300 cursor-pointer group flex flex-col h-full">
                 
                 <div class="relative aspect-[3/4] mb-3.5 overflow-hidden rounded-lg bg-slate-100 shadow-inner flex justify-center items-center">
-                    <img src="<?php echo $book['gambar']; ?>" 
+                    <img src="<?=   BOOK_IMAGE_PATH . $book['gambar']; ?>" 
                          onerror="this.src='https://placehold.co/400x600?text=No+Image'" 
                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                          alt="<?php echo $book['judul_buku']; ?>">
