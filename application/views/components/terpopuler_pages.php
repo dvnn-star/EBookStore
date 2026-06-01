@@ -305,7 +305,7 @@ define('BOOK_IMAGE_PATH', 'assets/images/Buku/');
         }
 
         function bukaModal(buku) {
-            document.getElementById('md-img').src = buku.gambar;
+            document.getElementById('md-img').src = 'assets/images/Buku/' + buku.gambar;
             document.getElementById('md-title').innerText = buku.judul_buku;
             document.getElementById('md-author').innerText = 'Karya ' + buku.penulis;
             document.getElementById('md-desc').innerText = buku.deskripsi || 'Tidak ada deskripsi tersedia.';

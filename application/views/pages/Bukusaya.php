@@ -1,5 +1,3 @@
-<?php $this->load->view('components/navbar');
-?>
 <!DOCTYPE html>
 <html lang="id" class="h-full bg-[#F8F9FA]">
 <head>
@@ -11,6 +9,8 @@
     <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
 <body class="text-[#2C3E50] antialiased min-h-screen flex flex-col bg-[#F8F9FA]">
+<?php $this->load->view('components/navbar');
+?>
 
 
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -43,7 +43,7 @@
                             <div class="flex gap-4">
                                 <div class="w-24 h-32 bg-[#F8F9FA] rounded-2xl border border-[#2C3E50]/10 overflow-hidden flex-shrink-0 shadow-sm relative group-hover:scale-[1.02] transition-all">
                                     <?php if ($book->gambar): ?>
-                                        <img src="<?= base_url('uploads/books/' . $book->gambar) ?>" alt="Cover <?= $book->judul_buku ?>" class="w-full h-full object-cover">
+                                        <img src="<?= base_url('assets/images/Buku/' . $book->gambar) ?>" alt="Cover <?= $book->judul_buku ?>" class="w-full h-full object-cover">
                                     <?php else: ?>
                                         <div class="w-full h-full flex items-center justify-center text-[10px] font-bold text-[#2C3E50]/40 uppercase bg-[#F8F9FA]">No Cover</div>
                                     <?php endif; ?>
@@ -73,9 +73,7 @@
                                 Diperoleh: <?= date('d M Y', strtotime($book->created_at)) ?>
                             </span>
                             
-                            <a href="<?= base_url('library/read/' . $book->buku_id) ?>" class="px-4 py-2 bg-[#005B52] rounded-xl hover:bg-[#00443d] text-white font-bold text-xs shadow-sm transition-all active:scale-[0.98]">
-                                Baca Sekarang →
-                            </a>
+                       
                         </div>
 
                     </div>
@@ -86,9 +84,9 @@
 
     </main>
 
-</body>
 
 <?php
         $this->load->view('components/Footer');
     ?>
+</body>
 </html>

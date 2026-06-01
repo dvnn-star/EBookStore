@@ -24,8 +24,9 @@ class TransactionModel extends CI_Model
         $this->db->from('transactions');
         $this->db->join('users', 'users.id = transactions.user_id', 'left');
 
-
         $this->db->order_by('transactions.tanggal', 'DESC');
+        $this->db->order_by("FIELD(transactions.status, 'success', 'pending', 'failed')", '', FALSE);
+
 
         $this->db->limit($limit, $start);
 
@@ -45,7 +46,8 @@ class TransactionModel extends CI_Model
     public function GetPaginationTransactionsUser($limit, $start, $userid)
     {
 
-        $this->db->order_by('transactions.tanggal','DESC');
+        $this->db->order_by('transactions.tanggal', 'DESC');
+        $this->db->order_by("FIELD(transactions.status, 'success', 'pending', 'failed')", '', FALSE);
         $query = $this->db->get_where('transactions', ['user_id' => $userid], $limit, $start)->result();
         return $query;
     }

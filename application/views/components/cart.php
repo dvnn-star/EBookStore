@@ -1,3 +1,7 @@
+<?php 
+define('Book_Path','assets/images/Buku');
+
+?>
 <!-- Container Utama: Layout Sidebar-Content -->
 <div class="container mx-auto px-4 py-12 flex flex-col lg:flex-row gap-10 min-h-[70vh]">
     <!-- AREA KONTEN UTAMA (DAFTAR ITEM) -->
@@ -188,7 +192,7 @@
             const safeTitle = item.judul_buku.replace(/'/g, "\\'");
             return `
                 <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-6 group hover:border-ep-green transition-all duration-300">
-                    <img src="${item.gambar}" class="w-20 h-28 object-cover rounded-xl shadow-md group-hover:scale-105 transition-transform" alt="${item.judul_buku}">
+                    <img src="assets/images/Buku/${item.gambar}" class="w-20 h-28 object-cover rounded-xl shadow-md group-hover:scale-105 transition-transform" alt="${item.judul_buku}">
                     <div class="flex-grow">
                         <span class="text-[9px] font-black text-ep-green uppercase tracking-[0.2em] mb-1 block">${item.kategori || 'Digital Book'}</span>
                         <h4 class="font-bold text-slate-800 leading-tight">${item.judul_buku}</h4>

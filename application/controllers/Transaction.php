@@ -28,7 +28,7 @@ class Transaction extends CI_Controller
         $config['cur_tag_open']     = '<span class="px-4 py-2 text-sm font-bold text-white bg-[#005B52] border border-[#005B52] rounded-lg shadow-sm">';
         $config['cur_tag_close']    = '</span>';
         $config['next_link']        = 'Next &rarr;';
-        $config['prev_link']        = '&larr; Prev'; 
+        $config['prev_link']        = '&larr; Prev';
 
 
         $this->pagination->initialize($config);
@@ -49,6 +49,7 @@ class Transaction extends CI_Controller
     public function create()
 
     {
+        $this->load->library('transactionservices');
         $this->load->model('User_libraries');
         $user_id = $this->session->userdata('user_id');
         $items = json_decode($this->input->post('cart_data'), true);
@@ -61,10 +62,8 @@ class Transaction extends CI_Controller
                     'message' => 'data tidak valid'
                 ]));
         }
-
         // ambil semua id
         $buku_ids = array_column($items, 'buku_id');
-
         $already_owned = $this->User_libraries->userlibraryjoin($user_id, $buku_ids);
         if (!empty($already_owned)) {
             $judul_terbeli = array_column($already_owned, 'judul_buku');
@@ -75,84 +74,30 @@ class Transaction extends CI_Controller
                     'message' => 'Gagal! Buku berikut sudah Anda miliki: ' . implode(', ', $judul_terbeli)
                 ]));
         }
-        $pending = $this->TransactionModel->HasPendingBook($user_id, $buku_ids);
+        $is_pending = $this->transactionservices->checkpendingbook($user_id, $buku_ids);
+        if ($is_pending == true) {
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400) // Berikan status 400 karena ini bad request/error logika
+                ->set_output(json_encode([
+                    'status' => 'error',
+                    'message' => 'Masih ada buku yang pending yang ada di riwayat transaksi',
+                    'redirect_url' => base_url('EBookStore/transaction/')
+                ]));
+        }    
+        try {
+            // Panggil service dan tangkap hasilnya
+            $KodeTransaksi = $this->transactionservices->create($user_id, $items);
 
-        if (!empty($pending)) {
             return $this->output
                 ->set_content_type('application/json')
                 ->set_output(json_encode([
-                    'status' => 'error',
-                    'message' => 'Masih ada buku yang pending',
-                    'redirect_url' => base_url('EBookStore/transaction/')
+                    'status' => 'success',
+                    'redirect_url' => base_url('payments/' . $KodeTransaksi)
                 ]));
-        }
-        // ambil semua buku sekaligus
-        $books = $this->db->where_in('id', $buku_ids)->get('Buku')->result();
-
-        // mapping
-        $bookMap = [];
-        foreach ($books as $b) {
-            $bookMap[$b->id] = $b;
-        }
-
-        $total = 0;
-        $details = [];
-
-        foreach ($items as $item) {
-            if (!isset($bookMap[$item['buku_id']])) {
-                return error('Buku tidak ditemukan');
-            }
-
-            $book = $bookMap[$item['buku_id']];
-            $qty = max(1, (int)$item['qty']);
-
-            $subtotal = $book->harga * $qty;
-            $total += $subtotal;
-
-            $details[] = [
-                'buku_id' => $book->id,
-                'qty' => $qty,
-                'harga_beli' => $book->harga
-            ];
-        }
-        try {
-            // menggunakan transaction
-            $this->db->trans_start();
-            $KodeTransaksi = $this->TransactionModel->generate_kode_transaksi();
-            $this->db->insert('transactions', [
-                'user_id' => $user_id,
-                'kode_transaksi' => $KodeTransaksi,
-                'total_bayar' => $total,
-                'tanggal' => date("Y/m/d")
-            ]);
-            // ambil data id yang telah diinsert
-            $transaction_id = $this->db->insert_id();
-            foreach ($details as $item) {
-
-
-                $this->db->insert('transactions_detail', [
-                    'transactions_id' => $transaction_id,
-                    'buku_id'  => $item['buku_id'],
-                    'qty' => $item['qty'],
-                    'harga_beli' => $item['harga_beli']
-                ]);
-            }
-            $this->db->trans_complete();
-            // ngecek hasil transaction
-            if ($this->db->trans_status() === FALSE) {
-                return $this->output
-                    ->set_content_type('application/json')
-                    ->set_output(json_encode([
-                        'status' => 'error',
-                        'message' => 'erorr pada saat melakukan transaksi'
-                    ]));
-            }
-            return $this->output->set_content_type('application/json')->set_output(json_encode([
-                'status' => 'success',
-                'redirect_url' => base_url('payments/' . $KodeTransaksi)
-            ]));
         } catch (\Throwable $th) {
             return $this->output
+                ->set_status_header(500)
                 ->set_content_type('application/json')
                 ->set_output(json_encode([
                     'status' => 'error',
@@ -188,7 +133,7 @@ class Transaction extends CI_Controller
                 ->set_content_type('application/json')
                 ->set_output(json_encode([
                     'status' => 'success',
-                    'message' => 'berhasil diubah'  
+                    'message' => 'berhasil diubah'
                 ]));
         } else {
             return $this->output

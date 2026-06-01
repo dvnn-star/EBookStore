@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-PUSTAKA - Toko Buku Digital</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght=300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
         }
+
         nav {
             transition: all 0.3s ease-in-out;
         }
@@ -36,7 +37,7 @@
                 </div>
 
                 <div class="flex items-center space-x-4">
-                    
+
                     <div class="relative hidden lg:block">
                         <input type="text" placeholder="Cari buku..." class="w-64 pl-10 pr-4 py-2 border border-slate-200 rounded-xl text-xs font-medium bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#0E6D64]/20 focus:border-[#0E6D64] transition-all">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
@@ -58,13 +59,18 @@
                             </button>
 
                             <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-52 bg-white border border-slate-100 rounded-2xl shadow-2xl p-2 z-50 animate-slide-in">
-                                <a href="<?= base_url('bukusaya/'.$this->session->userdata('user_id')); ?>" class="flex items-center px-4 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-[#0E6D64] rounded-xl transition-colors">
+                                <a href="<?= base_url('bukusaya/' . $this->session->userdata('user_id')); ?>" class="flex items-center px-4 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-[#0E6D64] rounded-xl transition-colors">
                                     <i class="fa-solid fa-book-bookmark mr-3 text-slate-400 text-sm w-4"></i>Buku Saya
                                 </a>
                                 <a href="<?= base_url('transaction/'); ?>" class="flex items-center px-4 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-[#0E6D64] rounded-xl transition-colors">
                                     <i class="fa-solid fa-clock-rotate-left mr-3 text-slate-400 text-sm w-4"></i>Riwayat Transaksi
                                 </a>
-                                <?php if ($this->session->userdata('role') == 'admin'):?>
+                                
+                                <a href="<?= base_url('settings'); ?>" class="flex items-center px-4 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-[#0E6D64] rounded-xl transition-colors">
+                                    <i class="fa-solid fa-gear mr-3 text-slate-400 text-sm w-4"></i>Pengaturan
+                                </a>
+
+                                <?php if ($this->session->userdata('role') == 'admin'): ?>
                                     <a href="<?= base_url('dashboard/'); ?>" class="flex items-center px-4 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-[#0E6D64] rounded-xl transition-colors">
                                         <i class="fa-solid fa-chart-pie mr-3 text-slate-400 text-sm w-4"></i>Dashboard
                                     </a>
@@ -90,7 +96,7 @@
     </nav>
 
     <div id="sidebar-backdrop" class="fixed inset-0 z-[100] bg-slate-950/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"></div>
-    
+
     <div id="mobile-sidebar" class="fixed top-0 right-0 h-full w-[290px] bg-white z-[101] shadow-2xl p-6 flex flex-col justify-between translate-x-full transition-transform duration-300 ease-out md:hidden">
         <div>
             <div class="flex items-center justify-between pb-6 border-b border-slate-100">
@@ -128,10 +134,23 @@
             <?php if ($this->session->userdata('logged_in')) : ?>
                 <div class="flex flex-col space-y-1 mt-6 pt-6 border-t border-slate-100">
                     <p class="text-[10px] font-black tracking-widest text-slate-400 uppercase mb-2 px-3">Fitur Pengguna</p>
-                    <a href="<?= base_url('bukusaya/'.$this->session->userdata('user_id')); ?>" class="flex items-center px-3 py-3 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-book-bookmark mr-3 w-5 text-slate-400 text-sm"></i>Buku Saya</a>
-                    <a href="<?= base_url('transaction/'); ?>" class="flex items-center px-3 py-3 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-clock-rotate-left mr-3 w-5 text-slate-400 text-sm"></i>Riwayat Transaksi</a>
-                    <?php if ($this->session->userdata('role') == 'admin'):?>
-                        <a href="<?= base_url('dashboard/'); ?>" class="flex items-center px-3 py-3 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-chart-pie mr-3 w-5 text-slate-400 text-sm"></i>Dashboard</a>
+
+                    <a href="<?= base_url('bukusaya/' . $this->session->userdata('user_id')); ?>" class="flex items-center px-3 py-3 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-50">
+                        <i class="fa-solid fa-book-bookmark mr-3 w-5 text-slate-400 text-sm"></i>Buku Saya
+                    </a>
+
+                    <a href="<?= base_url('transaction/'); ?>" class="flex items-center px-3 py-3 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-50">
+                        <i class="fa-solid fa-clock-rotate-left mr-3 w-5 text-slate-400 text-sm"></i>Riwayat Transaksi
+                    </a>
+
+                    <a href="<?= base_url('settings'); ?>" class="flex items-center px-3 py-3 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-50">
+                        <i class="fa-solid fa-gear mr-3 w-5 text-slate-400 text-sm"></i>Pengaturan
+                    </a>
+
+                    <?php if ($this->session->userdata('role') == 'admin'): ?>
+                        <a href="<?= base_url('dashboard/'); ?>" class="flex items-center px-3 py-3 text-xs font-bold rounded-xl text-slate-600 hover:bg-slate-50">
+                            <i class="fa-solid fa-chart-pie mr-3 w-5 text-slate-400 text-sm"></i>Dashboard
+                        </a>
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
@@ -156,7 +175,6 @@
         const sidebar = document.getElementById('mobile-sidebar');
         const backdrop = document.getElementById('sidebar-backdrop');
 
-        // Fungsi Buka Sidebar Mobile Drawer
         function openSidebar() {
             sidebar.classList.remove('translate-x-full');
             backdrop.classList.remove('opacity-0', 'pointer-events-none');
@@ -164,7 +182,6 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Fungsi Tutup Sidebar Mobile Drawer
         function closeSidebar() {
             sidebar.classList.add('translate-x-full');
             backdrop.classList.remove('opacity-100', 'pointer-events-auto');
@@ -172,11 +189,10 @@
             document.body.style.overflow = 'auto';
         }
 
-        if(menuBtn) menuBtn.addEventListener('click', openSidebar);
-        if(closeBtn) closeBtn.addEventListener('click', closeSidebar);
-        if(backdrop) backdrop.addEventListener('click', closeSidebar);
+        if (menuBtn) menuBtn.addEventListener('click', openSidebar);
+        if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+        if (backdrop) backdrop.addEventListener('click', closeSidebar);
 
-        // Dropdown Profil Destop System
         const destopDropdownBtn = document.getElementById('dropdownButton');
         const destopDropdownMenu = document.getElementById('dropdownMenu');
 
