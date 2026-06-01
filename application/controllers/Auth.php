@@ -75,16 +75,13 @@ class Auth extends CI_Controller
             $this->session->set_flashdata('old_input', $this->input->post());
             redirect('register');
         } else {
-            // 2. Data Valid: Siapkan Array untuk Database
             $data = [
                 'name'       => $this->input->post('full_name', TRUE),
                 'email'      => $this->input->post('email', TRUE),
-                // WAJIB: Gunakan password_hash, jangan MD5!
                 'password'   => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                 'role'       => 'user', // Default role
             ];
 
-            // 3. Simpan via Model dengan Error Handling
             try {
                 $insert = $this->db->insert('users', $data);
                 if ($insert) {
@@ -96,15 +93,15 @@ class Auth extends CI_Controller
                     if ($user_info) {
                         $session_data = [
                             'user_id'   => $user_info->id,
-                            'username' => $user_info->name, // Pastikan kolom di DB adalah 'name'
+                            'username' => $user_info->name, 
                             'role'      => $user_info->role,
                             'logged_in' => TRUE
                         ];
                         $this->session->set_userdata($session_data);
                         session_regenerate_id(TRUE);
 
-                        $this->session->set_flashdata('success', 'Registrasi berhasil! ' . $user_info->name);
                         // 6. Keamanan tambahan: Regenerasi ID Session
+                        $this->session->set_flashdata('success', 'Registrasi berhasil! ' . $user_info->name);
 
                         redirect('');
                     }

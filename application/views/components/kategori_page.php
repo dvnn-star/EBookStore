@@ -261,7 +261,7 @@ foreach ($semua_buku as $item) {
             const buku = JSON.parse(element.getAttribute('data-buku'));
             
             // Melakukan interpolasi string secara langsung pada textContent DOM node aman untuk mencegah kerentanan XSS Injection
-            document.getElementById('m-gambar').src = buku.gambar;
+            document.getElementById('m-gambar').src ='assets/images/Buku/' + buku.gambar;
             document.getElementById('m-judul').innerText = buku.judul_buku;
             document.getElementById('m-deskripsi').innerText = buku.deskripsi;
             

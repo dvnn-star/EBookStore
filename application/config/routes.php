@@ -77,6 +77,7 @@ $route['export_csv'] = 'PagesAdmin/ExportCsv';
 // route daftar transactions untuk admin
 $route['DaftarTransactions/(:num)'] = 'PagesAdmin/DaftarTransactions/$1';
 $route['DaftarTransactions/edit/(:any)'] = 'PagesAdmin/EditTransactions/$1';
+$route['DaftarTransactions/print/(:any)'] = 'PagesAdmin/PrintTransactions/$1';
 $route['DaftarTransactions/update_status/(:any)/(:any)'] = 'PagesAdmin/UpdateStatus/$1/$2';
 
 

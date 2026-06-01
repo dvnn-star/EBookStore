@@ -1,3 +1,7 @@
+<?php 
+define('book_path','assets/images/Buku/');
+?>
+
 <!DOCTYPE html>
 <html lang="en" class="h-full">
 
@@ -65,7 +69,7 @@
                         <div class="space-y-4">
                             <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Gambar Sampul</label>
                             <div class="relative group">
-                                <img src="<?= base_url('assets/images/' . ($buku->gambar ?? 'default.jpg')) ?>" class="w-full h-80 object-cover rounded-3xl shadow-md border border-slate-100">
+                                <img src="<?= base_url(book_path . $buku->gambar) ?>" class="w-full h-full object-cover rounded-3xl shadow-md border border-slate-100">
                                 <div class="mt-4">
                                     <input type="file" name="gambar" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-[10px] file:font-bold file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100">
                                 </div>

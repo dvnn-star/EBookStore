@@ -31,12 +31,15 @@ $session = $this->session->all_userdata();
             <a href="<?= base_url('DaftarTransactions') ?>" class="flex items-center px-4 py-3 text-sm font-bold <?= ($this->uri->segment(1) == 'DaftarTransactions') ? 'bg-[#005B52] text-white shadow-md shadow-[#005B52]/10' : 'text-neutral-600 hover:text-[#005B52] hover:bg-neutral-50' ?> rounded-xl transition-all">
                 Transactions
             </a>
+            <a href="<?= base_url('') ?>" class="flex items-center px-4 py-3 text-sm font-bold <?= ($this->uri->segment(1) == '') ? 'bg-[#005B52] text-white shadow-md shadow-[#005B52]/10' : 'text-neutral-600 hover:text-[#005B52] hover:bg-neutral-50' ?> rounded-xl transition-all">
+                Landing Page
+            </a>
         </nav>
     </div>
 
     <div class="p-4 border-t border-neutral-100 bg-white shrink-0">
         <div class="relative p-4 bg-neutral-50 rounded-2xl border-2 border-[#005B52]/20 group cursor-pointer hover:bg-[#005B52]/5 hover:border-[#005B52]/40 transition-all duration-300">
-            
+
             <div class="absolute bottom-full left-0 w-full mb-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
                 <div class="bg-white border border-neutral-200 rounded-xl shadow-xl py-1 overflow-hidden">
                     <a href="<?= base_url('auth/logout') ?>" class="px-4 py-2.5 text-sm font-extrabold text-rose-600 hover:bg-rose-50 transition-colors flex items-center gap-3">
