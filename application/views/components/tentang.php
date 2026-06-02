@@ -28,7 +28,7 @@
         <!-- Ilustrasi / Gambar (Bisa diganti dengan gambar asli Anda) -->
         <div class="rounded-2xl overflow-hidden shadow-xl bg-teal-50">
             <!-- Jika Anda punya aset gambar, ganti src di bawah dengan base_url('assets/img/nama-file.jpg') -->
-            <img src="https://placehold.co/800x600/0f766e/ffffff?text=Ilustrasi+E-PUSTAKA" alt="Ilustrasi Membaca E-PUSTAKA" class="w-full h-auto object-cover" />
+            <img src="assets/images/e-pustaka.webp" alt="Ilustrasi Membaca E-PUSTAKA" class="w-full h-auto object-cover" />
         </div>
     </div>
 </section>
