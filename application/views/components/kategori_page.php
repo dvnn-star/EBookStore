@@ -38,6 +38,16 @@ foreach ($semua_buku as $item) {
     <title>E-PUSTAKA - Arsitektur Katalog & Keranjang</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Utilities untuk menyembunyikan scrollbar di mobile view */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
     <script>
         // Deklarasi ekstensi konfigurasi Tailwind JIT (Just-In-Time) Compiler untuk kustomisasi token desain global.
         tailwind.config = {
@@ -62,19 +72,22 @@ foreach ($semua_buku as $item) {
         
         <!-- SIDEBAR: LAYOUT STICKY & ACCESSIBILITY NAV -->
         <!-- Penggunaan max-h dan overflow-y-auto memastikan kontainer navigasi mandiri dari scroll viewport utama -->
-        <aside class="w-full md:w-72 flex-shrink-0 self-start sticky top-28 z-20 max-h-[calc(100vh-7rem)] overflow-y-auto overscroll-contain rounded-2xl">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h3 class="font-bold text-slate-800 mb-6 flex items-center gap-2">
+        <aside class="w-full md:w-72 flex-shrink-0 self-start sticky top-4 md:top-28 z-30">
+            <div class="bg-white/90 backdrop-blur-md md:bg-white p-4 md:p-6 rounded-2xl shadow-sm md:shadow-sm border border-slate-200">
+                
+                <h3 class="font-bold text-slate-800 mb-3 md:mb-6 flex items-center gap-2 text-sm md:text-base">
                     <i class="fas fa-tags text-ep-green"></i> Kategori Buku
                 </h3>
-                <nav id="sidebar-nav" class="space-y-2">
+                
+                <nav id="sidebar-nav" class="flex flex-row md:flex-col gap-2 md:gap-0 md:space-y-2 overflow-x-auto no-scrollbar items-center md:items-stretch pb-1 md:pb-0">
                     <?php if (!empty($koleksi_buku)): ?>
                         <?php foreach ($koleksi_buku as $key => $section): ?>
                             <?php if (!empty($section['data'])): ?>
-                                <button type="button" id="btn-<?= $key ?>" onclick="scrollToSection('<?= $key ?>')" class="nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-300 group hover:bg-slate-50">
-                                    <div class="flex items-center gap-3">
+                                
+                                <button type="button" id="btn-<?= $key ?>" onclick="scrollToSection('<?= $key ?>')" class="nav-btn flex-none md:w-full flex items-center justify-between px-4 py-2 md:py-3 rounded-full md:rounded-xl transition-all duration-300 group hover:bg-slate-50 border border-slate-100 md:border-transparent">
+                                    <div class="flex items-center gap-2 md:gap-3 mr-3 md:mr-0">
                                         <div class="dot w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-ep-green transition-colors"></div>
-                                        <span class="text-sm font-medium text-slate-600 group-hover:text-ep-green capitalize">
+                                        <span class="text-xs md:text-sm font-medium text-slate-600 group-hover:text-ep-green capitalize whitespace-nowrap">
                                             <?= str_replace(['_', '&'], [' ', ' & '], $key) ?>
                                         </span>
                                     </div>
@@ -82,6 +95,7 @@ foreach ($semua_buku as $item) {
                                         <?= count($section['data']) ?>
                                     </span>
                                 </button>
+                                
                             <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
