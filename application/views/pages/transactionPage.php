@@ -1,6 +1,4 @@
-<?php $this->load->view('components/navbar');
-?>
-
+<?php $this->load->view('components/navbar'); ?>
 
 <main class="min-h-screen bg-[#F8F9FA] text-[#2C3E50] py-12 px-4 md:px-8">
     <div class="max-w-5xl mx-auto">
@@ -13,10 +11,10 @@
                 <p class="text-[#2C3E50]/70 mt-1 text-sm font-medium">Pantau status pesanan dan unduh e-book Anda.</p>
             </div>
 
-            <div class="inline-flex bg-white p-1 rounded-xl border border-[#2C3E50]/10 shadow-sm">
-                <button class="px-4 py-2 text-xs font-bold bg-[#F8F9FA] text-[#005B52] rounded-lg">Semua</button>
-                <button class="px-4 py-2 text-xs font-bold text-[#2C3E50]/60 hover:text-[#005B52]">Pending</button>
-                <button class="px-4 py-2 text-xs font-bold text-[#2C3E50]/60 hover:text-[#005B52]">Berhasil</button>
+            <div id="status-filter-wrapper" class="inline-flex bg-white p-1 rounded-xl border border-[#2C3E50]/10 shadow-sm">
+                <button onclick="filterTransactions('all', this)" class="filter-btn px-4 py-2 text-xs font-bold bg-[#F8F9FA] text-[#005B52] rounded-lg transition-all">Semua</button>
+                <button onclick="filterTransactions('pending', this)" class="filter-btn px-4 py-2 text-xs font-bold text-[#2C3E50]/60 hover:text-[#005B52] rounded-lg transition-all">Pending</button>
+                <button onclick="filterTransactions('success', this)" class="filter-btn px-4 py-2 text-xs font-bold text-[#2C3E50]/60 hover:text-[#005B52] rounded-lg transition-all">Berhasil</button>
             </div>
         </div>
 
@@ -36,11 +34,11 @@
                     $current_label = $labels[$status] ?? $status;
                     ?>
 
-                    <div id="card-trx-<?= $row->kode_transaksi ?>" class="transaction-card bg-white border border-[#2C3E50]/10 p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-[#005B52]/20 transition-all duration-500">
+                    <div id="card-trx-<?= $row->kode_transaksi ?>" data-status="<?= $status ?>" class="transaction-card bg-white border border-[#2C3E50]/10 p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-[#005B52]/20 transition-all duration-500">
                         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
 
-                            <div class="flex items-center space-x-5">
-                                <div class="w-12 h-12 flex items-center justify-center bg-[#F8F9FA] rounded-xl border border-[#2C3E50]/5">
+                            <div class="flex items-center space-x-5 flex-1">
+                                <div class="w-12 h-12 flex items-center justify-center bg-[#F8F9FA] rounded-xl border border-[#2C3E50]/5 flex-shrink-0">
                                     <svg class="w-6 h-6 text-[#2C3E50]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                                     </svg>
@@ -58,7 +56,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex items-center md:flex-col md:items-end justify-between gap-2">
+                            <div class="flex items-center md:flex-col md:items-end justify-between md:justify-center gap-2 md:min-w-[140px]">
                                 <span class="text-lg font-black text-[#2C3E50]">
                                     Rp <?= number_format($row->total_bayar, 0, ',', '.'); ?>
                                 </span>
@@ -68,7 +66,7 @@
                                 </span>
                             </div>
 
-                            <div class="border-t border-[#F8F9FA] md:border-t-0 pt-4 md:pt-0 flex items-center gap-3 justify-end">
+                            <div class="border-t border-[#F8F9FA] md:border-t-0 pt-4 md:pt-0 flex items-center gap-3 justify-end md:min-w-[260px]">
 
                                 <div id="action-buttons-<?= $row->kode_transaksi ?>" class="flex items-center gap-3">
                                     <?php if ($status === 'pending'): ?>
@@ -138,6 +136,29 @@
 
 <script>
     let activeCancelTrxCode = null;
+
+    // FUNGSI BARU: Implementasi Filter Status Realtime tanpa mengganggu data backend
+    function filterTransactions(status, buttonElement) {
+        // 1. Reset class semua tombol filter di dalam container wrapper
+        const allButtons = document.querySelectorAll('.filter-btn');
+        allButtons.forEach(btn => {
+            btn.className = "filter-btn px-4 py-2 text-xs font-bold text-[#2C3E50]/60 hover:text-[#005B52] rounded-lg transition-all";
+        });
+
+        // 2. Set style tombol yang sedang aktif terpilih
+        buttonElement.className = "filter-btn px-4 py-2 text-xs font-bold bg-[#F8F9FA] text-[#005B52] rounded-lg transition-all";
+
+        // 3. Filter card berdasarkan data-status
+        const cards = document.querySelectorAll('.transaction-card');
+        cards.forEach(card => {
+            const cardStatus = card.getAttribute('data-status');
+            if (status === 'all' || cardStatus === status) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
 
     function showToast(message, type = 'success') {
         const container = document.getElementById('toast-container');
@@ -212,7 +233,6 @@
         if (e.target.id === 'cancel-modal') closeCancelModal();
     }
 
-    // EXECUTE CANCEL: Mengubah status menjadi 'Gagal' tanpa opsi menghapus card
     function executeCancel(kodeTransaksi) {
         closeCancelModal();
 
@@ -232,14 +252,18 @@
                 if (data.status === 'success') {
                     showToast(`Pesanan #${kodeTransaksi} telah dibatalkan.`, 'success');
 
-                    // Ubah gaya visual Badge status secara realtime menjadi 'Gagal'
                     const badge = document.getElementById('badge-' + kodeTransaksi);
                     if (badge) {
                         badge.className = "px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-all duration-500 bg-red-50 text-red-600 border-red-100";
                         badge.innerText = "Gagal";
                     }
 
-                    // Kosongkan pembungkus aksi agar tombol "Batalkan Pembelian" hilang sepenuhnya
+                    // Sinkronisasi status data-attribute card setelah dibatalkan
+                    const targetCard = document.getElementById('card-trx-' + kodeTransaksi);
+                    if (targetCard) {
+                        targetCard.setAttribute('data-status', 'failed');
+                    }
+
                     const btnWrapper = document.getElementById('action-buttons-' + kodeTransaksi);
                     if (btnWrapper) {
                         btnWrapper.innerHTML = '';
@@ -255,21 +279,16 @@
     }
 
     function goToDetail(kodeTransaksi, statusTransaksi) {
-        // 1. Buat elemen form dinamis
         const form = document.createElement('form');
         form.method = 'POST';
-
-        // SUNTIKKAN KODE TRANSAKSI SEBAGAI SLUG DI URL ACTION
         form.action = "<?= base_url('transactions/index/') ?>" + kodeTransaksi;
 
-        // 2. Tambahkan input hidden HANYA untuk 'status'
         const inputStatus = document.createElement('input');
         inputStatus.type = 'hidden';
-        inputStatus.name = 'status'; // Namanya tetap 'status'
-        inputStatus.value = statusTransaksi; // Berisi 'pending'/'success'/'failed'
+        inputStatus.name = 'status';
+        inputStatus.value = statusTransaksi;
         form.appendChild(inputStatus);
 
-        // 3. Submit form ke backend
         document.body.appendChild(form);
         form.submit();
     }
