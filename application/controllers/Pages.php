@@ -69,7 +69,7 @@ class Pages extends CI_Controller
         $transactions = $this->TransactionModel->GetTransactionRecord($slug);
         if (!$transactions or $transactions->user_id !=  $this->session->userdata('user_id')) {
             show_error('unathorized', 401);
-        } 
+        }
         if ($transactions->status == 'success') {
             show_error('pembayaran berhasil', 404);
         }
@@ -89,12 +89,37 @@ class Pages extends CI_Controller
     public function mybooks($slug)
     {
         $this->load->model('User_libraries');
-        if ($this->session->userdata('user_id') != $slug){
-            show_error('gabisa brow',403);
+        if ($this->session->userdata('user_id') != $slug) {
+            show_error('gabisa brow', 403);
         }
         $data['books'] = $this->User_libraries->getdatabyuserid($slug);
 
-        $this->load->view('pages/Bukusaya',$data);
+        $this->load->view('pages/Bukusaya', $data);
+    }
+    public function search_api($slug = '')
+    {
+        $this->load->model('Buku');
+        if (empty(trim($slug))) {
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode([]));
+        }
+
+        $results = $this->Buku->search_by_keyword(urldecode($slug));
+
+        return $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($results));
+    }
+    public function detail_buku($slug)
+    {
+        if(empty(trim($slug))){
+            redirect(base_url(''));
+        }
+        $this->load->model('Buku');
+
+        $data['buku'] = $this->Buku->getById($slug);
+        $this->load->view('pages/detailbuku',$data);
+        
     }
 }
-  

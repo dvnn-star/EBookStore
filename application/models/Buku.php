@@ -52,10 +52,22 @@ class Buku extends CI_Model
     {
         $this->db->from('Buku');
         $this->db->select('*');
-        $this->db->order_by('total_terjual','DESC');
+        $this->db->order_by('total_terjual', 'DESC');
         $this->db->limit(4);
         return $this->db->get()->result_array();
-
     }
-    
+    public function search_by_keyword($keyword)
+    {
+        $this->db->select('id, judul_buku, penulis, gambar, harga');
+        $this->db->from('Buku');
+
+        // Gunakan grouping kueri internal agar or_like tidak merusak klausa where lainnya (jika ada status aktif)
+        $this->db->group_start();
+        $this->db->like('judul_buku', $keyword);
+        $this->db->or_like('penulis', $keyword);
+        $this->db->group_end();
+
+        $this->db->limit(5); // Batasi hanya 5 hasil teratas demi efisiensi render DOM
+        return $this->db->get()->result_array();
+    }
 }

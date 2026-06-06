@@ -39,8 +39,12 @@
                 <div class="flex items-center space-x-4">
 
                     <div class="relative hidden lg:block">
-                        <input type="text" placeholder="Cari buku..." class="w-64 pl-10 pr-4 py-2 border border-slate-200 rounded-xl text-xs font-medium bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#0E6D64]/20 focus:border-[#0E6D64] transition-all">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                        <input type="text" id="search-input-desktop" placeholder="Cari buku..." class="w-64 pl-10 pr-4 py-2 border border-slate-200 rounded-xl text-xs font-medium bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#0E6D64]/20 focus:border-[#0E6D64] transition-all">
+                        <i class="fa-solid cursor-pointer fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                        
+                        <div id="search-results-wrapper-desktop" class="hidden absolute left-0 mt-2 w-80 bg-white border border-slate-100 rounded-2xl shadow-2xl p-4 z-50 max-h-96 overflow-y-auto">
+                            <div id="search-results-content-desktop" class="space-y-2"></div>
+                        </div>
                     </div>
 
                     <a href="<?= $this->session->userdata('logged_in') ? base_url('keranjang') : base_url('login'); ?>" class="relative p-2.5 bg-slate-50 text-[#0E6D64] hover:bg-[#0E6D64] hover:text-white rounded-xl transition-all group">
@@ -65,7 +69,7 @@
                                 <a href="<?= base_url('transaction/'); ?>" class="flex items-center px-4 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-[#0E6D64] rounded-xl transition-colors">
                                     <i class="fa-solid fa-clock-rotate-left mr-3 text-slate-400 text-sm w-4"></i>Riwayat Transaksi
                                 </a>
-                                
+
                                 <a href="<?= base_url('settings'); ?>" class="flex items-center px-4 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-[#0E6D64] rounded-xl transition-colors">
                                     <i class="fa-solid fa-gear mr-3 text-slate-400 text-sm w-4"></i>Pengaturan
                                 </a>
@@ -119,8 +123,12 @@
             <?php endif; ?>
 
             <div class="relative mt-6">
-                <input type="text" placeholder="Cari buku pilihanmu..." class="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl text-xs font-medium bg-slate-50 focus:outline-none">
+                <input type="text" placeholder="Cari buku pilihanmu..." id="search-input" class="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl text-xs font-medium bg-slate-50 focus:outline-none">
                 <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
+            </div>
+            
+            <div id="search-results-wrapper" class="hidden absolute left-6 right-6 mt-2 bg-white border border-slate-100 rounded-2xl shadow-2xl p-4 z-50 max-h-80 overflow-y-auto">
+                <div id="search-results-content" class="space-y-2"></div>
             </div>
 
             <div class="flex flex-col space-y-1 mt-8">
@@ -208,6 +216,92 @@
                 }
             });
         }
+
+        // 1. ENGINE UTAMA: Fungsi Closure Debounce
+        function debounce(func, delay) {
+            let timeoutId;
+            return function(...args) {
+                if (timeoutId) clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    func.apply(this, args);
+                }, delay);
+            };
+        }
+
+        // 2. LOGIKA UTAMA: Hit API Backend (Mendukung Multi-Device Node Target)
+        const executeSearch = (keyword, isDesktop = false) => {
+            // Ambil elemen berdasarkan device target aktif
+            const suffix = isDesktop ? '-desktop' : '';
+            const contentContainer = document.getElementById(`search-results-content${suffix}`);
+            const wrapper = document.getElementById(`search-results-wrapper${suffix}`);
+
+            if (keyword.trim() === '') {
+                contentContainer.innerHTML = '';
+                wrapper.classList.add('hidden');
+                return;
+            }
+
+            contentContainer.innerHTML = '<p class="text-xs text-slate-400 font-medium animate-pulse p-2">Mencari lektur...</p>';
+            wrapper.classList.remove('hidden');
+
+            // Hit route CI3 berbasis GET Array parameter query
+            fetch(`<?= base_url('Buku/search/') ?>${encodeURIComponent(keyword)}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network bermasalah');
+                    return response.json();
+                })
+                .then(data => {
+                    contentContainer.innerHTML = '';
+
+                    if (data.length === 0) {
+                        contentContainer.innerHTML = '<p class="text-xs text-red-400 font-bold p-2">Buku tidak ditemukan.</p>';
+                        return;
+                    }
+
+                    data.forEach(book => {
+                        const rowHTML = `
+                            <div class="flex items-center gap-3 p-2 hover:bg-slate-50 rounded-xl cursor-pointer transition-colors" onclick="window.location.href='<?= base_url('buku/detail/') ?>${book.id}'">
+                                <img src="<?= base_url('assets/images/Buku/') ?>${book.gambar}" class="w-8 h-10 object-cover rounded-md shadow-sm">
+                                <div class="overflow-hidden">
+                                    <p class="text-xs font-bold text-slate-800 truncate">${book.judul_buku}</p>
+                                    <p class="text-[10px] text-slate-400 font-medium truncate">By ${book.penulis}</p>
+                                </div>
+                            </div>
+                        `;
+                        contentContainer.insertAdjacentHTML('beforeend', rowHTML);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    contentContainer.innerHTML = '<p class="text-xs text-red-500 p-2">Sistem gagal memuat data.</p>';
+                });
+        };
+
+        // 3. EVENT BINDING: Mengikat listener input untuk device mobile dan desktop secara terisolasi
+        const bindSearch = (elementId, isDesktop) => {
+            const inputEl = document.getElementById(elementId);
+            if (inputEl) {
+                inputEl.addEventListener('input', debounce((e) => {
+                    executeSearch(e.target.value, isDesktop);
+                }, 500));
+            }
+        };
+
+        bindSearch('search-input', false);         // Jalur Mobile Input
+        bindSearch('search-input-desktop', true);   // Jalur Desktop Input
+
+        // Global Event: Klik di luar dropdown untuk menutup down bar secara otomatis
+        window.addEventListener('click', (e) => {
+            const wrapperDesktop = document.getElementById('search-results-wrapper-desktop');
+            const wrapperMobile = document.getElementById('search-results-wrapper');
+            
+            if (wrapperDesktop && !document.getElementById('search-input-desktop').contains(e.target)) {
+                wrapperDesktop.classList.add('hidden');
+            }
+            if (wrapperMobile && !document.getElementById('search-input').contains(e.target)) {
+                wrapperMobile.classList.add('hidden');
+            }
+        });
     </script>
 </body>
 
