@@ -58,12 +58,13 @@ $route['keranjang'] = 'pages/keranjang';
 $route['bukusaya/(:any)'] = 'pages/mybooks/$1';
 $route['payments/execute_payment'] = 'Payment/execute_payment';
 $route['payments/(:any)'] = 'pages/payment/$1';
+$route['buku/detail/(:num)'] = 'pages/detail_buku/$1';
 
 
 // halaman untuk login dan register
 $route['login'] = 'pages/login';
 $route['register'] = 'pages/register';
-
+$route['Buku/search/(:any)'] = 'pages/search_api/$1';
 // untuk admin
 $route['dashboard'] = 'PagesAdmin/dashboard';
 $route['DaftarUser'] = 'PagesAdmin/DaftarUser';
@@ -103,6 +104,9 @@ $route['transactions/create'] = 'transaction/create';
 $route['transactions/index/(:any)'] = 'transaction/show/$1';
 $route['transaction/updatestatusfailed']  = 'transaction/updatestatus/';
 // route Payments
+
+
+
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
